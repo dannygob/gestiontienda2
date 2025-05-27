@@ -13,5 +13,5 @@ interface ProviderFirebaseDataSource {
 
     suspend fun updateProvider(provider: ProviderFirebase)
 
-    suspend fun deleteProvider(providerId: String)
+    suspend fun deleteProvider(provider: ProviderFirebase)
 }

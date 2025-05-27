@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PurchaseFirebaseDataSourceImpl @Inject constructor(
+class PurchaseFirebaseDataSourceImpl @Inject constructor (
     private val firestore: FirebaseFirestore
 ) : PurchaseFirebaseDataSource {
 

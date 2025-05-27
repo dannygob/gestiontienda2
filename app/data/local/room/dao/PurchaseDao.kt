@@ -6,7 +6,6 @@ import com.your_app_name.data.local.room.entities.PurchaseItemEntity
 import com.your_app_name.data.local.room.entities.PurchaseWithItems
 import kotlinx.coroutines.flow.Flow
 
-@Dao
 interface PurchaseDao {
 
     @Transaction

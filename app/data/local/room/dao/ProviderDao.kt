@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Update
 import com.your_app_name.data.local.room.entities.ProviderEntity
 import kotlinx.coroutines.flow.Flow
-
 @Dao
 interface ProviderDao {
 

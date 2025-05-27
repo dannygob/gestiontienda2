@@ -32,6 +32,14 @@ class PurchaseRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updatePurchase(purchase: Purchase) {
+        purchaseDao.updatePurchase(purchase.toEntity())
+    }
+
+    override suspend fun deletePurchase(purchase: Purchase) {
+        purchaseDao.deletePurchase(purchase.toEntity())
+    }
+
     //region Mappers
     private fun Purchase.toEntity(): PurchaseEntity {
         return PurchaseEntity(

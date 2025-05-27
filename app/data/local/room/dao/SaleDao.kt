@@ -6,6 +6,7 @@ import com.your_app_name.data.local.room.entities.SaleItemEntity
 import com.your_app_name.data.local.room.entities.SaleWithItems
 import kotlinx.coroutines.flow.Flow
 
+// This file is an interface for the Sale data access object (DAO).
 @Dao
 interface SaleDao {
 

@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SaleFirebaseDataSourceImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
+ private val firestore: FirebaseFirestore
 ) : SaleFirebaseDataSource {
 
     private val salesCollection = firestore.collection("sales")

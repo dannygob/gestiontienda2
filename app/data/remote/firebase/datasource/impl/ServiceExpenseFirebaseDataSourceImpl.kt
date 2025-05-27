@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ServiceExpenseFirebaseDataSourceImpl @Inject constructor(
+class ServiceExpenseFirebaseDataSourceImpl @Inject constructor (
     private val firestore: FirebaseFirestore
 ) : ServiceExpenseFirebaseDataSource {
 

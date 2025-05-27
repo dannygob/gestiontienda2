@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.your_app_name.data.local.room.entities.ServiceExpenseEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ServiceExpenseDao {

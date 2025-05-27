@@ -23,8 +23,8 @@ class ClientRepositoryImpl @Inject constructor(
         return flow {
             // Try to fetch from Firebase first
             try {
-                // Assuming clientFirebaseDataSource.getAllClients() returns a List<ClientFirebase>
-                val firebaseClients = clientFirebaseDataSource.getAllClients()
+                // Assuming clientFirebaseDataSource.getClients() returns a List<ClientFirebase>
+                val firebaseClients = clientFirebaseDataSource.getClients()
                 withContext(Dispatchers.IO) {
                     clientDao.insertAllClients(firebaseClients.map { it.toEntity() })
                 }

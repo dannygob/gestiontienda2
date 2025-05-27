@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SaleFirebaseDataSource {
 
-    fun getAllSales(): Flow<List<SaleFirebase>>
+    fun getSales(): Flow<List<SaleFirebase>>
 
     suspend fun getSaleById(saleId: String): SaleFirebase?
 

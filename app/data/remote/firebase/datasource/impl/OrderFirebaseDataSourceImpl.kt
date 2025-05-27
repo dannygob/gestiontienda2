@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class OrderFirebaseDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore
-) : OrderFirebaseDataSource {
+) : com.your_app_name.data.remote.firebase.datasource.OrderFirebaseDataSource {
 
     private val ordersCollection = firestore.collection("orders")
 

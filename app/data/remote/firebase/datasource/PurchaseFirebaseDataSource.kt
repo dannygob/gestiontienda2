@@ -9,9 +9,9 @@ interface PurchaseFirebaseDataSource {
 
     suspend fun getPurchaseById(purchaseId: String): PurchaseFirebase?
 
-    suspend fun addPurchase(purchase: PurchaseFirebase)
+    suspend fun addPurchase(purchase: PurchaseFirebase): String?
 
-    suspend fun updatePurchase(purchase: PurchaseFirebase)
+    suspend fun updatePurchase(purchase: PurchaseFirebase): Boolean
 
-    suspend fun deletePurchase(purchaseId: String)
+    suspend fun deletePurchase(purchaseId: String): Boolean
 }

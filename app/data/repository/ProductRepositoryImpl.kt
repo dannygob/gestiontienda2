@@ -8,6 +8,8 @@ import com.your_app_name.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.your_app_name.data.remote.firebase.ProductFirebaseDataSource
 import com.your_app_name.data.remote.firebase.toDomain as productFirebaseToDomain
@@ -96,7 +98,11 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun deleteProduct(product: Product) {
         // Example: Delete from local and Firebase
         productDao.deleteProduct(product.productDomainToEntity())
-        // Placeholder: Delete from Firebase
-        // productFirebaseDataSource.deleteProduct(product.toFirebase()) // Assume mapping function exists
+        try {
+            // Delete from Firebase
+            productFirebaseDataSource.deleteProduct(product.id.toString())
+        } catch (e: Exception) {
+            // Handle Firebase deletion failure
+        }
     }
 }

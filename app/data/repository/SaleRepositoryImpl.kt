@@ -9,6 +9,7 @@ import com.your_app_name.domain.models.SaleItem
 import com.your_app_name.domain.repository.SaleRepository
 import com.your_app_name.domain.repository.isOnline
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
@@ -53,6 +54,11 @@ class SaleRepositoryImpl @Inject constructor(
 
             if (isOnline()) {
                 // TODO: Add to Firebase
+                try {
+                    saleFirebaseDataSource.addSale(sale.toFirebaseModel(saleId.toString()))
+                } catch (e: Exception) {
+                    // Handle Firebase add error (e.g., log, show message)
+                }
             }
             saleId
         }
@@ -68,8 +74,11 @@ class SaleRepositoryImpl @Inject constructor(
             val saleItemEntities = sale.items.map { it.toSaleItemEntity(sale.id) }
             saleDao.insertSaleItems(saleItemEntities)
 
-            if (isOnline()) {
-                // TODO: Update in Firebase
+            try {
+                if (isOnline()) {
+                    saleFirebaseDataSource.updateSale(sale.toFirebaseModel(sale.id.toString()))
+                }
+            } catch (e: Exception) {
             }
         }
     }
@@ -80,7 +89,11 @@ class SaleRepositoryImpl @Inject constructor(
             saleDao.deleteSaleItemsForSale(sale.id) // Delete associated items
 
             if (isOnline()) {
-                // TODO: Delete from Firebase
+                try {
+                    saleFirebaseDataSource.deleteSale(sale.id.toString())
+                } catch (e: Exception) {
+                    // Handle Firebase delete error
+                }
             }
         }
     }

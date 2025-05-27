@@ -5,11 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
 
-    suspend fun addOrder(order: Order): Long
-
     fun getAllOrders(): Flow<List<Order>>
 
     suspend fun getOrderById(orderId: Int): Order?
+    suspend fun addOrder(order: Order): Long
 
     suspend fun updateOrder(order: Order)
 

@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface ServiceExpenseRepository {
 
-    fun getServiceExpenses(): Flow<List<ServiceExpense>>
+    fun getAllServiceExpenses(): Flow<List<ServiceExpense>>
 
-    suspend fun getServiceExpenseById(serviceExpenseId: Int): ServiceExpense?
+    fun getServiceExpenseById(id: Int): Flow<ServiceExpense?>
 
-    suspend fun addServiceExpense(serviceExpense: ServiceExpense): Long
+    suspend fun insertServiceExpense(serviceExpense: ServiceExpense)
 
     suspend fun updateServiceExpense(serviceExpense: ServiceExpense)
 

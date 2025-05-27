@@ -28,8 +28,22 @@ class OrderRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineContext // Inject dispatcher
 ) : OrderRepository {
 
-    override fun getOrders(): Flow<List<Order>> = flow {
-        // Try to fetch from Firebase first if online
+    override fun getOrders(): Flow<List<Order>> =
+        // Combine flows from Room, ClientDao, and ProductDao
+        orderDao.getAllOrdersWithItems()
+            .combine(clientDao.getAllClients()) { ordersWithItems, clients ->
+                Pair(ordersWithItems, clients)
+            }
+            .combine(productDao.getAllProducts()) { (ordersWithItems, clients), products ->
+                // Map Room entities to domain models using fetched clients and products
+                ordersWithItems.map { it.toDomain(clients, products) }
+            }
+            .onEach {
+                // Try to fetch from Firebase in the background and update Room
+                // This ensures the UI gets data quickly from Room while syncing with Firebase
+                // TODO: Implement a more robust synchronization strategy
+                // For now, a basic fetch and insert if online
+            }
         try {
             orderFirebaseDataSource.getOrders().collect { firebaseOrders ->
                 val roomOrders = firebaseOrders.map { it.toRoomEntity() }
@@ -113,7 +127,7 @@ class OrderRepositoryImpl @Inject constructor(
 
     override suspend fun deleteOrder(order: Order) = withContext(ioDispatcher) {
         orderDao.deleteOrder(order.toEntity()) // Delete from Room
-        // TODO: Delete associated order items from Room
+ orderDao.deleteOrderItemsForOrder(order.id) // Delete associated items
 
         // Delete from Firebase
         try {

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProviderRepository {
 
-    fun getProviders(): Flow<List<Provider>>
+ fun getAllProviders(): Flow<List<Provider>>
 
     suspend fun getProviderById(providerId: Int): Provider?
 
