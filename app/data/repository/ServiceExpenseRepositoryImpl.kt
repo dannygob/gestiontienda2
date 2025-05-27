@@ -1,0 +1,59 @@
+package com.yourstoreapp.data.repository
+
+import com.yourstoreapp.data.local.dao.ServiceExpenseDao
+import com.yourstoreapp.data.local.entities.ServiceExpenseEntity
+import com.yourstoreapp.domain.models.ServiceExpense
+import com.yourstoreapp.domain.repository.ServiceExpenseRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+
+class ServiceExpenseRepositoryImpl @Inject constructor(
+    private val serviceExpenseDao: ServiceExpenseDao
+) : ServiceExpenseRepository {
+
+    override suspend fun insertServiceExpense(serviceExpense: ServiceExpense) {
+        serviceExpenseDao.insertServiceExpense(serviceExpense.toEntity())
+    }
+
+    override fun getAllServiceExpenses(): Flow<List<ServiceExpense>> {
+        return serviceExpenseDao.getAllServiceExpenses().map { entities ->
+            entities.map { it.toDomain() }
+        }
+    }
+
+    override fun getServiceExpenseById(id: Int): Flow<ServiceExpense?> {
+        return serviceExpenseDao.getServiceExpenseById(id).map { entity ->
+            entity?.toDomain()
+        }
+    }
+
+    override suspend fun updateServiceExpense(serviceExpense: ServiceExpense) {
+        serviceExpenseDao.updateServiceExpense(serviceExpense.toEntity())
+    }
+
+    override suspend fun deleteServiceExpense(serviceExpense: ServiceExpense) {
+        serviceExpenseDao.deleteServiceExpense(serviceExpense.toEntity())
+    }
+}
+
+// Mapper functions (you might want to put these in a separate mapping file)
+fun ServiceExpense.toEntity(): ServiceExpenseEntity {
+    return ServiceExpenseEntity(
+        id = id,
+        type = type,
+        amount = amount,
+        date = date,
+        description = description
+    )
+}
+
+fun ServiceExpenseEntity.toDomain(): ServiceExpense {
+    return ServiceExpense(
+        id = id,
+        type = type,
+        amount = amount,
+        date = date,
+        description = description
+    )
+}

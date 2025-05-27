@@ -1,0 +1,135 @@
+package com.your_app_name.data.repository
+
+import com.your_app_name.data.local.dao.ClientDao
+import com.your_app_name.data.local.dao.ProductDao
+import com.your_app_name.data.local.dao.SaleDao
+import com.your_app_name.data.remote.firebase.datasource.SaleFirebaseDataSource
+import com.your_app_name.domain.models.Sale
+import com.your_app_name.domain.models.SaleItem
+import com.your_app_name.domain.repository.SaleRepository
+import com.your_app_name.domain.repository.isOnline
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
+import javax.inject.Inject
+
+class SaleRepositoryImpl @Inject constructor(
+    private val saleDao: SaleDao,
+    private val saleFirebaseDataSource: SaleFirebaseDataSource,
+    private val productDao: ProductDao, // To get product details for SaleItem mapping
+    private val clientDao: ClientDao, // To get client details for Sale mapping
+    private val ioDispatcher: CoroutineContext // Assuming you have an IO dispatcher provided
+) : SaleRepository {
+
+    override fun getAllSales(): Flow<List<Sale>> {
+        // Implement data source selection logic: fetch from Firebase if online,
+        // update Room, then return from Room. If offline, return from Room directly.
+        // This is a simplified example; a real implementation would involve
+        // more sophisticated synchronization.
+        if (isOnline()) {
+            // TODO: Fetch from Firebase, update Room
+        }
+        return saleDao.getAllSalesWithItems().map { salesWithItemsList ->
+            salesWithItemsList.map { it.toDomain(productDao) }
+        }
+    }
+
+    override suspend fun getSaleById(saleId: Int): Sale? {
+        return withContext(ioDispatcher) {
+            // Implement data source selection logic
+            if (isOnline()) {
+                // TODO: Fetch from Firebase if needed and update Room
+            }
+            saleDao.getSaleWithItemsById(saleId)?.toDomain(productDao)
+        }
+    }
+
+    override suspend fun addSale(sale: Sale): Long {
+        return withContext(ioDispatcher) {
+            val saleId = saleDao.insertSale(sale.toSaleEntity())
+            val saleItemEntities = sale.items.map { it.toSaleItemEntity(saleId.toInt()) }
+            saleDao.insertSaleItems(saleItemEntities)
+
+            if (isOnline()) {
+                // TODO: Add to Firebase
+            }
+            saleId
+        }
+    }
+
+    override suspend fun updateSale(sale: Sale) {
+        withContext(ioDispatcher) {
+            saleDao.updateSale(sale.toSaleEntity())
+            // Depending on update strategy, you might delete existing items
+            // and insert new ones or update individually.
+            // For simplicity, let's assume delete and insert for now.
+            saleDao.deleteSaleItemsForSale(sale.id)
+            val saleItemEntities = sale.items.map { it.toSaleItemEntity(sale.id) }
+            saleDao.insertSaleItems(saleItemEntities)
+
+            if (isOnline()) {
+                // TODO: Update in Firebase
+            }
+        }
+    }
+
+    override suspend fun deleteSale(sale: Sale) {
+        withContext(ioDispatcher) {
+            saleDao.deleteSale(sale.toSaleEntity())
+            saleDao.deleteSaleItemsForSale(sale.id) // Delete associated items
+
+            if (isOnline()) {
+                // TODO: Delete from Firebase
+            }
+        }
+    }
+
+    // region Mappers
+    private fun Sale.toSaleEntity(): com.your_app_name.data.local.room.entities.SaleEntity {
+        return com.your_app_name.data.local.room.entities.SaleEntity(
+            id = id,
+            date = date,
+            clientId = clientId,
+            total = total
+        )
+    }
+    
+    private fun com.your_app_name.data.local.room.entities.SaleWithItems.toDomain(productDao: ProductDao): Sale {
+        // This mapping requires fetching product details for each SaleItem.
+        // In a real app, you might optimize this or fetch product details separately in the ViewModel.
+        val saleItems = items.mapNotNull { saleItemEntity ->
+            val product = productDao.getProductById(saleItemEntity.productId) // Assuming sync access is okay here or refactor
+            saleItemEntity.toDomain(product?.toDomain())
+        }
+        return Sale( // Ensure all fields are mapped
+            id = id,
+            date = date,
+            clientId = saleEntity.clientId, // Assuming SaleWithItems has the SaleEntity
+            total = saleEntity.total, // Assuming SaleWithItems has the SaleEntity
+            items = saleItems
+        )
+    }
+
+    private fun SaleItem.toSaleItemEntity(saleId: Int): com.your_app_name.data.local.room.entities.SaleItemEntity {
+        return com.your_app_name.data.local.room.entities.SaleItemEntity(
+            id = id,
+            saleId = saleId,
+            productId = productId,
+            quantity = quantity,
+            unitPrice = unitPrice
+        )
+    }
+
+    private fun com.your_app_name.data.local.room.entities.SaleItemEntity.toDomain(product: com.your_app_name.domain.models.Product? = null): SaleItem {
+        return SaleItem(
+            id = id,
+            saleId = saleId,
+            productId = productId,
+            quantity = quantity,
+            priceAtSale = priceAtSale,
+            product = product
+        )
+    }
+    // endregion
+}
