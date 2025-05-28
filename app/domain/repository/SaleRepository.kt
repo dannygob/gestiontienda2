@@ -11,4 +11,6 @@ interface SaleRepository {
     suspend fun addSale(sale: Sale): Long
     suspend fun updateSale(sale: Sale)
     suspend fun deleteSale(sale: Sale)
+    suspend fun getTotalSalesAmount(startDate: Long? = null, endDate: Long? = null): Double
+    fun getSalesByDateRange(startDate: Long?, endDate: Long?): Flow<List<Sale>> // Or Flow<List<SaleWithItems>> if needed
 }

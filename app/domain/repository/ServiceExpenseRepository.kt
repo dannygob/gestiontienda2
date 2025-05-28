@@ -14,4 +14,8 @@ interface ServiceExpenseRepository {
     suspend fun updateServiceExpense(serviceExpense: ServiceExpense)
 
     suspend fun deleteServiceExpense(serviceExpense: ServiceExpense)
+
+    suspend fun getTotalServiceExpenseAmount(startDate: Long? = null, endDate: Long? = null): Double
+
+    fun getServiceExpensesByDateRange(startDate: Long? = null, endDate: Long? = null): Flow<List<ServiceExpense>>
 }

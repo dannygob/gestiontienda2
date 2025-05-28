@@ -19,7 +19,7 @@ interface ProductDao {
     suspend fun deleteProduct(product: ProductEntity)
 
     @Query("SELECT * FROM products WHERE id = :productId")
-    suspend fun getProductById(productId: Int): ProductEntity?
+    suspend fun getProductById(productId: Long): ProductEntity?
 
     @Query("SELECT * FROM products")
     fun getAllProducts(): Flow<List<ProductEntity>>

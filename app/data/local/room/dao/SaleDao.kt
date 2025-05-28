@@ -16,7 +16,7 @@ interface SaleDao {
 
     @Transaction
     @Query("SELECT * FROM sales WHERE id = :saleId")
-    suspend fun getSaleWithItemsById(saleId: Int): SaleWithItems?
+    suspend fun getSaleWithItemsById(saleId: Long): SaleWithItems?
 
     @Insert
     suspend fun insertSale(sale: SaleEntity): Long
@@ -31,7 +31,7 @@ interface SaleDao {
     suspend fun deleteSale(sale: SaleEntity)
 
     @Query("DELETE FROM saleitems WHERE saleId = :saleId")
-    suspend fun deleteSaleItemsForSale(saleId: Int)
+    suspend fun deleteSaleItemsForSale(saleId: Long)
 
     // Optional: Method to update a list of sale items if needed
     @Update

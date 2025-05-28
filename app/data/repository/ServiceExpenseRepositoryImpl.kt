@@ -1,6 +1,7 @@
 package com.yourstoreapp.data.repository
 
 import com.yourstoreapp.data.local.dao.ServiceExpenseDao
+import com.yourstoreapp.data.local.database.DateConverter // Assuming you have a DateConverter
 import com.yourstoreapp.data.local.entities.ServiceExpenseEntity
 import com.yourstoreapp.domain.models.ServiceExpense
 import com.yourstoreapp.domain.repository.ServiceExpenseRepository
@@ -35,7 +36,20 @@ class ServiceExpenseRepositoryImpl @Inject constructor(
     override suspend fun deleteServiceExpense(serviceExpense: ServiceExpense) {
         serviceExpenseDao.deleteServiceExpense(serviceExpense.toEntity())
     }
+
+    override suspend fun getTotalServiceExpenseAmount(startDate: Long?, endDate: Long?): Double {
+        return serviceExpenseDao.getTotalServiceExpenseAmount(startDate, endDate) ?: 0.0
+    }
 }
+
+    override fun getServiceExpensesByDateRange(
+        startDate: Long?,
+        endDate: Long?
+    ): Flow<List<ServiceExpense>> {
+        return serviceExpenseDao.getServiceExpensesByDateRange(startDate, endDate).map { entities ->
+            entities.map { it.toDomain() }
+        }
+    }
 
 // Mapper functions (you might want to put these in a separate mapping file)
 fun ServiceExpense.toEntity(): ServiceExpenseEntity {

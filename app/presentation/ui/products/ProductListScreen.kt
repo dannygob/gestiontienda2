@@ -81,8 +81,8 @@ fun ProductListItem(
                 maxLines = 1, // Limit name to one line
                 overflow = TextOverflow.Ellipsis // Add ellipsis if name is too long
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Stock: ${product.stock}", style = MaterialTheme.typography.body2) // Smaller text for stock
+            Spacer(modifier = Modifier.height(2.dp)) // Reduced spacing
+            Text(text = "Available: ${product.availableStock}", style = MaterialTheme.typography.body2) // Display available stock
             // You might add price or other key info here as well, but keep it concise
         }
     }

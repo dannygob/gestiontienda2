@@ -4,12 +4,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.your_app_name.domain.models.Sale // Assuming Sale data class exists
+import com.your_app_name.domain.models.Product // Assuming Product data class exists
 import com.your_app_name.domain.models.SaleItem // Assuming SaleItem data class exists
+import com.your_app_name.domain.repository.ProductRepository // Assuming ProductRepository interface exists
 import com.your_app_name.domain.repository.SaleRepository // Assuming SaleRepository interface exists
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,9 +25,14 @@ sealed class SavingState {
     data class Error(val message: String) : SavingState()
 }
 
+sealed class UiEvent {
+    data class ShowSnackbar(val message: String) : UiEvent()
+}
+
 @HiltViewModel
 class AddSaleViewModel @Inject constructor(
-    private val saleRepository: SaleRepository // Inject SaleRepository
+    private val saleRepository: SaleRepository, // Inject SaleRepository
+    private val productRepository: ProductRepository // Inject ProductRepository
 ) : ViewModel() {
 
     // Mutable states for the new sale data
@@ -34,6 +43,9 @@ class AddSaleViewModel @Inject constructor(
     // State for saving process
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
+
+    private val _eventChannel = Channel<UiEvent>(Channel.BUFFERED)
+    val events = _eventChannel.receiveAsFlow()
 
     // Functions to update the new sale data
     fun updateSaleDate(timestamp: Long) {
@@ -62,6 +74,20 @@ class AddSaleViewModel @Inject constructor(
     fun saveSale() {
         _savingState.value = SavingState.Saving
         viewModelScope.launch {
+            // Validate stock before saving
+            for (item in newSaleItems.value) {
+                val product = productRepository.getProductById(item.productId)
+                if (product == null || (product.stockQuantity - product.reservedStockQuantity) < item.quantity) {
+                    viewModelScope.launch {
+ _eventChannel.send(UiEvent.ShowSnackbar("Insufficient stock for product: ${product?.name ?: item.productId}"))
+                    }
+                    return@launch // Stop the saving process
+                }
+            }
+
+            // If all items have sufficient stock, proceed with saving
+
+
             try {
                 // Create the Sale object from the current state
                 val newSale = Sale(

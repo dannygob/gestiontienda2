@@ -1,14 +1,19 @@
 package com.your_app_name.presentation.viewmodels
 
+import androidx.compose.material3.SnackbarDuration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.your_app_name.domain.models.OrderItem
 import com.your_app_name.domain.models.OrderStatus
+import com.your_app_name.domain.repository.ProductRepository
 import com.your_app_name.domain.models.Order
+import com.your_app_name.presentation.ui.UiEvent
 import com.your_app_name.domain.repository.OrderRepository
 import com.your_app_name.util.SavingState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -16,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddOrderViewModel @Inject constructor(
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
+    private val productRepository: ProductRepository // Inject ProductRepository
 ) : ViewModel() {
 
     private val _newOrder = MutableStateFlow(
@@ -33,6 +39,9 @@ class AddOrderViewModel @Inject constructor(
 
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
+
+    private val _eventChannel = Channel<UiEvent>()
+    val events = _eventChannel.receiveAsFlow()
 
     fun updateOrderDate(timestamp: Long) {
         _newOrder.value = _newOrder.value.copy(orderDate = timestamp)
@@ -75,29 +84,38 @@ class AddOrderViewModel @Inject constructor(
     fun saveOrder() {
         viewModelScope.launch {
             _savingState.value = SavingState.Saving
-            try {
-                // Ensure order has necessary data before saving
-                val orderToSave = _newOrder.value
-                if (orderToSave.clientId != 0) { // Basic validation: client must be selected
-                    orderRepository.insertOrder(orderToSave)
-                    _savingState.value = SavingState.Success
-                    // Optionally reset _newOrder or navigate
-                } else {
-                    _savingState.value = SavingState.Error("Please select a client.")
+ try {
+ val orderToSave = _newOrder.value
+ val insufficientStockProduct = orderToSave.items.firstOrNull { item ->
+ viewModelScope.launch {
+ val product = productRepository.getProductById(item.productId)
+ return@launch product == null || product.stockQuantity - product.reservedStockQuantity < item.quantity
+                }.await() // Await the product check result for each item
+            }
+
+ if (insufficientStockProduct != null) {
+ // TODO: Get product name more gracefully if needed
+                    _eventChannel.send(UiEvent.ShowSnackbar("Insufficient stock for a product.")) // More generic message for simplicity
+ return@launch // Stop saving if stock is insufficient for any item
                 }
+            }
+
+ // If all items have sufficient stock, proceed to save and reserve
+                val orderId = orderRepository.insertOrder(orderToSave)
+ _savingState.value = SavingState.Success
+ // Optionally reset _newOrder or navigate
+
+ // Reserve stock for order items
+                orderToSave.items.forEach { item ->
+ val product = productRepository.getProductById(item.productId)
+ product?.let {
+                        productRepository.updateProduct(it.copy(reservedStockQuantity = it.reservedStockQuantity + item.quantity))
+                    }
+                    }
+
             } catch (e: Exception) {
                 _savingState.value = SavingState.Error("Failed to save order: ${e.localizedMessage}")
             }
         }
     }
 }
-
-// You will need to define a sealed class for SavingState
-/*
-sealed class SavingState {
-    object Idle : SavingState()
-    object Saving : SavingState()
-    data class Error(val message: String) : SavingState()
-    object Success : SavingState()
-}
-*/

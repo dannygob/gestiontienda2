@@ -136,7 +136,7 @@ fun ProductDetailScreen(
                             Text(text = "Purchase Price: ${product.purchasePrice}")
                             Text(text = "Sale Price: ${product.salePrice}")
                             Text(text = "Category: ${product.category}")
-                            Text(text = "Stock: ${product.stock}")
+                            Text(text = "Stock Available: ${product.availableStock}")
                             Text(text = "Provider ID: ${product.providerId}")
                         }
                     }

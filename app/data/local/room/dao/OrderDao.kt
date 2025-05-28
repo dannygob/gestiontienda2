@@ -6,8 +6,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Transaction
 import com.your_app_name.data.local.room.entities.OrderEntity
 import com.your_app_name.data.local.room.entities.OrderItemEntity
+import com.your_app_name.data.local.room.entities.OrderWithItems // Assuming OrderWithItems exists
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,11 +25,19 @@ interface OrderDao {
     suspend fun deleteOrder(order: OrderEntity)
 
     @Query("SELECT * FROM orders WHERE id = :orderId")
-    suspend fun getOrderById(orderId: String): OrderEntity?
+    suspend fun getOrderById(orderId: Long): OrderEntity?
 
     @Query("SELECT * FROM orders")
     fun getAllOrders(): Flow<List<OrderEntity>>
 
     @Query("DELETE FROM order_items WHERE orderId = :orderId")
-    suspend fun deleteOrderItemsForOrder(orderId: Int)
+    suspend fun deleteOrderItemsForOrder(orderId: Long)
+
+    @Transaction
+    @Query("SELECT * FROM orders")
+    fun getAllOrdersWithItems(): Flow<List<OrderWithItems>>
+
+    @Transaction
+    @Query("SELECT * FROM orders WHERE id = :orderId")
+    suspend fun getOrderWithItemsById(orderId: Long): OrderWithItems?
 }

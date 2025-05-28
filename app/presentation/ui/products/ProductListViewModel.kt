@@ -1,6 +1,6 @@
 package com.example.app.presentation.ui.products
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.app.domain.models.Product
 import com.example.app.domain.usecases.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +33,13 @@ class ProductListViewModel @Inject constructor(
             _errorMessage.value = null
             try {
                 getProductsUseCase().collect { productList ->
-                    _products.value = productList
+                    _products.value = productList.map { productEntity ->
+                        // Assuming Product domain model is same as ProductEntity for now
+                        // and ProductEntity has stockQuantity and reservedStockQuantity
+                        productEntity.copy(
+                            availableStock = productEntity.stockQuantity - productEntity.reservedStockQuantity
+                        )
+                    }
                 }
             } catch (e: Exception) {
                 _errorMessage.value = "Error loading products: ${e.message}"

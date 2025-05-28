@@ -14,7 +14,7 @@ interface ServiceExpenseDao {
     fun getAllServiceExpenses(): Flow<List<ServiceExpenseEntity>>
 
     @Query("SELECT * FROM serviceexpenses WHERE id = :expenseId")
-    suspend fun getServiceExpenseById(expenseId: Int): ServiceExpenseEntity?
+    suspend fun getServiceExpenseById(expenseId: Long): ServiceExpenseEntity?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertServiceExpense(expense: ServiceExpenseEntity): Long

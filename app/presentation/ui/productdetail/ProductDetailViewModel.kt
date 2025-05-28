@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +23,10 @@ class ProductDetailViewModel @Inject constructor(
 
     private val productId: Int? = savedStateHandle["productId"] // Assuming product ID is Int and passed as "productId"
 
-    private val _product = MutableStateFlow<Product?>(null)
+ private val _product =
+ productRepository.getProductById(productId ?: -1) // Assuming -1 is invalid ID
+ .map { it?.copy(availableStock = (it.stockQuantity ?: 0) - (it.reservedStockQuantity ?: 0)) }
+ .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val product: StateFlow<Product?> = _product.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
@@ -42,23 +46,9 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun loadProduct() {
-        productId?.let { id ->
-            viewModelScope.launch {
-                _isLoading.value = true
-                _errorMessage.value = null
-                try {
-                    // Assuming GetProductByIdUseCase returns a Flow of Product
-                    // If it returns a single Product, you'll need to adjust this
-                    getProductByIdUseCase(id).collect { fetchedProduct ->
-                        _product.value = fetchedProduct
-                        _isLoading.value = false
-                    }
-                } catch (e: Exception) {
-                    _errorMessage.value = "Error loading product: ${e.message}"
-                    _isLoading.value = false
-                }
-            }
-        } ?: run {
+        // Product is loaded via the stateIn operator in the property initialization
+ // We can potentially add a check here or use the product state in the UI to show loading/error
+ if (productId == null) {
             _errorMessage.value = "Product ID not provided."
         }
     }

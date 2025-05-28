@@ -3,8 +3,6 @@ package com.your_app_name.presentation.ui.orders
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Delete // Import Delete icon
 import androidx.compose.material.icons.filled.ArrowBack // Import ArrowBack for the back icon
@@ -15,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.your_app_name.domain.models.Order
+import com.your_app_name.domain.models.OrderStatus // Import OrderStatus
 import com.your_app_name.presentation.ui.components.DatePickerDialog // Import DatePickerDialog
 import java.text.SimpleDateFormat // Import SimpleDateFormat
 import java.util.* // Import Date and Locale
@@ -59,7 +58,7 @@ fun OrderDetailScreen(
                     if (orderState != null) {
                         IconButton(onClick = { viewModel.toggleEditMode() }) {
                             Icon(
-                                imageVector = if (editMode) Icons.Default.Save else Icons.Default.Edit,
+                                imageVector = if (editMode) Icons.Default.Save else Icons.Default.Edit, // Ensure Icons.Default.Edit is imported if used
                                 contentDescription = if (editMode) "Save Order" else "Edit Order"
                             )
                         }
@@ -110,11 +109,8 @@ fun OrderDetailScreen(
                                         Icon(Icons.Filled.CalendarToday, contentDescription = "Select Date")
                                     }
                                 },
-                        } else {
-                            Text("Order ID: ${order.id}")
-                            Text("Client ID: ${order.clientId}") // TODO: Display client name
-                            Text("Order Date: ${order.orderDate}") // TODO: Format date
-                            Text("Status: ${order.status}")
+                                modifier = Modifier
+                                    .fillMaxWidth()
                             Text("Total Amount: ${order.totalAmount}")
 
                                 modifier = Modifier
@@ -130,6 +126,24 @@ fun OrderDetailScreen(
                                 Text("- Product ID: ${item.productId}, Quantity: ${item.quantity}, Price: ${item.priceAtOrder}") // TODO: Display product name
                             }
                         }
+
+                        // Fulfill Order Button
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Button(
+                            onClick = {
+                                viewModel.fulfillOrder(order.id)
+                            },
+                            enabled = order.status != OrderStatus.FULFILLED.name, // Button is enabled if status is not FULFILLED
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        ) {
+                            Text("Mark as Fulfilled")
+                        }
+                    }
+                }
+                else -> {
+                    Text("Order not found")
+                }
+
                     }
                 }
                 else -> {

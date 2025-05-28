@@ -14,7 +14,7 @@ interface PurchaseDao {
 
     @Transaction
     @Query("SELECT * FROM purchases WHERE id = :purchaseId")
-    suspend fun getPurchaseWithItemsById(purchaseId: Int): PurchaseWithItems?
+    suspend fun getPurchaseWithItemsById(purchaseId: Long): PurchaseWithItems?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPurchase(purchase: PurchaseEntity): Long
@@ -29,5 +29,5 @@ interface PurchaseDao {
     suspend fun deletePurchase(purchase: PurchaseEntity)
 
     @Query("DELETE FROM purchase_items WHERE purchaseId = :purchaseId")
-    suspend fun deletePurchaseItemsForPurchase(purchaseId: Int)
+    suspend fun deletePurchaseItemsForPurchase(purchaseId: Long)
 }

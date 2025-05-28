@@ -98,6 +98,25 @@ class SaleRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getSalesByDateRange(startDate: Long?, endDate: Long?): Flow<List<Sale>> {
+        // Implement data source selection logic if needed
+        return saleDao.getSalesByDateRangeWithItems(startDate, endDate).map { salesWithItemsList ->
+            salesWithItemsList.map { it.toDomain(productDao) }
+        }
+    }
+
+    override suspend fun getTotalSalesAmount(startDate: Long?, endDate: Long?): Double {
+        // Need to modify SaleDao to accept startDate and endDate parameters
+        // and filter the query accordingly.
+        // Example SQL modification in SaleDao:
+        // @Query("SELECT SUM(total) FROM sales WHERE (:startDate IS NULL OR date >= :startDate) AND (:endDate IS NULL OR date <= :endDate)")
+        // suspend fun getTotalSalesAmount(startDate: Long?, endDate: Long?): Double?
+        return withContext(ioDispatcher) {
+            // Assuming the SaleDao method now accepts dates
+            saleDao.getTotalSalesAmount(startDate, endDate)
+        }
+    }
+
     // region Mappers
     private fun Sale.toSaleEntity(): com.your_app_name.data.local.room.entities.SaleEntity {
         return com.your_app_name.data.local.room.entities.SaleEntity(
@@ -130,7 +149,7 @@ class SaleRepositoryImpl @Inject constructor(
             saleId = saleId,
             productId = productId,
             quantity = quantity,
-            unitPrice = unitPrice
+            priceAtSale = unitPrice // Assuming unitPrice maps to priceAtSale
         )
     }
 
