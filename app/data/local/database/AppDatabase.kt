@@ -24,8 +24,6 @@ import com.your_app_name.data.local.entities.PurchaseEntity
 import com.your_app_name.data.local.entities.ServiceExpenseEntity
 
 import com.your_app_name.data.local.database.migrations.MIGRATION_6_7 // Assuming the new version is 7 and old is 6
-
-@Database(entities = [ProductEntity::class, ClientEntity::class, SaleEntity::class, SaleDetailEntity::class, PurchaseEntity::class, PurchaseDetailEntity::class, ProviderEntity::class, OrderEntity::class, ServiceExpenseEntity::class], version = 6, exportSchema = false)
 @Database(entities = [ProductEntity::class, ClientEntity::class, SaleEntity::class, SaleDetailEntity::class, PurchaseEntity::class, PurchaseDetailEntity::class, ProviderEntity::class, OrderEntity::class, ServiceExpenseEntity::class], version = 7, exportSchema = false) // Incremented version to 7
 
     companion object {
