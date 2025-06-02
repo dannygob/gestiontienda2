@@ -1,7 +1,7 @@
-package com.example.myapp.data.local.repository
+package com.example.gestiontienda2.data.repository
 
-import com.example.myapp.data.local.dao.StockAdjustmentDao
-import com.example.myapp.data.local.entities.StockAdjustmentEntity
+import com.example.gestiontienda2.data.local.dao.StockAdjustmentDao
+import com.example.gestiontienda2.data.local.entities.StockAdjustmentEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
