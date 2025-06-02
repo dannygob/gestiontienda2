@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.ksp) // ✅ Migrado a KSP
-    id("dagger.hilt.android.plugin")
+    //alias(libs.plugins.kotlin.ksp) // ✅ Migrado a KSP
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -32,7 +33,8 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler.ksp) // ✅ KSP en lugar de kapt
-    implementation(libs.hilt.android)
+    implementation("com.google.dagger:hilt-android:2.56.2")
+    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
 
     // Jetpack Compose
     implementation(libs.androidx.ui)
@@ -58,5 +60,9 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+
+
+
 
 }
