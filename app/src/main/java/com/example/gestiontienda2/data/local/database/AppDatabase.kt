@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.local.database
+package com.example.gestiontienda2.data.local.database
 
 
 import android.content.Context

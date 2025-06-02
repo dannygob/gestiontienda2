@@ -64,6 +64,17 @@ dependencies {
     implementation(libs.room.ktx)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
 
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    implementation(libs.kotlin.stdlib)
+
+    implementation(libs.androidx.lifecycle.viewmodel.ktx.v270)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
 
 
 
