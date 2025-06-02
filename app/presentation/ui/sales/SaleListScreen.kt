@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.your_app_name.domain.models.Sale
+import com.your_app_name.presentation.viewmodels.SaleListState // Import SaleListState
 
 @Composable
 fun SaleListScreen(
@@ -46,13 +47,13 @@ fun SaleListScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
-                salesState.sales.isNotEmpty() -> {
+                salesState.salesWithClients.isNotEmpty() -> { // Use salesWithClients
                     LazyColumn(
                         contentPadding = PaddingValues(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(salesState.sales) { sale ->
-                            SaleListItem(sale = sale, onSaleClick = onSaleClick)
+                        items(salesState.salesWithClients) { saleWithClient -> // Change lambda parameter
+                            SaleListItem(sale = saleWithClient.sale, onSaleClick = onSaleClick, client = saleWithClient.client) // Pass sale and client
                         }
                     }
                 }

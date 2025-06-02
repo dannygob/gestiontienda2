@@ -25,6 +25,14 @@ class ProductRepositoryImpl @Inject constructor(
     private val openFoodFactsApiService: OpenFoodFactsApiService // Assume this is implemented
 ) : ProductRepository {
 
+    override suspend fun updateProductStockQuantity(productId: Long, newStock: Int) {
+        productDao.updateStockQuantity(productId, newStock)
+    }
+
+    override suspend fun updateProductReservedStockQuantity(productId: Long, newReservedStock: Int) {
+        productDao.updateReservedStockQuantity(productId, newReservedStock)
+    }
+
     override fun getAllProducts(): Flow<List<Product>> {
         // Try to fetch from Firebase first
         kotlinx.coroutines.CoroutineScope(Dispatchers.IO).launch {

@@ -6,6 +6,12 @@ import com.your_app_name.data.local.room.entities.ProductEntity // Assuming Prod
 
 @Dao
 interface ProductDao {
+    @Query("UPDATE products SET stockQuantity = :newStock WHERE id = :productId")
+    suspend fun updateStockQuantity(productId: Long, newStock: Int)
+
+    @Query("UPDATE products SET reservedStockQuantity = :newReservedStock WHERE id = :productId")
+    suspend fun updateReservedStockQuantity(productId: Long, newReservedStock: Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: ProductEntity)
 

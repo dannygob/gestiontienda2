@@ -9,10 +9,13 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.RemoveCircle // Use RemoveCircle for removing items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,14 +23,18 @@ import com.your_app_name.domain.models.Sale
 import com.your_app_name.domain.models.SaleItem
 
 @OptIn(ExperimentalMaterial3Api::class)
+import com.your_app_name.presentation.viewmodels.SaleDetailViewModel // Import SaleDetailViewModel
+import com.your_app_name.presentation.viewmodels.DetailedSaleState // Import DetailedSaleState
+import com.your_app_name.presentation.viewmodels.SaleItemWithProduct // Import SaleItemWithProduct
+import java.text.SimpleDateFormat
+import java.util.Date
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SaleDetailScreen(
     viewModel: SaleDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit
 ) {
-    val saleState by viewModel.sale.collectAsState()
-    val loading by viewModel.loading.collectAsState()
-    val error by viewModel.error.collectAsState()
     val editMode by viewModel.editMode.collectAsState()
     val savingState by viewModel.savingState.collectAsState() // Assuming savingState is a Flow in ViewModel
 
@@ -35,6 +42,13 @@ fun SaleDetailScreen(
     var showDeleteConfirmation by remember { mutableStateOf(false) }
 
     Scaffold(
+    val detailedSaleState by viewModel.detailedSaleState.collectAsState()
+    val savingState by viewModel.savingState.collectAsState()
+
+    val sale = detailedSaleState.sale
+    val client = detailedSaleState.client
+    val itemsWithProducts = detailedSaleState.itemsWithProducts
+    val loading = detailedSaleState.isLoading
         topBar = {
             TopAppBar(
                 title = { Text("Sale Details") },
@@ -53,7 +67,7 @@ fun SaleDetailScreen(
                             Icon(Icons.Filled.Save, contentDescription = "Save Sale")
                         }
                     }
-                    if (!editMode && saleState != null) {
+                    if (!editMode && sale != null) {
                         IconButton(onClick = { showDeleteConfirmation = true }) {
                             Icon(Icons.Default.Delete, contentDescription = "Delete Sale")
                         }
@@ -72,14 +86,13 @@ fun SaleDetailScreen(
         ) {
             when {
                 loading -> CircularProgressIndicator()
-                error != null -> Text("Error: $error", color = MaterialTheme.colorScheme.error)
-                saleState == null -> Text("Sale not found")
+                detailedSaleState.error != null -> Text("Error: ${detailedSaleState.error}", color = MaterialTheme.colorScheme.error)
+                sale == null -> Text("Sale not found")
                 else -> {
-                    val sale = saleState!!
                     if (editMode) {
                         // Edit Mode UI
                         Column(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxSize().padding(bottom = 60.dp), // Add padding for FAB
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text("Edit Sale", style = MaterialTheme.typography.headlineSmall)

@@ -70,8 +70,7 @@ fun InventoryListScreen(
                                     supportingContent = { Text("Stock: ${product.stockQuantity}") },
                                     modifier = Modifier
                                         .clickable {
-                                            // TODO: Navigate to Inventory Detail Screen
-                                            // navController.navigate("${AppRoutes.INVENTORY_DETAIL}/${product.id}")
+                                            navController.navigate("product_detail/${product.id}")
                                         }
                                         .padding(horizontal = 16.dp, vertical = 4.dp)
                                 )

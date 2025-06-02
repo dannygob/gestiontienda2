@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface OrderDao {
 
+    @Query("UPDATE orders SET status = :newStatus WHERE id = :orderId")
+    suspend fun updateOrderStatus(orderId: Long, newStatus: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrder(order: OrderEntity)
 

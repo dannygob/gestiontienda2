@@ -87,6 +87,20 @@ class AddSaleViewModel @Inject constructor(
 
             // If all items have sufficient stock, proceed with saving
 
+            // Update product stock quantities
+            try {
+                for (item in newSaleItems.value) {
+                    val product = productRepository.getProductById(item.productId)
+                    val newStock = (product?.stockQuantity ?: 0) - item.quantity
+                    // Assuming productRepository has updateProductStockQuantity method
+                    productRepository.updateProductStockQuantity(item.productId, newStock)
+                }
+            } catch (e: Exception) {
+                viewModelScope.launch {
+                    _eventChannel.send(UiEvent.ShowSnackbar("Failed to update product stock: ${e.localizedMessage ?: "Unknown error"}"))
+                }
+                return@launch // Stop the saving process
+            }
 
             try {
                 // Create the Sale object from the current state

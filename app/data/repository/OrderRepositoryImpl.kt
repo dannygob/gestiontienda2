@@ -1,9 +1,9 @@
 package com.your_app_name.data.repository
 
 import com.your_app_name.data.local.room.dao.ClientDao
-import com.your_app_name.data.local.dao.OrderDao
+import com.your_app_name.data.local.room.dao.OrderDao
 import com.your_app_name.data.local.room.dao.ProductDao
-import com.your_app_name.data.local.entities.OrderEntity
+import com.your_app_name.data.local.room.entities.OrderEntity
 import com.your_app_name.data.local.room.entities.OrderItemEntity
 import com.your_app_name.data.remote.firebase.datasource.OrderFirebaseDataSource
 import com.your_app_name.data.remote.firebase.models.OrderFirebase
@@ -63,6 +63,12 @@ class OrderRepositoryImpl @Inject constructor(
             }.collect { emit(it) }
         }
     }
+
+    override suspend fun updateOrderStatus(orderId: Long, newStatus: String) = withContext(ioDispatcher) {
+        orderDao.updateOrderStatus(orderId, newStatus) // Update status in Room
+        // TODO: Consider updating status in Firebase as well if needed for synchronization
+    }
+
 
     override suspend fun getOrderById(orderId: Int): Order? = withContext(ioDispatcher) {
         // Try Firebase first

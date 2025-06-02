@@ -123,7 +123,7 @@ class OrderDetailViewModel @Inject constructor(
                             val updatedReservedStock = it.reservedStockQuantity + change // Adjust reserved stock by the change amount
                             // Ensure reserved stock doesn't go below zero
                              val finalReservedStock = maxOf(0, updatedReservedStock)
-                            productRepository.updateProduct(it.copy(reservedStockQuantity = finalReservedStock))
+                            productRepository.updateProductReservedStockQuantity(it.id, finalReservedStock)
                         }
                     }
 
@@ -152,7 +152,8 @@ class OrderDetailViewModel @Inject constructor(
                               val updatedReservedStock = it.reservedStockQuantity - item.quantity
                                // Ensure reserved stock doesn't go below zero
                               val finalReservedStock = maxOf(0, updatedReservedStock)
-                              productRepository.updateProduct(it.copy(reservedStockQuantity = finalReservedStock))
+                              productRepository.updateProductStockQuantity(it.id, it.stockQuantity + item.quantity) // Assuming return to total stock on delete
+                              productRepository.updateProductReservedStockQuantity(it.id, finalReservedStock)
                          }
                     }
                     orderRepository.deleteOrder(orderToDelete)
@@ -181,12 +182,9 @@ class OrderDetailViewModel @Inject constructor(
                             // Ensure reserved stock doesn't go below zero
                             val finalReservedStock = maxOf(0, updatedReservedStock)
 
-                            productRepository.updateProduct(
-                                it.copy(
-                                    stockQuantity = updatedTotalStock,
-                                    reservedStockQuantity = finalReservedStock
-                                )
-                            )
+                            // Use specific repository methods to update stock
+                            productRepository.updateProductStockQuantity(it.id, updatedTotalStock)
+                            productRepository.updateProductReservedStockQuantity(it.id, finalReservedStock)
                         }
                     }
 
@@ -195,7 +193,8 @@ class OrderDetailViewModel @Inject constructor(
                     orderRepository.updateOrder(fulfilledOrder)
 
                     _savingState.value = SavingState.Success // Or a separate state for fulfillment success
-                     _order.value = fulfilledOrder // Update local state
+                    val fulfilledOrder = orderToFulfill.copy(status = "FULFILLED")
+                    _order.value = fulfilledOrder // Update local state
                      // Refresh detailed order to show updated status and stock
                      loadOrder(fulfilledOrder.id)
 
@@ -210,6 +209,41 @@ class OrderDetailViewModel @Inject constructor(
         }
     }
 
+    fun cancelOrder() {
+        viewModelScope.launch {
+            _savingState.value = SavingState.Saving
+            try {
+                val orderToCancel = _order.value
+                if (orderToCancel != null && orderToCancel.status != "CANCELLED") {
+                    // Return reserved stock to total stock
+                    orderToCancel.items.forEach { item ->
+                        val product = productRepository.getProductById(item.productId)
+                        product?.let {
+                            val updatedTotalStock = it.stockQuantity + item.quantity // Return to total stock
+                            val updatedReservedStock = it.reservedStockQuantity - item.quantity // Decrease reserved stock
+                            // Ensure reserved stock doesn't go below zero
+                            val finalReservedStock = maxOf(0, updatedReservedStock)
+
+                            productRepository.updateProductStockQuantity(it.id, updatedTotalStock)
+                            productRepository.updateProductReservedStockQuantity(it.id, finalReservedStock)
+                        }
+                    }
+
+                    orderRepository.updateOrderStatus(orderToCancel.id, "CANCELLED") // Update order status
+                    _savingState.value = SavingState.Success // Or a separate state for cancellation success
+                    val cancelledOrder = orderToCancel.copy(status = "CANCELLED")
+                    _order.value = cancelledOrder // Update local state
+                    loadOrder(cancelledOrder.id) // Refresh detailed order
+                } else if (orderToCancel?.status == "CANCELLED") {
+                    _savingState.value = SavingState.Error("Order is already cancelled.")
+                } else {
+                    _savingState.value = SavingState.Error("Order data is inconsistent for cancellation")
+                }
+            } catch (e: Exception) {
+                _savingState.value = SavingState.Error(e.localizedMessage ?: "An error occurred")
+            }
+        }
+    }
 
     enum class SavingState {
         Idle, Saving, Success, Error

@@ -1,3 +1,4 @@
+git add .
 package com.your_app_name.data.repository
 
 import com.your_app_name.data.local.dao.ClientDao
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.util.UUID
 import kotlin.coroutines.CoroutineContext
 import javax.inject.Inject
 
@@ -48,8 +50,12 @@ class SaleRepositoryImpl @Inject constructor(
 
     override suspend fun addSale(sale: Sale): Long {
         return withContext(ioDispatcher) {
-            val saleId = saleDao.insertSale(sale.toSaleEntity())
-            val saleItemEntities = sale.items.map { it.toSaleItemEntity(saleId.toInt()) }
+            // Generate a unique ID for the new sale before inserting into Room
+            // This ensures consistency if Firebase generates its own ID later
+            val newSaleId = generateUniqueId() // Implement a method to generate a unique ID (e.g., UUID)
+
+            val saleId = saleDao.insertSale(sale.copy(id = newSaleId).toSaleEntity())
+            val saleItemEntities = sale.items.map { it.copy(saleId = newSaleId).toSaleItemEntity() }
             saleDao.insertSaleItems(saleItemEntities)
 
             if (isOnline()) {
@@ -72,7 +78,7 @@ class SaleRepositoryImpl @Inject constructor(
             // For simplicity, let's assume delete and insert for now.
             saleDao.deleteSaleItemsForSale(sale.id)
             val saleItemEntities = sale.items.map { it.toSaleItemEntity(sale.id) }
-            saleDao.insertSaleItems(saleItemEntities)
+            saleDao.insertSaleItems(saleItemEntities.map { it.copy(id = 0) }) // Assuming id is auto-generated on insert
 
             try {
                 if (isOnline()) {
