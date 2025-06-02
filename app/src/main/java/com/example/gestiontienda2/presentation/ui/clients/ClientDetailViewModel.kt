@@ -3,7 +3,7 @@ package com.gestiontienda2.presentation.ui.clients
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Client
 import com.gestiontienda2.domain.usecases.GetClientByIdUseCase
 import com.gestiontienda2.domain.usecases.UpdateClientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

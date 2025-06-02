@@ -1,6 +1,11 @@
-package com.gestiontienda2.domain.models
+package com.example.gestiontienda2.domain.models
+import android.annotation.SuppressLint
+import com.google.android.gms.analytics.ecommerce.Product
 
-data class PurchaseItem(
+
+
+
+data class PurchaseItem @SuppressLint("VisibleForTests") constructor(
     val id: Int = 0,
     val purchaseId: Int,
     val productId: Int,

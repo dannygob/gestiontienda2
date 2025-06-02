@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gestiontienda2.domain.models.SaleItem
+import com.example.gestiontienda2.domain.models.SaleItem
 import com.gestiontienda2.presentation.viewmodels.SaleDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

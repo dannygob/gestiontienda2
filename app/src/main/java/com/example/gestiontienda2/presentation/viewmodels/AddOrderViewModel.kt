@@ -2,8 +2,8 @@ package com.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gestiontienda2.domain.models.Order
-import com.gestiontienda2.domain.models.OrderItem
+import com.example.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.models.OrderItem
 import com.gestiontienda2.domain.models.OrderStatus
 import com.gestiontienda2.domain.repository.OrderRepository
 import com.gestiontienda2.domain.repository.ProductRepository

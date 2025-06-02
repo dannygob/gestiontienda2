@@ -3,7 +3,7 @@ package app.presentation.ui.orders
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.models.Order
 import com.gestiontienda2.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

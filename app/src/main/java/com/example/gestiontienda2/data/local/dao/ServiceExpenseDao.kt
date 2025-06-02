@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.local.room.dao
+package com.gestiontienda2.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

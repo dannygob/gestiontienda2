@@ -1,4 +1,4 @@
-package com.yourcompany.yourappname.domain.models
+package com.example.gestiontienda2.domain.models
 
 data class Order(
     val id: Int = 0,

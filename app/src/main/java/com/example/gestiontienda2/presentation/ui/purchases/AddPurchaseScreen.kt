@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.models.Provider
-import com.gestiontienda2.domain.models.PurchaseItem
+import com.example.gestiontienda2.domain.models.PurchaseItem
 import com.gestiontienda2.presentation.ui.components.DatePickerDialog
 import com.gestiontienda2.presentation.viewmodels.AddPurchaseViewModel
 import com.gestiontienda2.util.SavingState

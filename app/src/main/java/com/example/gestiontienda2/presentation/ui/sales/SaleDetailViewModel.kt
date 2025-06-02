@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.models.SaleItem
+import com.example.gestiontienda2.domain.models.SaleItem
 import com.gestiontienda2.domain.usecases.DeleteSaleUseCase
 import com.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.gestiontienda2.domain.usecases.GetProductsUseCase

@@ -1,4 +1,4 @@
-package com.yourstoreapp.domain.models
+package com.example.gestiontienda2.domain.models
 
 data class PurchaseDetail(
     val id: Int = 0,

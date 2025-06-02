@@ -2,10 +2,10 @@ package com.gestiontienda2.presentation.ui.sales
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Client
 import com.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.models.SaleItem
+import com.example.gestiontienda2.domain.models.SaleItem
 import com.gestiontienda2.domain.usecases.AddSaleUseCase
 import com.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.gestiontienda2.domain.usecases.GetProductsUseCase

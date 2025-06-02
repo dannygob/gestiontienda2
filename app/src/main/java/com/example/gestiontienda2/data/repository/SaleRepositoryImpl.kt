@@ -3,7 +3,7 @@ import com.gestiontienda2.data.local.dao.ProductDao
 import com.gestiontienda2.data.local.dao.SaleDao
 import com.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
 import com.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.models.SaleItem
+import com.example.gestiontienda2.domain.models.SaleItem
 import com.gestiontienda2.domain.repository.SaleRepository
 import com.gestiontienda2.domain.repository.isOnline
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +15,6 @@ import kotlin.coroutines.CoroutineContext
 git add .
 package com.your_app_name.data .repository
 
-import com.gestiontienda2.data.local.dao.ClientDao
 import com.gestiontienda2.data.local.dao.SaleDao
 import com.gestiontienda2.domain.models.Sale
 import com.gestiontienda2.domain.repository.isOnline

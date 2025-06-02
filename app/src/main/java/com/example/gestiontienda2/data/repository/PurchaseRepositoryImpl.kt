@@ -3,9 +3,9 @@ package com.gestiontienda2.data.repository
 import com.gestiontienda2.data.local.dao.PurchaseDao
 import com.gestiontienda2.data.local.entities.PurchaseDetailEntity
 import com.gestiontienda2.data.local.entities.PurchaseEntity
-import com.gestiontienda2.domain.model.Purchase
-import com.gestiontienda2.domain.model.PurchaseDetail
-import com.gestiontienda2.domain.model.PurchaseWithItems
+import com.example.gestiontienda2.domain.models.Purchase
+import com.example.gestiontienda2.domain.models.PurchaseDetail
+import com.example.gestiontienda2.domain.models.PurchaseItem
 import com.gestiontienda2.domain.repository.PurchaseRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -51,8 +51,8 @@ class PurchaseRepositoryImpl @Inject constructor(
     override fun getPurchasesByDateRange(
         startDate: Long?,
         endDate: Long?
-    ): Flow<List<PurchaseWithItems>> {
-        return purchaseDao.getPurchasesWithItemsByDateRange(startDate, endDate).map { entities ->
+    ): Flow<List<PurchaseItem>> {
+        return purchaseDao.getPurchasesItemByDateRange(startDate, endDate).map { entities ->
             entities.map { it.toDomain() }
         }
     }

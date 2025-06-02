@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.models.SaleItem
+import com.example.gestiontienda2.domain.models.SaleItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao

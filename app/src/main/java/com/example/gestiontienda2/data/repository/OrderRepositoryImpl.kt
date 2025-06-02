@@ -8,9 +8,9 @@ import com.gestiontienda2.data.local.room.entities.OrderItemEntity
 import com.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource
 import com.gestiontienda2.data.remote.firebase.models.OrderFirebase
 import com.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
-import com.gestiontienda2.domain.models.Client
-import com.gestiontienda2.domain.models.Order
-import com.gestiontienda2.domain.models.OrderItem
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.models.OrderItem
 import com.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
