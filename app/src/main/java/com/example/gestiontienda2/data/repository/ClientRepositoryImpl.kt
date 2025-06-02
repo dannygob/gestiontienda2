@@ -7,19 +7,25 @@ import com.gestiontienda2.data.remote.firebase.toDomain
 import com.gestiontienda2.data.remote.firebase.toFirebase
 import com.gestiontienda2.domain.models.Client
 import com.gestiontienda2.domain.repository.ClientRepository
+import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
+class ClientFirebaseDataSource {
+
+}
 
 class ClientRepositoryImpl @Inject constructor(
     private val clientDao: ClientDao,
     private val clientFirebaseDataSource: ClientFirebaseDataSource
 ) : ClientRepository {
 
-    override fun getAllClients(): Flow<List<Client>> {
+    override fun getAllClients(): Flow<List<Api.Client>> {
         return flow {
             // Try to fetch from Firebase first
             try {
