@@ -2,4 +2,7 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
+//    id 'com.android.application'
+//    id 'org.jetbrains.kotlin.android'
+//    id 'kotlin-kapt' // <-- este es importante
 }

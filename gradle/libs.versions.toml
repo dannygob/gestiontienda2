@@ -1,7 +1,10 @@
 [versions]
+lifecycleRuntimeKtx = "2.9.0"
+material3 = "1.3.2"
 room = "2.6.0"
 agp = "8.9.2"
 kotlin = "2.0.21"
+ksp = "1.0.21"               # <-- Versión de KSP compatible con Kotlin 2.0.21
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -10,9 +13,14 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
+ui = "1.8.2"
 
 [libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -21,8 +29,12 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
+# Room con KSP (usamos room-compiler con KSP)
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }  # <-- plugin KSP
