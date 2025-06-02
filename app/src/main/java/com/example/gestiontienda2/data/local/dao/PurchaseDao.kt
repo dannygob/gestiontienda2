@@ -1,9 +1,9 @@
-package com.your_app_name.data.local.room.dao
+package com.gestiontienda2.data.local.room.dao
 
 import androidx.room.*
-import com.your_app_name.data.local.room.entities.PurchaseEntity
-import com.your_app_name.data.local.room.entities.PurchaseItemEntity
-import com.your_app_name.data.local.room.entities.PurchaseWithItems
+import com.gestiontienda2.data.local.room.entities.PurchaseEntity
+import com.gestiontienda2.data.local.room.entities.PurchaseItemEntity
+import com.gestiontienda2.data.local.room.entities.PurchaseWithItems
 import kotlinx.coroutines.flow.Flow
 
 interface PurchaseDao {

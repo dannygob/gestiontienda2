@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.clients
+package com.gestiontienda2.presentation.ui.clients
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*

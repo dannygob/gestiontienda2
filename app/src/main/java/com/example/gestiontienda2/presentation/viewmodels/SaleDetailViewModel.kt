@@ -1,15 +1,15 @@
-package com.your_app_name.presentation.viewmodels
+package com.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Product
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.domain.repository.ClientRepository
-import com.your_app_name.domain.repository.ProductRepository
-import com.your_app_name.domain.repository.SaleRepository
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.models.Product
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.models.SaleItem
+import com.gestiontienda2.domain.repository.ClientRepository
+import com.gestiontienda2.domain.repository.ProductRepository
+import com.gestiontienda2.domain.repository.SaleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

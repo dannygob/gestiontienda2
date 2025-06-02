@@ -1,9 +1,9 @@
-package com.your_app_name.presentation.screens.inventory.viewmodel
+package com.gestiontienda2.presentation.screens.inventory.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.data.local.dao.ProductDao
-import com.your_app_name.data.local.entities.ProductEntity
+import com.gestiontienda2.data.local.dao.ProductDao
+import com.gestiontienda2.data.local.entities.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

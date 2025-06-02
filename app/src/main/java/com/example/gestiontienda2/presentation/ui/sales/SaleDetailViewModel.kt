@@ -1,15 +1,15 @@
-package com.your_app_name.presentation.ui.sales
+package com.gestiontienda2.presentation.ui.sales
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.domain.usecases.DeleteSaleUseCase
-import com.your_app_name.domain.usecases.GetClientsUseCase
-import com.your_app_name.domain.usecases.GetProductsUseCase
-import com.your_app_name.domain.usecases.GetSaleByIdUseCase
-import com.your_app_name.domain.usecases.UpdateSaleUseCase
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.models.SaleItem
+import com.gestiontienda2.domain.usecases.DeleteSaleUseCase
+import com.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.gestiontienda2.domain.usecases.GetProductsUseCase
+import com.gestiontienda2.domain.usecases.GetSaleByIdUseCase
+import com.gestiontienda2.domain.usecases.UpdateSaleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,4 +1,4 @@
-package com.your_app_name.data.remote.api
+package com.gestiontienda2.data.remote.api
 
 import retrofit2.Response
 import retrofit2.http.GET

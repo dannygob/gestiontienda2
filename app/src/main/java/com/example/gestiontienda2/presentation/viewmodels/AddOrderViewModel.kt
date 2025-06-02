@@ -1,12 +1,12 @@
-package com.your_app_name.presentation.viewmodels
+package com.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Order
-import com.your_app_name.domain.models.OrderItem
-import com.your_app_name.domain.models.OrderStatus
-import com.your_app_name.domain.repository.OrderRepository
-import com.your_app_name.domain.repository.ProductRepository
+import com.gestiontienda2.domain.models.Order
+import com.gestiontienda2.domain.models.OrderItem
+import com.gestiontienda2.domain.models.OrderStatus
+import com.gestiontienda2.domain.repository.OrderRepository
+import com.gestiontienda2.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

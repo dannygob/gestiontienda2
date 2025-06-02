@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.dashboard
+package com.gestiontienda2.presentation.ui.dashboard
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*

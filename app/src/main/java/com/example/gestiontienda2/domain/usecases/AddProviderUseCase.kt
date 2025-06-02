@@ -1,7 +1,7 @@
-package com.your_app_name.domain.usecases
+package com.gestiontienda2.domain.usecases
 
-import com.your_app_name.domain.models.Provider
-import com.your_app_name.domain.repository.ProviderRepository
+import com.gestiontienda2.domain.models.Provider
+import com.gestiontienda2.domain.repository.ProviderRepository
 import javax.inject.Inject
 
 class AddProviderUseCase @Inject constructor(

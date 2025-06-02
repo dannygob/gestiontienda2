@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.components
+package com.gestiontienda2.presentation.ui.components
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
@@ -57,4 +57,3 @@ fun DatePickerDialog(
     }
 }
 
-import androidx.compose.runtime.derivedStateOf

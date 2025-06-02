@@ -1,7 +1,7 @@
-package com.your_app_name.data.remote.firebase.datasource.impl
+package com.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.your_app_name.data.remote.firebase.models.OrderFirebase
+import com.gestiontienda2.data.remote.firebase.models.OrderFirebase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class OrderFirebaseDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore
-) : com.your_app_name.data.remote.firebase.datasource.OrderFirebaseDataSource {
+) : com.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource {
 
     private val ordersCollection = firestore.collection("orders")
 

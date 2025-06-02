@@ -11,34 +11,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.OrderStatus
-import com.your_app_name.presentation.ui.components.DatePickerDialog
-import com.your_app_name.presentation.viewmodels.OrderDetailViewModel.SavingState
+import com.gestiontienda2.domain.models.OrderStatus
+import com.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.gestiontienda2.presentation.viewmodels.OrderDetailViewModel.SavingState
 import java.text.SimpleDateFormat
 import java.util.*
 
 ppackage com.your_app_name.presentation.ui.orders
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Delete // Import Delete icon
 import androidx.compose.material.icons.filled.ArrowBack // Import ArrowBack for the back icon
 import androidx.compose.material.icons.filled.CalendarToday // Import CalendarToday
 import androidx.compose.material.icons.filled.Edit // Import Edit icon
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.Order
-import com.your_app_name.presentation.viewmodels.OrderDetailViewModel.DetailedOrder
-import com.your_app_name.domain.models.OrderStatus // Import OrderStatus
-import com.your_app_name.presentation.ui.components.DatePickerDialog // Import DatePickerDialog
-import java.text.SimpleDateFormat // Import SimpleDateFormat
-import java.util.* // Import Date and Locale
-import com.your_app_name.presentation.viewmodels.OrderDetailViewModel.SavingState // Import SavingState
+import com.gestiontienda2.domain.models.OrderStatus // Import OrderStatus
+import com.gestiontienda2.presentation.viewmodels.OrderDetailViewModel.SavingState // Import SavingState
 
 @Composable
 fun OrderDetailScreen(

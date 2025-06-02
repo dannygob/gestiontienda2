@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.financialreports // Replace with your actual package name
+package com.gestiontienda2.presentation.ui.financialreports // Replace with your actual package name
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 // import androidx.compose.ui.tooling.preview.Preview // Keep commented out or remove if not needed
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.Sale // Replace with your actual Sale model
-import com.your_app_name.presentation.viewmodels.SaleReportViewModel // Replace with your actual ViewModel
+import com.gestiontienda2.domain.models.Sale // Replace with your actual Sale model
+import com.gestiontienda2.presentation.viewmodels.SaleReportViewModel // Replace with your actual ViewModel
 
 @Composable
 fun SaleReportScreen(

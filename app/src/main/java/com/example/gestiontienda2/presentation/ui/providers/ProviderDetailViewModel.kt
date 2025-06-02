@@ -1,11 +1,11 @@
-package com.your_app_name.presentation.ui.providers
+package com.gestiontienda2.presentation.ui.providers
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Provider
-import com.your_app_name.domain.usecases.GetProviderByIdUseCase
-import com.your_app_name.domain.usecases.UpdateProviderUseCase
+import com.gestiontienda2.domain.models.Provider
+import com.gestiontienda2.domain.usecases.GetProviderByIdUseCase
+import com.gestiontienda2.domain.usecases.UpdateProviderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

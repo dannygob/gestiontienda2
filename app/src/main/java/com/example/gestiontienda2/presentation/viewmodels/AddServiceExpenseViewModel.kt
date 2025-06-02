@@ -1,9 +1,9 @@
-package com.your_app_name.presentation.viewmodels
+package com.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.ServiceExpense
-import com.your_app_name.domain.repository.ServiceExpenseRepository
+import com.gestiontienda2.domain.models.ServiceExpense
+import com.gestiontienda2.domain.repository.ServiceExpenseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

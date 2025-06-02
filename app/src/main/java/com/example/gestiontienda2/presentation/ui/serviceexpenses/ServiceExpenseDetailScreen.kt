@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.serviceexpenses
+package com.gestiontienda2.presentation.ui.serviceexpenses
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions

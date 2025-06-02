@@ -1,13 +1,13 @@
-package com.your_app_name.data.repository
+package com.gestiontienda2.data.repository
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.your_app_name.data.local.dao.ProviderDao
-import com.your_app_name.data.local.entities.ProviderEntity
-import com.your_app_name.data.remote.firebase.datasource.ProviderFirebaseDataSource
-import com.your_app_name.data.remote.firebase.models.ProviderFirebase
-import com.your_app_name.domain.models.Provider
-import com.your_app_name.domain.repository.ProviderRepository
+import com.gestiontienda2.data.local.dao.ProviderDao
+import com.gestiontienda2.data.local.entities.ProviderEntity
+import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
+import com.gestiontienda2.data.remote.firebase.models.ProviderFirebase
+import com.gestiontienda2.domain.models.Provider
+import com.gestiontienda2.domain.repository.ProviderRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

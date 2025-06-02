@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.providers
+package com.gestiontienda2.presentation.ui.providers
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions

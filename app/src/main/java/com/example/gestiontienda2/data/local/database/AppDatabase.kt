@@ -1,25 +1,25 @@
-package com.your_app_name.data.local.database
+package com.gestiontienda2.data.local.database
 
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
-import com.your_app_name.data.local.dao.ClientDao
-import com.your_app_name.data.local.dao.OrderDao
-import com.your_app_name.data.local.dao.ProviderDao
-import com.your_app_name.data.local.dao.PurchaseDao
-import com.your_app_name.data.local.dao.SaleDao
-import com.your_app_name.data.local.dao.ServiceExpenseDao
-import com.your_app_name.data.local.database.migrations.MIGRATION_6_7
-import com.your_app_name.data.local.entities.ClientEntity
-import com.your_app_name.data.local.entities.OrderEntity
-import com.your_app_name.data.local.entities.ProductEntity
-import com.your_app_name.data.local.entities.ProviderEntity
-import com.your_app_name.data.local.entities.PurchaseDetailEntity
-import com.your_app_name.data.local.entities.PurchaseEntity
-import com.your_app_name.data.local.entities.SaleDetailEntity
-import com.your_app_name.data.local.entities.SaleEntity
-import com.your_app_name.data.local.entities.ServiceExpenseEntity
+import com.gestiontienda2.data.local.dao.ClientDao
+import com.gestiontienda2.data.local.dao.OrderDao
+import com.gestiontienda2.data.local.dao.ProviderDao
+import com.gestiontienda2.data.local.dao.PurchaseDao
+import com.gestiontienda2.data.local.dao.SaleDao
+import com.gestiontienda2.data.local.dao.ServiceExpenseDao
+import com.gestiontienda2.data.local.database.migrations.MIGRATION_6_7
+import com.gestiontienda2.data.local.entities.ClientEntity
+import com.gestiontienda2.data.local.entities.OrderEntity
+import com.gestiontienda2.data.local.entities.ProductEntity
+import com.gestiontienda2.data.local.entities.ProviderEntity
+import com.gestiontienda2.data.local.entities.PurchaseDetailEntity
+import com.gestiontienda2.data.local.entities.PurchaseEntity
+import com.gestiontienda2.data.local.entities.SaleDetailEntity
+import com.gestiontienda2.data.local.entities.SaleEntity
+import com.gestiontienda2.data.local.entities.ServiceExpenseEntity
 
 @Database(
     entities = [ProductEntity::class, ClientEntity::class, SaleEntity::class, SaleDetailEntity::class, PurchaseEntity::class, PurchaseDetailEntity::class, ProviderEntity::class, OrderEntity::class, ServiceExpenseEntity::class],

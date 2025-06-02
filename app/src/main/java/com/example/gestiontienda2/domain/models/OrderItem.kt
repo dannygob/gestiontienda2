@@ -1,4 +1,4 @@
-package com.your_app_name.domain.models
+package com.gestiontienda2.domain.models
 
 data class OrderItem(
     val id: Int = 0,

@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.purchases
+package com.gestiontienda2.presentation.ui.purchases
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,9 +17,9 @@ import androidx.compose.ui.clickable
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.your_app_name.presentation.ui.components.DatePickerDialog
-import com.your_app_name.presentation.viewmodels.PurchaseDetailViewModel
-import com.your_app_name.util.SavingState
+import com.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.gestiontienda2.presentation.viewmodels.PurchaseDetailViewModel
+import com.gestiontienda2.util.SavingState
 import java.text.SimpleDateFormat
 import java.util.*
 

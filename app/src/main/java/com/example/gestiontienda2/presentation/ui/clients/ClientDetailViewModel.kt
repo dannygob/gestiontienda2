@@ -1,11 +1,11 @@
-package com.your_app_name.presentation.ui.clients
+package com.gestiontienda2.presentation.ui.clients
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.usecases.GetClientByIdUseCase
-import com.your_app_name.domain.usecases.UpdateClientUseCase
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.usecases.GetClientByIdUseCase
+import com.gestiontienda2.domain.usecases.UpdateClientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

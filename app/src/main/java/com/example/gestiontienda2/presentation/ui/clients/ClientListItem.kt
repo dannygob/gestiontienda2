@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.clients
+package com.gestiontienda2.presentation.ui.clients
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.your_app_name.domain.models.Client
+import com.gestiontienda2.domain.models.Client
 
 @Composable
 fun ClientListItem(

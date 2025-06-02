@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleItem
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.models.SaleItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao

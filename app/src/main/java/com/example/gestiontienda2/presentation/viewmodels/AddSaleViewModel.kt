@@ -1,12 +1,12 @@
-package com.your_app_name.presentation.viewmodels // Adjust package name as needed
+package com.gestiontienda2.presentation.viewmodels // Adjust package name as needed
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.domain.repository.ProductRepository
-import com.your_app_name.domain.repository.SaleRepository
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.models.SaleItem
+import com.gestiontienda2.domain.repository.ProductRepository
+import com.gestiontienda2.domain.repository.SaleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

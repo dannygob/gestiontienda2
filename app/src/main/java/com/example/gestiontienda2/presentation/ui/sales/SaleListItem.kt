@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.sales
+package com.gestiontienda2.presentation.ui.sales
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,8 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Sale
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.models.Sale
 
 @Composable
 fun SaleListItem(

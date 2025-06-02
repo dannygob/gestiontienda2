@@ -1,4 +1,4 @@
-package com.your_app_name.data.remote.firebase.models
+package com.gestiontienda2.data.remote.firebase.models
 
 data class ProviderFirebase(
     val id: String = "",

@@ -1,7 +1,7 @@
-package com.your_app_name.data.remote.firebase.datasource.impl
+package com.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.your_app_name.data.remote.firebase.models.ProviderFirebase
+import com.gestiontienda2.data.remote.firebase.models.ProviderFirebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

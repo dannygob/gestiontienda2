@@ -1,6 +1,6 @@
-package com.your_app_name.data.remote.firebase.datasource
+package com.gestiontienda2.data.remote.firebase.datasource
 
-import com.your_app_name.data.remote.firebase.models.SaleFirebase
+import com.gestiontienda2.data.remote.firebase.models.SaleFirebase
 import kotlinx.coroutines.flow.Flow
 
 interface SaleFirebaseDataSource {

@@ -1,11 +1,11 @@
-package com.your_app_name.presentation.viewmodels
+package com.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.repository.ClientRepository
-import com.your_app_name.domain.repository.SaleRepository
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.repository.ClientRepository
+import com.gestiontienda2.domain.repository.SaleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

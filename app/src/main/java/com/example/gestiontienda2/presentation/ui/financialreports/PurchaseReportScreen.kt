@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.financialreports // Replace with your actual package name
+package com.gestiontienda2.presentation.ui.financialreports // Replace with your actual package name
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.presentation.viewmodels.PurchaseReportViewModel
-import com.your_app_name.ui.theme.YourAppTheme
+import com.gestiontienda2.presentation.viewmodels.PurchaseReportViewModel
+import com.gestiontienda2.ui.theme.YourAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

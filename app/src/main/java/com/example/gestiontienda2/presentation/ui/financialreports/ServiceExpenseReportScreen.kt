@@ -1,8 +1,7 @@
-package com.your_app_name.presentation.ui.financialreports // Replace with your actual package name
+package com.gestiontienda2.presentation.ui.financialreports // Replace with your actual package name
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -12,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.model.ServiceExpense
-import com.your_app_name.presentation.viewmodels.ServiceExpenseReportViewModel
+import com.gestiontienda2.domain.model.ServiceExpense
+import com.gestiontienda2.presentation.viewmodels.ServiceExpenseReportViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -104,18 +103,9 @@ fun PreviewServiceExpenseReportScreen() {
 }
 package com.your_app_name.presentation.ui.financialreports // Replace with your actual package name
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.model.ServiceExpense // Replace with your actual ServiceExpense model
-import com.your_app_name.presentation.viewmodels.ServiceExpenseReportViewModel // Replace with your actual ViewModel package
+import com.gestiontienda2.domain.model.ServiceExpense // Replace with your actual ServiceExpense model
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

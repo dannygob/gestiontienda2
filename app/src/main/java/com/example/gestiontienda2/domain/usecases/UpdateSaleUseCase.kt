@@ -1,7 +1,7 @@
-package com.your_app_name.domain.usecases
+package com.gestiontienda2.domain.usecases
 
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.repository.SaleRepository
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.repository.SaleRepository
 import javax.inject.Inject
 
 class UpdateSaleUseCase @Inject constructor(

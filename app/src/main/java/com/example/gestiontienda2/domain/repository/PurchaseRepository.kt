@@ -1,7 +1,7 @@
-package com.your_app_name.domain.repository
+package com.gestiontienda2.domain.repository
 
-import com.your_app_name.domain.models.Purchase
-import com.your_app_name.domain.models.PurchaseDetail
+import com.gestiontienda2.domain.models.Purchase
+import com.gestiontienda2.domain.models.PurchaseDetail
 import kotlinx.coroutines.flow.Flow
 
 interface PurchaseRepository {

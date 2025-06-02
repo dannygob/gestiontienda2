@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.sales
+package com.gestiontienda2.presentation.ui.sales
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,17 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.presentation.viewmodels.SaleDetailViewModel
+import com.gestiontienda2.domain.models.SaleItem
+import com.gestiontienda2.presentation.viewmodels.SaleDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
-import com.your_app_name.presentation.viewmodels.SaleDetailViewModel // Import SaleDetailViewModel
-import com.your_app_name.presentation.viewmodels.DetailedSaleState // Import DetailedSaleState
-import com.your_app_name.presentation.viewmodels.SaleItemWithProduct // Import SaleItemWithProduct
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Calendar
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

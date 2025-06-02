@@ -32,6 +32,7 @@ dependencies {
     // Room + KSP
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.firebase.firestore.ktx)
     ksp(libs.room.compiler.ksp) // ✅ KSP en lugar de kapt
     implementation("com.google.dagger:hilt-android:2.56.2")
     ksp("com.google.dagger:hilt-android-compiler:2.56.2")

@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.your_app_name.domain.models.Provider // Replace with your actual Provider model import
+import com.gestiontienda2.domain.models.Provider // Replace with your actual Provider model import
 
 @Composable
 fun ProviderListItem(

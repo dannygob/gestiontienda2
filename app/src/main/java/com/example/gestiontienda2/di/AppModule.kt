@@ -1,12 +1,12 @@
-package com.your_app_name.di
+package com.gestiontienda2.di
 
 import android.content.Context
 import androidx.room.Room
-import com.your_app_name.data.local.dao.ProductDao
-import com.your_app_name.data.local.database.AppDatabase
-import com.your_app_name.data.remote.api.OpenFoodFactsApiService
-import com.your_app_name.data.repository.*
-import com.your_app_name.domain.repository.*
+import com.gestiontienda2.data.local.dao.ProductDao
+import com.gestiontienda2.data.local.database.AppDatabase
+import com.gestiontienda2.data.remote.api.OpenFoodFactsApiService
+import com.gestiontienda2.data.repository.*
+import com.gestiontienda2.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

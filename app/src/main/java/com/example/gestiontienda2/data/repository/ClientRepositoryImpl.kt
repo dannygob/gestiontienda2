@@ -1,12 +1,12 @@
-package com.your_app_name.data.repository
+package com.example.gestiontienda2.data.repository
 
-import com.your_app_name.data.local.dao.ClientDao
-import com.your_app_name.data.local.entities.toEntity
-import com.your_app_name.data.remote.firebase.ClientFirebaseDataSource
-import com.your_app_name.data.remote.firebase.toDomain
-import com.your_app_name.data.remote.firebase.toFirebase
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.repository.ClientRepository
+import com.gestiontienda2.data.local.entities.toEntity
+import com.gestiontienda2.data.local.room.dao.ClientDao
+import com.gestiontienda2.data.remote.firebase.ClientFirebaseDataSource
+import com.gestiontienda2.data.remote.firebase.toDomain
+import com.gestiontienda2.data.remote.firebase.toFirebase
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.repository.ClientRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

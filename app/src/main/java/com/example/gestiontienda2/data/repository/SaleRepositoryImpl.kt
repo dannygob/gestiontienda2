@@ -1,11 +1,11 @@
-import com.your_app_name.data.local.dao.ClientDao
-import com.your_app_name.data.local.dao.ProductDao
-import com.your_app_name.data.local.dao.SaleDao
-import com.your_app_name.data.remote.firebase.datasource.SaleFirebaseDataSource
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.domain.repository.SaleRepository
-import com.your_app_name.domain.repository.isOnline
+import com.gestiontienda2.data.local.dao.ClientDao
+import com.gestiontienda2.data.local.dao.ProductDao
+import com.gestiontienda2.data.local.dao.SaleDao
+import com.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.models.SaleItem
+import com.gestiontienda2.domain.repository.SaleRepository
+import com.gestiontienda2.domain.repository.isOnline
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -15,21 +15,11 @@ import kotlin.coroutines.CoroutineContext
 git add .
 package com.your_app_name.data .repository
 
-import com.your_app_name.data.local.dao.ClientDao
-import com.your_app_name.data.local.dao.ProductDao
-import com.your_app_name.data.local.dao.SaleDao
-import com.your_app_name.data.remote.firebase.datasource.SaleFirebaseDataSource
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.domain.repository.SaleRepository
-import com.your_app_name.domain.repository.isOnline
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.gestiontienda2.data.local.dao.ClientDao
+import com.gestiontienda2.data.local.dao.SaleDao
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.repository.isOnline
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
-import java.util.UUID
-import kotlin.coroutines.CoroutineContext
-import javax.inject.Inject
 
 class SaleRepositoryImpl @Inject constructor(
     private val saleDao: SaleDao,
@@ -139,7 +129,7 @@ class SaleRepositoryImpl @Inject constructor(
     }
 
     // region Mappers
-    private fun Sale.toSaleEntity(): com.your_app_name.data.local.room.entities.SaleEntity {
+    private fun Sale.toSaleEntity(): com.gestiontienda2.data.local.room.entities.SaleEntity {
         return com.your_app_name.data.local.room.entities.SaleEntity(
             id = id,
             date = date,
@@ -148,7 +138,7 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun com.your_app_name.data.local.room.entities.SaleWithItems.toDomain(productDao: ProductDao): Sale {
+    private fun com.gestiontienda2.data.local.room.entities.SaleWithItems.toDomain(productDao: ProductDao): Sale {
         // This mapping requires fetching product details for each SaleItem.
         // In a real app, you might optimize this or fetch product details separately in the ViewModel.
         val saleItems = items.mapNotNull { saleItemEntity ->
@@ -165,8 +155,8 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun SaleItem.toSaleItemEntity(saleId: Int): com.your_app_name.data.local.room.entities.SaleItemEntity {
-        return com.your_app_name.data.local.room.entities.SaleItemEntity(
+    private fun SaleItem.toSaleItemEntity(saleId: Int): com.gestiontienda2.data.local.room.entities.SaleItemEntity {
+        return com.gestiontienda2.data.local.room.entities.SaleItemEntity(
             id = id,
             saleId = saleId,
             productId = productId,
@@ -175,7 +165,7 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun com.your_app_name.data.local.room.entities.SaleItemEntity.toDomain(product: com.your_app_name.domain.models.Product? = null): SaleItem {
+    private fun com.gestiontienda2.data.local.room.entities.SaleItemEntity.toDomain(product: com.gestiontienda2.domain.models.Product? = null): SaleItem {
         return SaleItem(
             id = id,
             saleId = saleId,

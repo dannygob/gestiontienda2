@@ -1,8 +1,8 @@
-package com.your_app_name.data.remote.firebase.datasource.impl
+package com.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.your_app_name.data.remote.firebase.datasource.SaleFirebaseDataSource
-import com.your_app_name.data.remote.firebase.models.SaleFirebase
+import com.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
+import com.gestiontienda2.data.remote.firebase.models.SaleFirebase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

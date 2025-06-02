@@ -1,4 +1,4 @@
-package com.your_app_name.data.local.room.entities
+package com.gestiontienda2.data.local.room.entities
 
 import androidx.room.Embedded
 import androidx.room.Relation

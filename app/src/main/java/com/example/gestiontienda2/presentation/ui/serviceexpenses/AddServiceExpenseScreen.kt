@@ -1,4 +1,4 @@
-package com.your_app_name.presentation.ui.serviceexpenses
+package com.gestiontienda2.presentation.ui.serviceexpenses
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,8 +12,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.domain.models.ServiceExpense
-import com.your_app_name.presentation.ui.common.SavingState
-import com.your_app_name.presentation.ui.components.DatePickerDialog
+import com.gestiontienda2.presentation.ui.common.SavingState
+import com.gestiontienda2.presentation.ui.components.DatePickerDialog
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*

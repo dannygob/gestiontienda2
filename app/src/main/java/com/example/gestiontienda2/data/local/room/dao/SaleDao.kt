@@ -1,9 +1,9 @@
-package com.your_app_name.data.local.room.dao
+package com.gestiontienda2.data.local.room.dao
 
 import androidx.room.*
-import com.your_app_name.data.local.room.entities.SaleEntity
-import com.your_app_name.data.local.room.entities.SaleItemEntity
-import com.your_app_name.data.local.room.entities.SaleWithItems
+import com.gestiontienda2.data.local.room.entities.SaleEntity
+import com.gestiontienda2.data.local.room.entities.SaleItemEntity
+import com.gestiontienda2.data.local.room.entities.SaleWithItems
 import kotlinx.coroutines.flow.Flow
 
 // This file is an interface for the Sale data access object (DAO).

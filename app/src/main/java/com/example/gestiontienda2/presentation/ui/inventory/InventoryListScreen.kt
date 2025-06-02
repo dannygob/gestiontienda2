@@ -1,11 +1,10 @@
-package com.your_app_name.presentation.ui.inventory
+package com.gestiontienda2.presentation.ui.inventory
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
@@ -19,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.your_app_name.presentation.viewmodels.InventoryViewModel
+import com.gestiontienda2.presentation.viewmodels.InventoryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

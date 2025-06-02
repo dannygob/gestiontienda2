@@ -1,12 +1,12 @@
-package com.your_app_name.data.repository
+package com.gestiontienda2.data.repository
 
-import com.your_app_name.data.local.dao.PurchaseDao
-import com.your_app_name.data.local.entities.PurchaseDetailEntity
-import com.your_app_name.data.local.entities.PurchaseEntity
-import com.your_app_name.domain.model.Purchase
-import com.your_app_name.domain.model.PurchaseDetail
-import com.your_app_name.domain.model.PurchaseWithItems
-import com.your_app_name.domain.repository.PurchaseRepository
+import com.gestiontienda2.data.local.dao.PurchaseDao
+import com.gestiontienda2.data.local.entities.PurchaseDetailEntity
+import com.gestiontienda2.data.local.entities.PurchaseEntity
+import com.gestiontienda2.domain.model.Purchase
+import com.gestiontienda2.domain.model.PurchaseDetail
+import com.gestiontienda2.domain.model.PurchaseWithItems
+import com.gestiontienda2.domain.repository.PurchaseRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

@@ -1,8 +1,7 @@
-package com.your_app_name.presentation.ui.sales
+package com.gestiontienda2.presentation.ui.sales
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,12 +15,12 @@ import androidx.compose.ui.clickable
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Product
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.presentation.ui.components.DatePickerDialog
-import com.your_app_name.presentation.viewmodels.AddSaleViewModel
-import com.your_app_name.util.SavingState
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.models.Product
+import com.gestiontienda2.domain.models.SaleItem
+import com.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.gestiontienda2.presentation.viewmodels.AddSaleViewModel
+import com.gestiontienda2.util.SavingState
 import java.text.SimpleDateFormat
 import java.util.Date
 

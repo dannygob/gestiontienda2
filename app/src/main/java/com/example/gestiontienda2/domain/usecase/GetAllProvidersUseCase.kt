@@ -1,7 +1,7 @@
-package com.your_app_name.domain.usecase
+package com.gestiontienda2.domain.usecase
 
-import com.your_app_name.domain.models.Provider
-import com.your_app_name.domain.repository.ProviderRepository
+import com.gestiontienda2.domain.models.Provider
+import com.gestiontienda2.domain.repository.ProviderRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

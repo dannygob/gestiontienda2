@@ -1,15 +1,15 @@
-package com.your_app_name.presentation.ui.sales
+package com.gestiontienda2.presentation.ui.sales
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Product
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleItem
-import com.your_app_name.domain.usecases.AddSaleUseCase
-import com.your_app_name.domain.usecases.GetClientsUseCase
-import com.your_app_name.domain.usecases.GetProductsUseCase
-import com.your_app_name.util.Resource
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.models.Product
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.models.SaleItem
+import com.gestiontienda2.domain.usecases.AddSaleUseCase
+import com.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.gestiontienda2.domain.usecases.GetProductsUseCase
+import com.gestiontienda2.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

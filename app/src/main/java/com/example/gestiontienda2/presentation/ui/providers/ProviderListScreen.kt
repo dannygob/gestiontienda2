@@ -1,10 +1,9 @@
-package com.your_app_name.presentation.ui.providers
+package com.gestiontienda2.presentation.ui.providers
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -19,7 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.Provider
+import com.gestiontienda2.domain.models.Provider
 
 @Composable
 fun ProviderListScreen(

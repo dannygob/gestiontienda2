@@ -1,18 +1,18 @@
-package com.your_app_name.data.repository
+package com.gestiontienda2.data.repository
 
-import com.your_app_name.data.local.room.dao.ClientDao
-import com.your_app_name.data.local.room.dao.OrderDao
-import com.your_app_name.data.local.room.dao.ProductDao
-import com.your_app_name.data.local.room.entities.OrderEntity
-import com.your_app_name.data.local.room.entities.OrderItemEntity
-import com.your_app_name.data.remote.firebase.datasource.OrderFirebaseDataSource
-import com.your_app_name.data.remote.firebase.models.OrderFirebase
-import com.your_app_name.data.remote.firebase.models.OrderItemFirebase
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Order
-import com.your_app_name.domain.models.OrderItem
-import com.your_app_name.domain.models.Product
-import com.your_app_name.domain.repository.OrderRepository
+import com.gestiontienda2.data.local.room.dao.ClientDao
+import com.gestiontienda2.data.local.room.dao.OrderDao
+import com.gestiontienda2.data.local.room.dao.ProductDao
+import com.gestiontienda2.data.local.room.entities.OrderEntity
+import com.gestiontienda2.data.local.room.entities.OrderItemEntity
+import com.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource
+import com.gestiontienda2.data.remote.firebase.models.OrderFirebase
+import com.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.models.Order
+import com.gestiontienda2.domain.models.OrderItem
+import com.gestiontienda2.domain.models.Product
+import com.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -165,7 +165,7 @@ private fun OrderFirebase.toRoomEntity(): OrderEntity {
     )
 }
 
-private fun com.your_app_name.data.local.room.entities.OrderWithItems.toDomain(
+private fun com.gestiontienda2.data.local.room.entities.OrderWithItems.toDomain(
     clients: List<Client>,
     products: List<Product>
 ): Order {

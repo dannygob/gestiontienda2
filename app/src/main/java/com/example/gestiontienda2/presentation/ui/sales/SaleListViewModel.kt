@@ -1,9 +1,9 @@
-package com.your_app_name.presentation.ui.sales
+package com.gestiontienda2.presentation.ui.sales
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.usecases.GetSalesUseCase
+import com.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.usecases.GetSalesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

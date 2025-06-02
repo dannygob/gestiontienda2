@@ -1,7 +1,7 @@
-package com.your_app_name.domain.usecases
+package com.gestiontienda2.domain.usecases
 
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.repository.ClientRepository
+import com.gestiontienda2.domain.models.Client
+import com.gestiontienda2.domain.repository.ClientRepository
 import javax.inject.Inject
 
 class UpdateClientUseCase @Inject constructor(
