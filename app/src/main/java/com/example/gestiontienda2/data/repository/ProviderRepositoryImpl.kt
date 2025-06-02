@@ -1,11 +1,12 @@
-package com.gestiontienda2.data.repository
+package com.example.gestiontienda2.data.repository
 
 import android.content.Context
 import android.net.ConnectivityManager
 import com.gestiontienda2.data.local.dao.ProviderDao
 import com.gestiontienda2.data.local.entities.ProviderEntity
 import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
-import com.gestiontienda2.data.remote.firebase.models.ProviderFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
+import com.example.gestiontienda2.domain.models.Provider
 import com.gestiontienda2.domain.models.Provider
 import com.gestiontienda2.domain.repository.ProviderRepository
 import kotlinx.coroutines.flow.Flow

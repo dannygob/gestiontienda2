@@ -1,7 +1,7 @@
 package com.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.gestiontienda2.data.remote.firebase.datasource.PurchaseFirebaseDataSource
+import com.example.gestiontienda2.data.remote.firebase.datasource.PurchaseFirebaseDataSource
 import com.gestiontienda2.data.remote.firebase.models.PurchaseFirebase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

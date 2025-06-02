@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.remote.firebase.models
+package com.example.gestiontienda2.data.remote.firebase.models
 
 data class ServiceExpenseFirebase(
     val id: String = "",

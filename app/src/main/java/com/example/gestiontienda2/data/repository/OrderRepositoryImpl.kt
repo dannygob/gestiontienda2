@@ -1,13 +1,13 @@
-package com.gestiontienda2.data.repository
+package com.example.gestiontienda2.data.repository
 
 import com.gestiontienda2.data.local.room.dao.ClientDao
 import com.gestiontienda2.data.local.room.dao.OrderDao
 import com.gestiontienda2.data.local.room.dao.ProductDao
 import com.gestiontienda2.data.local.room.entities.OrderEntity
 import com.gestiontienda2.data.local.room.entities.OrderItemEntity
-import com.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource
+import com.example.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource
 import com.gestiontienda2.data.remote.firebase.models.OrderFirebase
-import com.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem

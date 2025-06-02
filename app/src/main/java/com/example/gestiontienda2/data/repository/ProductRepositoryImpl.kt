@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.repository
+package com.example.gestiontienda2.data.repository
 
 import com.gestiontienda2.data.local.dao.ProductDao
 import com.gestiontienda2.data.remote.api.OpenFoodFactsApiService

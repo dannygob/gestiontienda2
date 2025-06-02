@@ -35,8 +35,8 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.play.services.analytics.impl)
     ksp(libs.room.compiler.ksp) // ✅ KSP en lugar de kapt
-    implementation("com.google.dagger:hilt-android:2.56.2")
-    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
     // Jetpack Compose
     implementation(libs.androidx.ui)
@@ -62,7 +62,7 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
 
 
 

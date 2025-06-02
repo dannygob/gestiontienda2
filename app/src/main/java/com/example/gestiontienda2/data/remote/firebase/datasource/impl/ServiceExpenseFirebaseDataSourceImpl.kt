@@ -2,7 +2,7 @@ package com.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.gestiontienda2.data.remote.firebase.datasource.ServiceExpenseFirebaseDataSource
-import com.gestiontienda2.data.remote.firebase.models.ServiceExpenseFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.ServiceExpenseFirebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await

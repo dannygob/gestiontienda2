@@ -1,5 +1,7 @@
 package com.gestiontienda2.data.remote.firebase.models
 
+import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
+
 data class OrderFirebase(
     val id: String = "",
     val clientId: String = "",

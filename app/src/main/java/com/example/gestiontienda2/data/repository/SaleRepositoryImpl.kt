@@ -1,7 +1,7 @@
 import com.gestiontienda2.data.local.dao.ClientDao
 import com.gestiontienda2.data.local.dao.ProductDao
 import com.gestiontienda2.data.local.dao.SaleDao
-import com.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
+import com.example.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
 import com.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.gestiontienda2.domain.repository.SaleRepository
