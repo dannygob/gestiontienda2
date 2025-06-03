@@ -74,9 +74,25 @@ class ClientDetailViewModel @Inject constructor(
                 _editMode.value = false // Exit edit mode on successful save
             } catch (e: Exception) {
                 _errorMessage.value = "Error saving client: ${e.message}"
-                _savingState.value = SavingState.Error
+                _savingState.value = SavingState.Error("Error saving client: ${e.message}")
             }
         }
+    }
+
+    fun updateName(newName: String) {
+        _client.value = _client.value?.copy(name = newName)
+    }
+
+    fun updatePhone(newPhone: String) {
+        _client.value = _client.value?.copy(phone = newPhone)
+    }
+
+    fun updateEmail(newEmail: String) {
+        _client.value = _client.value?.copy(email = newEmail)
+    }
+
+    fun updateAddress(newAddress: String) {
+        _client.value = _client.value?.copy(address = newAddress)
     }
 }
 
@@ -84,5 +100,5 @@ sealed class SavingState {
     object Idle : SavingState()
     object Saving : SavingState()
     object Success : SavingState()
-    object Error : SavingState()
+    data class Error(val message: String?) : SavingState()
 }
