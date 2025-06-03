@@ -83,3 +83,4 @@ class ClientRepositoryImpl @Inject constructor(
             clientFirebaseDataSource.deleteClient(client.id.toString()) // Assuming Firebase delete uses ID string
         }
     }
+}

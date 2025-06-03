@@ -13,9 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class ProviderFirebaseDataSourceImpl @Inject constructor() : ProviderFirebaseDataSource {
 
-    private val firestore: FirebaseFirestore.collection("providers")
-) : ProviderFirebaseDataSource {
-
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val providersCollection = firestore.collection("providers")
 
     override fun getAllProviders(): Flow<List<ProviderFirebase>> = flow {
@@ -23,7 +21,6 @@ class ProviderFirebaseDataSourceImpl @Inject constructor() : ProviderFirebaseDat
         val providers = snapshot.documents.mapNotNull { it.toObject(ProviderFirebase::class.java) }
         emit(providers)
     }.catch { e ->
-        // Log or handle the error
         emit(emptyList()) // Emit empty list on error
     }
 
@@ -32,7 +29,6 @@ class ProviderFirebaseDataSourceImpl @Inject constructor() : ProviderFirebaseDat
             providersCollection.document(providerId).get().await()
                 .toObject(ProviderFirebase::class.java)
         } catch (e: Exception) {
-            // Log or handle the error
             null
         }
     }
@@ -41,18 +37,15 @@ class ProviderFirebaseDataSourceImpl @Inject constructor() : ProviderFirebaseDat
         try {
             providersCollection.document(provider.id).set(provider).await()
         } catch (e: Exception) {
-            // Log or handle the error
-            throw e // Re-throw or handle as needed
+            throw e
         }
     }
 
     override suspend fun updateProvider(provider: ProviderFirebase) {
         try {
-            providersCollection.document(provider.id).set(provider)
-                .await() // Firestore set updates or creates
+            providersCollection.document(provider.id).set(provider).await()
         } catch (e: Exception) {
-            // Log or handle the error
-            throw e // Re-throw or handle as needed
+            throw e
         }
     }
 
@@ -60,8 +53,7 @@ class ProviderFirebaseDataSourceImpl @Inject constructor() : ProviderFirebaseDat
         try {
             providersCollection.document(provider.id).delete().await()
         } catch (e: Exception) {
-            // Log or handle the error
-            throw e // Re-throw or handle as needed
+            throw e
         }
     }
 }
