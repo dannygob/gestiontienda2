@@ -2,7 +2,6 @@ package com.example.gestiontienda2.data.repository
 
 
 import com.example.gestiontienda2.data.local.room.dao.ClientDao
-
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.google.android.gms.common.api.Api

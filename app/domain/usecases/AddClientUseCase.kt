@@ -1,6 +1,6 @@
 package com.inventoryapp.domain.usecases
 
-import com.inventoryapp.domain.model.Client
+import com.your_app_name.domain.models.Client
 import com.inventoryapp.domain.repository.ClientRepository
 import javax.inject.Inject
 

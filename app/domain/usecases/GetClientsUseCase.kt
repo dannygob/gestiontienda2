@@ -1,7 +1,7 @@
-package com.mobileinventors.domain.usecases
+package com.your_app_name.domain.usecases
 
-import com.mobileinventors.domain.model.Client
-import com.mobileinventors.domain.repository.ClientRepository
+import com.your_app_name.domain.models.Client
+import com.your_app_name.domain.repository.ClientRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
