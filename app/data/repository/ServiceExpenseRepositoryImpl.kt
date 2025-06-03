@@ -1,11 +1,11 @@
-package com.yourcompany.app.data.repository
+package com.your_app_name.data.repository
 
-import com.yourcompany.app.data.local.dao.ServiceExpenseDao
+import com.your_app_name.data.local.room.dao.ServiceExpenseDao
 // Assuming you have a DateConverter, if not, this import might be unused or problematic
-// import com.yourcompany.app.data.local.database.DateConverter
-import com.yourcompany.app.data.local.entities.ServiceExpenseEntity // Assuming this path is correct
-import com.yourcompany.app.domain.models.ServiceExpense
-import com.yourcompany.app.domain.repository.ServiceExpenseRepository
+// import com.your_app_name.data.local.database.DateConverter
+import com.your_app_name.data.local.room.entities.ServiceExpenseEntity // Assuming this path is correct
+import com.your_app_name.domain.models.ServiceExpense
+import com.your_app_name.domain.repository.ServiceExpenseRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -53,27 +53,28 @@ class ServiceExpenseRepositoryImpl @Inject constructor(
 }
 
 // Mapper functions (you might want to put these in a separate mapping file)
-// Ensure ServiceExpenseEntity has fields: id, type, amount, date, description
-// ServiceExpense domain model requires: id, type, description, date, amount, category
+// Ensure ServiceExpenseEntity has fields: id, type, amount, date, description, category, notes
+// ServiceExpense domain model requires: id, type, description, date, amount, category, notes
 fun ServiceExpense.toEntity(): ServiceExpenseEntity {
     return ServiceExpenseEntity(
         id = id,
-        type = type,
-        amount = amount,
+        // type = type, // Domain 'type' is not mapped to entity 'type' which is usually an Int or String code.
+        description = description,
         date = date,
-        description = description
-        // category and notes are not mapped to entity
+        amount = amount,
+        category = category,
+        notes = notes
     )
 }
 
 fun ServiceExpenseEntity.toDomain(): ServiceExpense {
     return ServiceExpense(
         id = id,
-        type = type,
-        description = description, // Assuming description is present in ServiceExpenseEntity
+        type = this.category, // Temporary: using entity's category for domain's type
+        description = description,
         date = date,
         amount = amount,
-        category = "", // Placeholder for missing category
-        notes = null    // Placeholder for missing notes
+        category = category,
+        notes = notes
     )
 }

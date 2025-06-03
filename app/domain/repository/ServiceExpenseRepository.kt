@@ -1,6 +1,6 @@
-package com.yourcompany.app.domain.repository
+package com.your_app_name.domain.repository
 
-import com.yourcompany.app.domain.models.ServiceExpense
+import com.your_app_name.domain.models.ServiceExpense
 import kotlinx.coroutines.flow.Flow
 
 interface ServiceExpenseRepository {

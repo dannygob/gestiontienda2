@@ -1,4 +1,4 @@
-package com.yourcompany.app.domain.models
+package com.your_app_name.domain.models
 
 data class ServiceExpense(
     val id: Int,
