@@ -52,6 +52,10 @@ class ProductRepositoryImpl @Inject constructor(
         return productDao.getAllProducts().map { entities -> entities.map { it.toDomain() } }
     }
 
+    private fun T.productFirebaseToDomain() {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getProductById(id: Int): Product? {
         // Example: Prioritize local database, then Firebase
         return productDao.getProductById(id)?.productEntityToDomain() ?: try {

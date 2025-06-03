@@ -3,8 +3,6 @@ package com.example.gestiontienda2.data.repository
 import com.example.gestiontienda2.data.local.dao.PurchaseDao
 import com.example.gestiontienda2.data.local.room.entities.PurchaseDetailEntity
 import com.example.gestiontienda2.data.local.room.entities.PurchaseEntity
-import com.gestiontienda2.data.local.entities.PurchaseDetailEntity
-import com.gestiontienda2.data.local.entities.PurchaseEntity
 import com.example.gestiontienda2.domain.models.Purchase
 import com.example.gestiontienda2.domain.models.PurchaseDetail
 import com.example.gestiontienda2.domain.models.PurchaseItem

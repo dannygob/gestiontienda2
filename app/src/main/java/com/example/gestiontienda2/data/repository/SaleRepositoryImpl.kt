@@ -1,29 +1,23 @@
+package com.example.gestiontienda2.data.repository
+
+
+import android.R.attr.id
 import com.example.gestiontienda2.data.local.room.entities.SaleEntity
 import com.example.gestiontienda2.data.local.room.entities.SaleItemEntity
 import com.example.gestiontienda2.data.local.room.entities.SaleWithItems
 import com.example.gestiontienda2.data.local.dao.ClientDao
 import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
-import com.gestiontienda2.data.local.dao.SaleDao
 import com.example.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
 import com.example.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.models.Sale
+import com.example.gestiontienda2.domain.models.SaleDetail
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.gestiontienda2.domain.repository.SaleRepository
-import com.gestiontienda2.domain.repository.isOnline
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
-
-git add .
-package com.your_app_name.data .repository
-
-import com.gestiontienda2.data.local.dao.SaleDao
-import com.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.repository.isOnline
-import kotlinx.coroutines.flow.map
 
 class SaleRepositoryImpl @Inject constructor(
     private val saleDao: SaleDao,
@@ -118,6 +112,17 @@ class SaleRepositoryImpl @Inject constructor(
         return saleDao.getSalesByDateRangeWithItems(startDate, endDate).map { salesWithItemsList ->
             salesWithItemsList.map { it.toDomain(productDao) }
         }
+    }
+
+    override fun insertSaleWithDetails(
+        sale: Sale,
+        saleDetails: List<SaleDetail>,
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getSales(): Flow<List<Sale>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getTotalSalesAmount(startDate: Long?, endDate: Long?): Double {

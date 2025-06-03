@@ -1,5 +1,7 @@
 package com.example.gestiontienda2.data.repository
 
+import com.example.gestiontienda2.data.local.database.clientDao
+import com.example.gestiontienda2.data.local.database.orderDao
 import com.example.gestiontienda2.data.local.room.dao.ClientDao
 import com.example.gestiontienda2.data.local.room.dao.OrderDao
 import com.example.gestiontienda2.data.local.room.dao.ProductDao
@@ -12,7 +14,7 @@ import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
-import com.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -29,7 +31,7 @@ class OrderRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineContext // Inject dispatcher
 ) : OrderRepository {
 
-    override fun getOrders(): Flow<List<Order>> =
+    override suspend fun getOrders(): Flow<List<Order>> =
         // Combine flows from Room, ClientDao, and ProductDao
         orderDao.getAllOrdersWithItems()
             .combine(clientDao.getAllClients()) { ordersWithItems, clients ->
@@ -71,6 +73,30 @@ class OrderRepositoryImpl @Inject constructor(
             val products = productDao.getAllProductsBlocking()
             roomOrdersWithItems.map { it.toDomain(clients, products) }
         }.collect { emit(it) }
+    }
+
+    override fun getAllOrders(): Flow<List<Order>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getOrderById(orderId: Int): Order? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addOrder(order: Order): Long {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateOrder(order: Order) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteOrder(order: Order) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getOrders(): Flow<List<Order>> {
+        TODO("Not yet implemented")
     }
 }
 
