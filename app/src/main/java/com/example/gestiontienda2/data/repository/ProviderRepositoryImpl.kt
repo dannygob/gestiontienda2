@@ -2,17 +2,21 @@ package com.example.gestiontienda2.data.repository
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.example.gestiontienda2.data.local.dao.ProviderDao
 import com.example.gestiontienda2.data.local.room.entities.ProviderEntity
-import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
 import com.example.gestiontienda2.domain.models.Provider
+import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
 import com.gestiontienda2.domain.repository.ProviderRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProviderRepositoryImpl @Inject constructor(
+    private val context: Context,  // Se inyecta Context para verificar conectividad
     private val providerDao: ProviderDao,
     private val providerFirebaseDataSource: ProviderFirebaseDataSource,
 ) : ProviderRepository {
@@ -24,13 +28,16 @@ class ProviderRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getProviderById(providerId: Int): Provider? {
-        // Prioritize fetching from Firebase if online, otherwise get from Room
-        return if (isOnline) {
-            val firebaseProvider =
-                providerFirebaseDataSource.getProviderById(providerId.toString()) // Assuming Firebase ID is String
-            firebaseProvider?.toDomain()?.also { provider ->
-                // Optionally update Room with the fetched data
-                providerDao.updateProvider(provider.toEntity())
+        return if (isOnline()) {
+            try {
+                providerFirebaseDataSource.getProviderById(providerId.toString())?.toDomain()
+                    ?.also {
+                        withContext(Dispatchers.IO) {
+                            providerDao.updateProvider(it.toEntity())
+                        }
+                    }
+            } catch (e: Exception) {
+                providerDao.getProviderById(providerId)?.toDomain()
             }
         } else {
             providerDao.getProviderById(providerId)?.toDomain()
@@ -38,47 +45,53 @@ class ProviderRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addProvider(provider: Provider) {
-        // Save to Room and Firebase
-        providerFirebaseDataSource.addProvider(provider.toFirebase())
-        providerDao.insertProvider(provider.toEntity())
+        withContext(Dispatchers.IO) {
+            providerDao.insertProvider(provider.toEntity())
+        }
+        try {
+            providerFirebaseDataSource.addProvider(provider.toFirebase())
+        } catch (_: Exception) {
+        }
     }
 
     override suspend fun updateProvider(provider: Provider) {
-        providerDao.updateProvider(provider.toEntity())
+        withContext(Dispatchers.IO) {
+            providerDao.updateProvider(provider.toEntity())
+        }
     }
 
     override suspend fun deleteProvider(provider: Provider) {
-        providerDao.deleteProvider(provider.toEntity())
+        withContext(Dispatchers.IO) {
+            providerDao.deleteProvider(provider.toEntity())
+        }
+    }
+
+    private fun isOnline(): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 }
 
-// Check network connectivity (simplified)
-// You might want to inject a separate NetworkManager
-private val isOnline: Boolean
-    get() {
-        val connectivityManager =
-            appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.activeNetworkInfo?.isConnectedOrConnecting == true
-    }
-
-// Mapper functions (should ideally be in a separate mapper module or file)
+// Mapper functions
 fun ProviderEntity.toDomain(): Provider {
     return Provider(
         id = this.id,
         name = this.name,
-        phone = this.phone,
-        address = this.address,
+        phone = this.phone.toString(),
+        address = this.address.toString(),
         email = this.email
     )
 }
 
-// Add mapping function for Firebase
 fun Provider.toFirebase(): ProviderFirebase {
     return ProviderFirebase(
-        id = if (this.id == 0) null else this.id.toString(), // Firebase will generate ID if 0
+        id = this.id.takeIf { it != 0 }?.toString().toString(),
         name = this.name,
         phone = this.phone,
-        email = this.email
+        email = this.email.toString()
     )
 }
 
