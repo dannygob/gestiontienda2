@@ -2,6 +2,7 @@ package com.example.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
+import com.example.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -10,9 +11,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProviderFirebaseDataSourceImpl @Inject constructor
-
-private val firestore: FirebaseFirestore = TODO()
+class ProviderFirebaseDataSourceImpl @Inject constructor(
+    private val firestore: FirebaseFirestore
 ) : ProviderFirebaseDataSource {
 
     private val providersCollection = firestore.collection("providers")
