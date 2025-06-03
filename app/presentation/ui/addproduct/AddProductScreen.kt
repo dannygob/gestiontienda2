@@ -1,4 +1,4 @@
-package com.example.inventory.presentation.ui.addproduct
+package com.your_app_name.presentation.ui.addproduct
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.inventory.domain.models.SavingState
+// SavingState is defined in AddProductViewModel.kt in the same package
 import kotlinx.coroutines.launch
 
 @Composable
@@ -19,13 +19,13 @@ fun AddProductScreen(
     viewModel: AddProductViewModel = hiltViewModel(),
     navigateBack: () -> Unit
 ) {
-    val productName by viewModel.productName.collectAsState()
-    val productBarcode by viewModel.productBarcode.collectAsState()
-    val productPurchasePrice by viewModel.productPurchasePrice.collectAsState()
-    val productSalePrice by viewModel.productSalePrice.collectAsState()
-    val productCategory by viewModel.productCategory.collectAsState()
-    val productStock by viewModel.productStock.collectAsState()
-    val productProviderId by viewModel.productProviderId.collectAsState()
+    val productName by viewModel.name.collectAsState()
+    val productBarcode by viewModel.barcode.collectAsState()
+    val productPurchasePrice by viewModel.purchasePrice.collectAsState()
+    val productSalePrice by viewModel.salePrice.collectAsState()
+    val productCategory by viewModel.category.collectAsState()
+    val productStock by viewModel.stock.collectAsState()
+    val productProviderId by viewModel.providerId.collectAsState()
     val savingState by viewModel.savingState.collectAsState()
 
     val scaffoldState = rememberScaffoldState()
@@ -53,21 +53,21 @@ fun AddProductScreen(
         ) {
             OutlinedTextField(
                 value = productName,
-                onValueChange = { viewModel.updateProductName(it) },
+                onValueChange = { viewModel.onNameChange(it) },
                 label = { Text("Product Name") },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = productBarcode,
-                onValueChange = { viewModel.updateProductBarcode(it) },
+                onValueChange = { viewModel.onBarcodeChange(it) },
                 label = { Text("Barcode") },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = productPurchasePrice,
-                onValueChange = { viewModel.updateProductPurchasePrice(it) },
+                onValueChange = { viewModel.onPurchasePriceChange(it) },
                 label = { Text("Purchase Price") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -75,7 +75,7 @@ fun AddProductScreen(
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = productSalePrice,
-                onValueChange = { viewModel.updateProductSalePrice(it) },
+                onValueChange = { viewModel.onSalePriceChange(it) },
                 label = { Text("Sale Price") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -83,14 +83,14 @@ fun AddProductScreen(
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = productCategory,
-                onValueChange = { viewModel.updateProductCategory(it) },
+                onValueChange = { viewModel.onCategoryChange(it) },
                 label = { Text("Category") },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = productStock,
-                onValueChange = { viewModel.updateProductStock(it) },
+                onValueChange = { viewModel.onStockChange(it) },
                 label = { Text("Stock") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -98,7 +98,7 @@ fun AddProductScreen(
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = productProviderId,
-                onValueChange = { viewModel.updateProductProviderId(it) },
+                onValueChange = { viewModel.onProviderIdChange(it) },
                 label = { Text("Provider ID") },
                 modifier = Modifier.fillMaxWidth()
             )

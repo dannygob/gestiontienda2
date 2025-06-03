@@ -1,4 +1,4 @@
-package com.example.miniproject.presentation.ui.products
+package com.your_app_name.presentation.ui.products
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.miniproject.domain.models.Product
+import com.your_app_name.domain.models.Product
 
 
 @Composable
