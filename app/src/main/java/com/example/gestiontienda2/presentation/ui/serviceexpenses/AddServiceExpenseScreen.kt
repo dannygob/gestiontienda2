@@ -1,10 +1,13 @@
-package com.gestiontienda2.presentation.ui.serviceexpenses
+package com.example.gestiontienda2.presentation.ui.serviceexpenses
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import app.domain.models.ServiceExpense
 import com.gestiontienda2.presentation.ui.common.SavingState
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.gestiontienda2.presentation.viewmodels.AddServiceExpenseViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*

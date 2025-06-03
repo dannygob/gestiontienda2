@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.ui.purchases
+package com.example.gestiontienda2.presentation.ui.purchases
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

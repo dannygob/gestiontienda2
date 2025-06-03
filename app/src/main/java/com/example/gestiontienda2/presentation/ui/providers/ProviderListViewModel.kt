@@ -1,8 +1,8 @@
-package com.gestiontienda2.presentation.ui.providers
+package com.example.gestiontienda2.presentation.ui.providers
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gestiontienda2.domain.models.Provider
+import com.example.gestiontienda2.domain.models.Provider
 import com.gestiontienda2.domain.usecases.GetProvidersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

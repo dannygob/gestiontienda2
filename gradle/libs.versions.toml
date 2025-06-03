@@ -29,6 +29,7 @@ cameraCore = "1.4.2"
 uiToolingPreviewAndroid = "1.8.2"
 glancePreview = "1.1.1"
 tilesToolingPreview = "1.4.1"
+roomRuntimeAndroid = "2.7.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
@@ -68,6 +69,7 @@ androidx-camera-core = { group = "androidx.camera", name = "camera-core", versio
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-glance-preview = { group = "androidx.glance", name = "glance-preview", version.ref = "glancePreview" }
 androidx-tiles-tooling-preview = { group = "androidx.wear.tiles", name = "tiles-tooling-preview", version.ref = "tilesToolingPreview" }
+androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

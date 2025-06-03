@@ -79,7 +79,7 @@ class AddPurchaseViewModel @Inject constructor(
     }
 
     // Function to save the new purchase
-    fun savePurchase() {
+    fun savePurchase(selectedDateTimestamp: Long) {
         _savingState.value = SavingState.Saving
         viewModelScope.launch {
             try {

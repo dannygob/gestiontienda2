@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.gestiontienda2.domain.models.Client
 
 @Composable
-fun ClientListItem(
+public fun (
     client: Client,
     onClientClick: (Client) -> Unit
 ) {

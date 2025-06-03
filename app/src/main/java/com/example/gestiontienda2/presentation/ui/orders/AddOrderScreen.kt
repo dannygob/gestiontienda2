@@ -1,4 +1,4 @@
-package app.presentation.ui.orders
+package com.example.gestiontienda2.presentation.ui.orders
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.domain.models.OrderItem
-import app.presentation.ui.components.DatePickerDialog
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import java.text.SimpleDateFormat
 import java.util.*

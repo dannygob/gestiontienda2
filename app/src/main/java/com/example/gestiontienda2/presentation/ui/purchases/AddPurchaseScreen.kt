@@ -1,5 +1,6 @@
-package com.gestiontienda2.presentation.ui.purchases
+package com.example.gestiontienda2.presentation.ui.purchases
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,16 +17,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gestiontienda2.domain.models.Product
-import com.gestiontienda2.domain.models.Provider
+import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.models.PurchaseItem
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import com.gestiontienda2.presentation.viewmodels.AddPurchaseViewModel
+import com.gestiontienda2.presentation.viewmodels.SavingState
 import com.gestiontienda2.util.SavingState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.ServiceLoader
 
+@SuppressLint("DefaultLocale")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AddPurchaseScreen(
@@ -65,7 +68,7 @@ fun AddPurchaseScreen(
                 // TODO: Navigate to Provider Picker Screen and handle selection result
                 // For now, a placeholder:
                 viewModel.selectProvider(
-                    Provider(
+                    ServiceLoader.Provider(
                         id = 1,
                         name = "Sample Provider",
                         phone = "123-456-7890",
@@ -91,7 +94,7 @@ fun AddPurchaseScreen(
                         salePrice = 20.0,
                         category = "Category",
                         stock = 100,
-                        providerId = null
+                        providerId = null,)
                     )
                 )
             }) {

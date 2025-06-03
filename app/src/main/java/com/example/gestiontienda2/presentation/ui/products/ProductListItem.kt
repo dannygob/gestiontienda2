@@ -1,15 +1,15 @@
-package com.example.ministore.presentation.ui.products
+package com.example.gestiontienda2.presentation.ui.products
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.ministore.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 
 @Composable
 fun ProductListItem(

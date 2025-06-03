@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.ui.inventory
+package com.example.gestiontienda2.presentation.ui.inventory
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.gestiontienda2.presentation.screens.inventory.viewmodel.InventoryViewModel
+import com.example.gestiontienda2.presentation.screens.inventory.viewmodel.InventoryViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)

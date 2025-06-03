@@ -5,6 +5,6 @@ data class Order(
     val clientId: Int,
     val orderDate: Long,
     val status: String,
-    val totalAmount: Double,
+    var totalAmount: Double,
     val items: List<OrderItem> = emptyList()
 )

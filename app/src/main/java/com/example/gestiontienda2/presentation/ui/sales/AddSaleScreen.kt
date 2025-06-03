@@ -1,5 +1,6 @@
-package com.gestiontienda2.presentation.ui.sales
+package com.example.gestiontienda2.presentation.ui.sales
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog

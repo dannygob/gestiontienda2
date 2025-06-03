@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.screens.inventory.viewmodel
+package com.example.gestiontienda2.presentation.screens.inventory.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,9 +16,10 @@ class InventoryViewModel @Inject constructor(
     private val productDao: ProductDao
 ) : ViewModel() {
 
-    val error: Any
+    val error: Any = TODO()
     private val _products = MutableStateFlow<List<ProductEntity>>(emptyList())
     val products: StateFlow<List<ProductEntity>> = _products.asStateFlow()
+    var loading: Any = TODO()
 
     init {
         getAllProducts()

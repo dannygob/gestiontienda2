@@ -16,6 +16,7 @@ class InventoryDetailViewModel<ProductRepository> @Inject constructor(
 ) : ViewModel() {
 
     lateinit var error: Any
+    lateinit var loading: Any
     private val _product = MutableStateFlow<Product?>(null)
     val product: StateFlow<Product?> = _product.asStateFlow()
 

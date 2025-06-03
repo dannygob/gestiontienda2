@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.ui.sales
+package com.example.gestiontienda2.presentation.ui.sales
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,7 +23,7 @@ import com.gestiontienda2.presentation.viewmodels.SaleDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SaleDetailScreen(
+private fun SaleDetailScreen(
     viewModel: SaleDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit
 ) {

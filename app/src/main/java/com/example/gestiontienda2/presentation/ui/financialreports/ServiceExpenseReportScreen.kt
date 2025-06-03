@@ -22,7 +22,9 @@ import java.util.*
 @Composable
 fun ServiceExpenseReportScreen(
     viewModel: ServiceExpenseReportViewModel = hiltViewModel(),
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    function: (ServiceExpenseReportViewModel, () -> Unit) -> Unit,
+    function1: () -> Unit
 ) {
     val serviceExpenses by viewModel.serviceExpensesList.collectAsState()
 
@@ -101,7 +103,53 @@ fun PreviewServiceExpenseReportScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewServiceExpenseReportScreen() {
-    ServiceExpenseReportScreen()
+    ServiceExpenseReportScreen(
+        function = @Composable
+        fun ServiceExpenseReportScreen(
+            viewModel: ServiceExpenseReportViewModel = hiltViewModel(),
+            onBackClick: () -> Unit = {}
+        ) {
+            val serviceExpenses by viewModel.serviceExpensesList.collectAsState()
+
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = { Text("Service Expense Report") },
+                        navigationIcon = {
+                            IconButton(onClick = onBackClick) {
+                                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                            }
+                        }
+                    )
+                }
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(16.dp)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // TODO: Add date range display and filtering UI here
+
+                    if (serviceExpenses.isEmpty()) {
+                        Text("No service expenses found for the selected date range.")
+                    } else {
+                        // TODO: Display list of service expenses
+                        // Example:
+                        // LazyColumn {
+                        //     items(serviceExpenses) { expense ->
+                        //         Text("Date: ${expense.date}, Amount: ${expense.amount}")
+                        //     }
+                        // }
+                    }
+                }
+            }
+        }, function1 = @Preview(showBackground = true)
+        @Composable
+        fun PreviewServiceExpenseReportScreen() {
+            ServiceExpenseReportScreen()
+        })
 }
 
 @Composable
@@ -145,10 +193,54 @@ fun ServiceExpenseReportScreen(
             }
         }
     }
-}
-
+},
 @Preview(showBackground = true)
 @Composable
 fun PreviewServiceExpenseReportScreen() {
-    ServiceExpenseReportScreen()
+    ServiceExpenseReportScreen(
+        function = @Composable
+        fun ServiceExpenseReportScreen(
+            viewModel: ServiceExpenseReportViewModel = hiltViewModel(),
+            onBackClick: () -> Unit = {}
+        ) {
+            val serviceExpenses by viewModel.serviceExpensesList.collectAsState()
+
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = { Text("Service Expense Report") },
+                        navigationIcon = {
+                            IconButton(onClick = onBackClick) {
+                                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                            }
+                        }
+                    )
+                }
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(16.dp)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // TODO: Add date range display and filtering UI here
+
+                    if (serviceExpenses.isEmpty()) {
+                        Text("No service expenses found for the selected date range.")
+                    } else {
+                        // TODO: Display list of service expenses
+                        // Example:
+                        // LazyColumn {
+                        //     items(serviceExpenses) { expense ->
+                        //         Text("Date: ${expense.date}, Amount: ${expense.amount}")
+                        //     }
+                        // }
+                    }
+                }
+            }
+        }, function1 = @Preview(showBackground = true)
+        @Composable
+        fun PreviewServiceExpenseReportScreen() {
+            ServiceExpenseReportScreen() }
 }

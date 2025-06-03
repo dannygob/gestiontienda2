@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
 import com.example.app.domain.models.Product
 import com.example.app.domain.usecases.GetProductsUseCase
+import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

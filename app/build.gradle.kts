@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview.android)
     implementation(libs.androidx.glance.preview)
     implementation(libs.androidx.tiles.tooling.preview)
+    implementation(libs.androidx.room.runtime.android)
     ksp(libs.room.compiler.ksp) // ✅ KSP en lugar de kapt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

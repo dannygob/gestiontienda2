@@ -3,6 +3,7 @@ package com.gestiontienda2.presentation.ui.providers
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.copy
 import com.gestiontienda2.domain.models.Provider
 import com.gestiontienda2.domain.usecases.GetProviderByIdUseCase
 import com.example.gestiontienda2.domain.usecases.UpdateProviderUseCase

@@ -1,15 +1,19 @@
-package com.gestiontienda2.presentation.ui.sales
+package com.example.gestiontienda2.presentation.ui.sales
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.domain.usecases.AddSaleUseCase
+import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.gestiontienda2.util.Resource
+import com.google.rpc.context.AttributeContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -51,15 +55,15 @@ class AddSaleViewModel @Inject constructor(
         viewModelScope.launch {
             getClientsUseCase().collect { resource ->
                 when (resource) {
-                    is Resource.Success -> {
+                    is AttributeContext.Resource.Success -> {
                         _clients.value = resource.data ?: emptyList()
                     }
 
-                    is Resource.Error -> {
+                    is AttributeContext.Resource.Error -> {
                         // Handle error loading clients
                     }
 
-                    is Resource.Loading -> {
+                    is AttributeContext.Resource.Loading -> {
                         // Handle loading state for clients
                     }
                 }

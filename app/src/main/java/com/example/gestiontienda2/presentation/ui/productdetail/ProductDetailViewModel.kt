@@ -3,10 +3,14 @@ package com.example.app.presentation.ui.productdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.ministore.domain.usecases.GetProductByIdUseCase
 import com.example.app.domain.models.Product
 import com.example.app.domain.repository.ProductRepository
 import com.example.app.domain.usecases.GetProductByIdUseCase
 import com.example.app.domain.usecases.UpdateProductUseCase
+import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.usecases.UpdateProductUseCase
+import com.gestiontienda2.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

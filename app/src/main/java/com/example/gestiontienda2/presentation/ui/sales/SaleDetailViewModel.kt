@@ -3,9 +3,12 @@ package com.gestiontienda2.presentation.ui.sales
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gestiontienda2.domain.models.Sale
 import com.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.domain.usecases.DeleteSaleUseCase
+import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.gestiontienda2.domain.usecases.GetSaleByIdUseCase

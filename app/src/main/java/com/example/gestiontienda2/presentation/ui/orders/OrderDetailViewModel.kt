@@ -1,10 +1,14 @@
-package app.presentation.ui.orders
+package com.example.gestiontienda2.presentation.ui.orders
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Order
-import com.gestiontienda2.domain.usecases.*
+import com.example.gestiontienda2.domain.usecases.DeleteOrderUseCase
+import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.example.gestiontienda2.domain.usecases.GetOrderByIdUseCase
+import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
+import com.example.gestiontienda2.domain.usecases.UpdateOrderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

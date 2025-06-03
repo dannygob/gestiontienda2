@@ -1,14 +1,9 @@
-package app.presentation.ui.orders
+package com.example.gestiontienda2.presentation.ui.orders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.domain.models.Client
 import app.domain.models.Order
-import app.domain.models.OrderItem
-import app.domain.models.Product
 import com.example.gestiontienda2.domain.usecases.AddOrderUseCase
-import app.domain.usecases.GetClientsUseCase
-import app.domain.usecases.GetProductsUseCase
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.example.gestiontienda2.domain.models.Product
@@ -46,6 +41,9 @@ class AddOrderViewModel @Inject constructor(
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products = _products.asStateFlow()
 
+    private val _orderItems = MutableStateFlow<List<Product>>(emptyList())
+    val orderItems = _orderItems.asStateFlow()
+
 
     init {
         fetchClients()
@@ -78,20 +76,19 @@ class AddOrderViewModel @Inject constructor(
         if (existingItem != null) {
             updateItemQuantity(existingItem.product!!, existingItem.quantity + quantity)
         } else {
-            _selectedItems.value = _selectedItems.value +
-                    OrderItem(
-                        id = 0, // Will be assigned by Room
-                        orderId = 0, // Will be assigned when saving the order
-                        productId = product.id,
-                        quantity = quantity,
-                        priceAtOrder = product.price, // Or a negotiated price
-                        product = product
-                    )
+            _selectedItems.value += OrderItem(
+                id = 0, // Will be assigned by Room
+                orderId = 0, // Will be assigned when saving the order
+                productId = product.id,
+                quantity = quantity,
+                priceAtOrder = product.price, // Or a negotiated price
+                product = product
+            )
             calculateTotal()
         }
     }
 
-    fun updateItemQuantity(product: Product, quantity: Int) {
+    private fun updateItemQuantity(product: Product, quantity: Int) {
         _selectedItems.value = _selectedItems.value.map {
             if (it.productId == product.id) {
                 it.copy(quantity = quantity)
@@ -111,7 +108,7 @@ class AddOrderViewModel @Inject constructor(
         _totalAmount.value = _selectedItems.value.sumOf { it.quantity * it.priceAtOrder }
     }
 
-    fun saveOrder() {
+    fun saveOrder(value: Any) {
         viewModelScope.launch {
             _savingState.value = SavingState.Loading
             val client = _selectedClient.value
