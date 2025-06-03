@@ -3,7 +3,7 @@ package com.example.gestiontienda2.presentation.ui.addproduct
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Product
-import com.gestiontienda2.domain.usecases.AddProductUseCase
+import com.example.gestiontienda2.domain.usecases.AddProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

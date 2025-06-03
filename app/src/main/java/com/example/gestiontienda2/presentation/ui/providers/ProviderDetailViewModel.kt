@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.util.copy
-import com.gestiontienda2.domain.models.Provider
-import com.gestiontienda2.domain.usecases.GetProviderByIdUseCase
+import com.example.gestiontienda2.domain.usecases.GetProviderByIdUseCase
 import com.example.gestiontienda2.domain.usecases.UpdateProviderUseCase
+import com.gestiontienda2.domain.models.Provider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

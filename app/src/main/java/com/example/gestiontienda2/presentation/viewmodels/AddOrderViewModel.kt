@@ -4,14 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
-import com.gestiontienda2.domain.models.OrderStatus
 import com.example.gestiontienda2.domain.repository.OrderRepository
+import com.gestiontienda2.domain.models.OrderStatus
 import com.gestiontienda2.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -116,5 +117,4 @@ class AddOrderViewModel @Inject constructor(
             _savingState.value = SavingState.Error("Failed to save order: ${e.localizedMessage}")
         }
     }
-}
 }

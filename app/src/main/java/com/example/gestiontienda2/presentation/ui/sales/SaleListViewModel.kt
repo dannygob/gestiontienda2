@@ -3,7 +3,7 @@ package com.example.gestiontienda2.presentation.ui.sales
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.usecases.GetSalesUseCase
+import com.example.gestiontienda2.domain.usecases.GetSalesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
