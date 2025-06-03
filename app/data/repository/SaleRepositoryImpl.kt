@@ -1,4 +1,3 @@
-git add .
 package com.your_app_name.data.repository
 
 import com.your_app_name.data.local.dao.ClientDao

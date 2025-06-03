@@ -10,4 +10,7 @@ interface PurchaseRepository {
     fun getPurchaseById(id: Int): Flow<Purchase?>
     suspend fun getTotalPurchaseAmount(startDate: Long? = null, endDate: Long? = null): Double
     fun getPurchasesByDateRange(startDate: Long? = null, endDate: Long? = null): Flow<List<Purchase>>
+
+    suspend fun updatePurchase(purchase: Purchase)
+    suspend fun deletePurchase(purchase: Purchase)
 }

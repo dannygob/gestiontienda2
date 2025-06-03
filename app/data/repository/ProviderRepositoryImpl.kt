@@ -21,6 +21,7 @@ import kotlinx.coroutines.withContext
 class ProviderRepositoryImpl @Inject constructor(
     private val providerDao: ProviderDao,
     private val providerFirebaseDataSource: ProviderFirebaseDataSource,
+    @ApplicationContext private val appContext: Context // Inject ApplicationContext
 ) : ProviderRepository {
 
     override fun getAllProviders(): Flow<List<Provider>> {
@@ -57,13 +58,15 @@ class ProviderRepositoryImpl @Inject constructor(
     }
 }
 
-// Check network connectivity (simplified)
-// You might want to inject a separate NetworkManager
+// Check network connectivity
 private val isOnline: Boolean
     get() {
         val connectivityManager =
             appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.activeNetworkInfo?.isConnectedOrConnecting == true
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
 // Mapper functions (should ideally be in a separate mapper module or file)

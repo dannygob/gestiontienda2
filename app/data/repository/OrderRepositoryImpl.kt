@@ -28,7 +28,7 @@ class OrderRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineContext // Inject dispatcher
 ) : OrderRepository {
 
-    override fun getOrders(): Flow<List<Order>> =
+    override fun getAllOrders(): Flow<List<Order>> =
         // Combine flows from Room, ClientDao, and ProductDao
         orderDao.getAllOrdersWithItems()
             .combine(clientDao.getAllClients()) { ordersWithItems, clients ->
