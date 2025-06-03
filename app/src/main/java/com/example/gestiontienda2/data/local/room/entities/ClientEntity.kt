@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.local.room.entities
+package com.example.gestiontienda2.data.local.room.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

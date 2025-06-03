@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.local.dao
+package com.example.gestiontienda2.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.gestiontienda2.data.local.entities.ProductEntity
+import com.example.gestiontienda2.data.local.room.entities.ProductEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -32,4 +32,5 @@ interface ProductDao {
 
     @Query("UPDATE products SET reservedStockQuantity = :newReservedStock WHERE id = :productId")
     suspend fun updateReservedStockQuantity(productId: Long, newReservedStock: Int)
+suspend fun insertAllProducts(map: Any)
 }

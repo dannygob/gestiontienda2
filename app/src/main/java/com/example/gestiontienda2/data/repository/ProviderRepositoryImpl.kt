@@ -2,7 +2,7 @@ package com.example.gestiontienda2.data.repository
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.gestiontienda2.data.local.dao.ProviderDao
+import com.example.gestiontienda2.data.local.dao.ProviderDao
 import com.gestiontienda2.data.local.entities.ProviderEntity
 import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase

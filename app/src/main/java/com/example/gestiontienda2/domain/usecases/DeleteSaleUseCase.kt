@@ -1,6 +1,6 @@
-package com.gestiontienda2.domain.usecases
+package com.example.gestiontienda2.domain.usecases
 
-import com.gestiontienda2.domain.models.Sale
+import com.example.gestiontienda2.domain.models.Sale
 import com.gestiontienda2.domain.repository.SaleRepository
 import javax.inject.Inject
 

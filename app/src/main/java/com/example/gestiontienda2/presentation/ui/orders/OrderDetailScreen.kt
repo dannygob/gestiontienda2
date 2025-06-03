@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gestiontienda2.domain.models.OrderStatus
-import com.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import com.gestiontienda2.presentation.viewmodels.OrderDetailViewModel.SavingState
 import java.text.SimpleDateFormat
 import java.util.*

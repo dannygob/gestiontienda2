@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.gestiontienda2.domain.models.OrderStatus
-import com.gestiontienda2.domain.repository.OrderRepository
+import com.example.gestiontienda2.domain.repository.OrderRepository
 import com.gestiontienda2.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

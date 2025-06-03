@@ -1,5 +1,6 @@
-package com.gestiontienda2.presentation.ui.financialreports // Replace with your actual package name
+package com.example.gestiontienda2.presentation.ui.financialreports // Replace with your actual package name
 
+import androidx.camera.core.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,7 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.glance.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.wear.tiles.tooling.preview.Preview
 import com.gestiontienda2.presentation.viewmodels.PurchaseReportViewModel
 import com.gestiontienda2.ui.theme.YourAppTheme
 

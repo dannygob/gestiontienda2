@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Client
 import com.gestiontienda2.domain.models.Sale
-import com.gestiontienda2.domain.repository.ClientRepository
+import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.gestiontienda2.domain.repository.SaleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

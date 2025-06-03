@@ -1,3 +1,5 @@
+package com.example.gestiontienda2.presentation.ui.financialreports
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

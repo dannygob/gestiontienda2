@@ -6,5 +6,5 @@ data class Sale(
     val saleDate: Long,
     val clientId: Int,
     val totalAmount: Double,
-    val items: List<SaleItem>
+    val items: List<Product.SaleItem>
 )

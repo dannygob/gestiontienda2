@@ -1,4 +1,4 @@
-package com.bizsync.bizsync.presentation.ui.inventory
+package com.example.gestiontienda2.presentation.ui.inventory
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -11,11 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bizsync.bizsync.presentation.viewmodels.InventoryDetailViewModel
+import com.example.your_app_name.presentation.viewmodels.inventory.InventoryDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryDetailScreen(
-    viewModel: InventoryDetailViewModel = hiltViewModel(),
+    viewModel: InventoryDetailViewModel<Any?> = hiltViewModel(),
     productId: Int,
     navigateBack: () -> Unit
 ) {

@@ -1,6 +1,6 @@
 package com.gestiontienda2.domain.repository
 
-import com.gestiontienda2.domain.models.Provider
+import com.example.gestiontienda2.domain.models.Provider
 import kotlinx.coroutines.flow.Flow
 
 interface ProviderRepository {

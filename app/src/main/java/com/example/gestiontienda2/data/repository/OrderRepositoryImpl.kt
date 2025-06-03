@@ -1,18 +1,19 @@
 package com.example.gestiontienda2.data.repository
 
-import com.gestiontienda2.data.local.room.dao.ClientDao
-import com.gestiontienda2.data.local.room.dao.OrderDao
-import com.gestiontienda2.data.local.room.dao.ProductDao
-import com.gestiontienda2.data.local.room.entities.OrderEntity
-import com.gestiontienda2.data.local.room.entities.OrderItemEntity
+import com.example.gestiontienda2.data.local.room.dao.ClientDao
+import com.example.gestiontienda2.data.local.room.dao.OrderDao
+import com.example.gestiontienda2.data.local.room.dao.ProductDao
+import com.example.gestiontienda2.data.local.room.entities.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.OrderItemEntity
+import com.example.gestiontienda2.data.local.room.entities.OrderWithItems
 import com.example.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource
-import com.gestiontienda2.data.remote.firebase.models.OrderFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.OrderFirebase
 import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.gestiontienda2.domain.models.Product
-import com.gestiontienda2.domain.repository.OrderRepository
+import com.example.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -165,7 +166,7 @@ private fun OrderFirebase.toRoomEntity(): OrderEntity {
     )
 }
 
-private fun com.gestiontienda2.data.local.room.entities.OrderWithItems.toDomain(
+private fun OrderWithItems.toDomain(
     clients: List<Client>,
     products: List<Product>
 ): Order {

@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.domain.models.ServiceExpense
 import com.gestiontienda2.presentation.ui.common.SavingState
-import com.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*

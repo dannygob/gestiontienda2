@@ -1,6 +1,7 @@
-package com.gestiontienda2.data.remote.api
+package com.example.gestiontienda2.data.remote.api
 
 import com.gestiontienda2.domain.models.Product
+import com.google.android.gms.analytics.ecommerce.Product
 
 data class ProductApiResponse(
     val product_name: String?,

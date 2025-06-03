@@ -1,6 +1,6 @@
-package com.gestiontiendas2.yourapp.domain.repository
+package com.example.gestiontienda2.domain.repository
 
-import com.gestiontiendas2.yourapp.domain.models.ServiceExpense
+import com.gestiontiendas2.data.domain.models.ServiceExpense
 import kotlinx.coroutines.flow.Flow
 
 interface ServiceExpenseRepository {

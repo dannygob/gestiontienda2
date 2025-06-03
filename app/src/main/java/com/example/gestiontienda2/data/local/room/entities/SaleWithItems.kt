@@ -1,7 +1,9 @@
-package com.gestiontienda2.data.local.room.entities
+package com.example.gestiontienda2.data.local.room.entities
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.gestiontienda2.data.local.room.entities.SaleEntity
+import com.example.gestiontienda2.data.local.room.entities.SaleItemEntity
 
 data class SaleWithItems(
     @Embedded val sale: SaleEntity,

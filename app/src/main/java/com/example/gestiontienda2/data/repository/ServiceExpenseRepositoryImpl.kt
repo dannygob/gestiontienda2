@@ -1,9 +1,9 @@
 package com.example.gestiontienda2.data.repository
 
-import com.gestiontienda2.data.local.dao.ServiceExpenseDao
+import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
+import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
 import com.gestiontienda2.data.local.entities.ServiceExpenseEntity
 import com.gestiontienda2.domain.models.ServiceExpense
-import com.gestiontienda2.domain.repository.ServiceExpenseRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

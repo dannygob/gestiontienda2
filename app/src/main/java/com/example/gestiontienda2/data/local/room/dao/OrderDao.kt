@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.local.room.dao
+package com.example.gestiontienda2.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.gestiontienda2.data.local.room.entities.OrderEntity
-import com.gestiontienda2.data.local.room.entities.OrderWithItems
+import com.example.gestiontienda2.data.local.room.entities.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.OrderWithItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,6 +1,7 @@
 package com.gestiontienda2.domain.repository
 
-import com.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
+
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
@@ -10,4 +11,5 @@ interface ProductRepository {
     suspend fun getProductById(id: Int): Product?
     suspend fun updateProduct(product: Product) // This line is already present, confirming it remains
     suspend fun deleteProduct(product: Product)
+  suspend fun insertProduct(product: Product)
 }

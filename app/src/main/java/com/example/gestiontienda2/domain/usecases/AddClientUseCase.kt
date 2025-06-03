@@ -1,7 +1,9 @@
-package com.inventoryapp.domain.usecases
+package com.example.gestiontienda2.domain.usecases
 
-import com.inventoryapp.domain.model.Client
-import com.inventoryapp.domain.repository.ClientRepository
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.repository.ClientRepository
+
+
 import javax.inject.Inject
 
 class AddClientUseCase @Inject constructor(

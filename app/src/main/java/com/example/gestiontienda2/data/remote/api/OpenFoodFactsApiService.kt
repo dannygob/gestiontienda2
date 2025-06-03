@@ -11,6 +11,10 @@ interface OpenFoodFactsApiService {
     suspend fun getProductByBarcode(
         @Path("barcode") barcode: String
     ): Response<OpenFoodFactsProductResponse>
+
+    class OpenFoodFactsProductResponse {
+
+    }
 }
 
 // You'll need to define OpenFoodFactsProductResponse data class

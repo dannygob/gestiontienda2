@@ -1,7 +1,12 @@
-import com.gestiontienda2.data.local.dao.ClientDao
-import com.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.room.entities.SaleEntity
+import com.example.gestiontienda2.data.local.room.entities.SaleItemEntity
+import com.example.gestiontienda2.data.local.room.entities.SaleWithItems
+import com.example.gestiontienda2.data.local.dao.ClientDao
+import com.example.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.dao.SaleDao
 import com.gestiontienda2.data.local.dao.SaleDao
 import com.example.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
+import com.example.gestiontienda2.domain.models.Sale
 import com.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.gestiontienda2.domain.repository.SaleRepository
@@ -128,8 +133,8 @@ class SaleRepositoryImpl @Inject constructor(
     }
 
     // region Mappers
-    private fun Sale.toSaleEntity(): com.gestiontienda2.data.local.room.entities.SaleEntity {
-        return com.your_app_name.data.local.room.entities.SaleEntity(
+    private fun Sale.toSaleEntity(): SaleEntity {
+        return com.gestiontienda2.data.local.room.entities.SaleEntity(
             id = id,
             date = date,
             clientId = clientId,
@@ -137,7 +142,7 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun com.gestiontienda2.data.local.room.entities.SaleWithItems.toDomain(productDao: ProductDao): Sale {
+    private fun SaleWithItems.toDomain(productDao: ProductDao): Sale {
         // This mapping requires fetching product details for each SaleItem.
         // In a real app, you might optimize this or fetch product details separately in the ViewModel.
         val saleItems = items.mapNotNull { saleItemEntity ->
@@ -154,8 +159,8 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun SaleItem.toSaleItemEntity(saleId: Int): com.gestiontienda2.data.local.room.entities.SaleItemEntity {
-        return com.gestiontienda2.data.local.room.entities.SaleItemEntity(
+    private fun SaleItem.toSaleItemEntity(saleId: Int): SaleItemEntity {
+        return SaleItemEntity(
             id = id,
             saleId = saleId,
             productId = productId,
@@ -164,7 +169,7 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun com.gestiontienda2.data.local.room.entities.SaleItemEntity.toDomain(product: com.gestiontienda2.domain.models.Product? = null): SaleItem {
+    private fun SaleItemEntity.toDomain(product: com.gestiontienda2.domain.models.Product? = null): SaleItem {
         return SaleItem(
             id = id,
             saleId = saleId,

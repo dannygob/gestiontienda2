@@ -1,4 +1,4 @@
-package com.gestiontienda2.domain.repository
+package com.example.gestiontienda2.domain.repository
 
 import com.example.gestiontienda2.domain.models.Order
 import kotlinx.coroutines.flow.Flow
@@ -13,4 +13,5 @@ interface OrderRepository {
     suspend fun updateOrder(order: Order)
 
     suspend fun deleteOrder(order: Order)
+    suspend fun getOrders(): Flow<List<Order>>
 }

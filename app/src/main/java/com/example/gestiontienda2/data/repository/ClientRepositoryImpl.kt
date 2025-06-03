@@ -1,11 +1,11 @@
 package com.example.gestiontienda2.data.repository
 
 import com.gestiontienda2.data.local.entities.toEntity
-import com.gestiontienda2.data.local.room.dao.ClientDao
+import com.example.gestiontienda2.data.local.room.dao.ClientDao
 import com.gestiontienda2.data.remote.firebase.toDomain
 import com.gestiontienda2.data.remote.firebase.toFirebase
 import com.example.gestiontienda2.domain.models.Client
-import com.gestiontienda2.domain.repository.ClientRepository
+import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

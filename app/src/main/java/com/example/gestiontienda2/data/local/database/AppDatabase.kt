@@ -4,22 +4,23 @@ package com.example.gestiontienda2.data.local.database
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
-import com.gestiontienda2.data.local.dao.ClientDao
-import com.gestiontienda2.data.local.dao.OrderDao
-import com.gestiontienda2.data.local.dao.ProviderDao
-import com.gestiontienda2.data.local.dao.PurchaseDao
-import com.gestiontienda2.data.local.dao.SaleDao
-import com.gestiontienda2.data.local.dao.ServiceExpenseDao
+import com.example.gestiontienda2.data.local.dao.ClientDao
+import com.example.gestiontienda2.data.local.dao.OrderDao
+import com.example.gestiontienda2.data.local.dao.ProviderDao
+import com.example.gestiontienda2.data.local.dao.PurchaseDao
+import com.example.gestiontienda2.data.local.dao.SaleDao
+import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
 import com.gestiontienda2.data.local.database.migrations.MIGRATION_6_7
-import com.gestiontienda2.data.local.entities.ClientEntity
-import com.gestiontienda2.data.local.entities.OrderEntity
-import com.gestiontienda2.data.local.entities.ProductEntity
-import com.gestiontienda2.data.local.entities.ProviderEntity
-import com.gestiontienda2.data.local.entities.PurchaseDetailEntity
-import com.gestiontienda2.data.local.entities.PurchaseEntity
-import com.gestiontienda2.data.local.entities.SaleDetailEntity
-import com.gestiontienda2.data.local.entities.SaleEntity
-import com.gestiontienda2.data.local.entities.ServiceExpenseEntity
+import com.example.gestiontienda2.data.local.room.entities.ClientEntity
+import com.example.gestiontienda2.data.local.room.entities.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.ProductEntity
+import com.example.gestiontienda2.data.local.room.entities.ProviderEntity
+import com.example.gestiontienda2.data.local.room.entities.PurchaseDetailEntity
+import com.example.gestiontienda2.data.local.room.entities.PurchaseEntity
+import com.example.gestiontienda2.data.local.room.entities.SaleDetailEntity
+import com.example.gestiontienda2.data.local.room.entities.SaleEntity
+import com.example.gestiontienda2.data.local.room.entities.ServiceExpenseEntity
+
 
 @Database(
     entities = [ProductEntity::class, ClientEntity::class, SaleEntity::class, SaleDetailEntity::class, PurchaseEntity::class, PurchaseDetailEntity::class, ProviderEntity::class, OrderEntity::class, ServiceExpenseEntity::class],

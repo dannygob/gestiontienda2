@@ -1,6 +1,6 @@
 package com.example.gestiontienda2.data.remote.firebase.datasource
 
-import app.data.remote.firebase.models.ServiceExpenseFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.ServiceExpenseFirebase
 import kotlinx.coroutines.flow.Flow
 
 interface ServiceExpenseFirebaseDataSource {

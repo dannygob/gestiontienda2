@@ -306,8 +306,7 @@ if (showDatePicker) {
             navigateBack()
         }
 }
-}
-}
+
 
 // Client Selection Dialog
 if (showClientDialog) {

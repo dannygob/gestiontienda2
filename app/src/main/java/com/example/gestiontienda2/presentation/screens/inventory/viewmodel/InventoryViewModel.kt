@@ -2,8 +2,8 @@ package com.gestiontienda2.presentation.screens.inventory.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gestiontienda2.data.local.dao.ProductDao
-import com.gestiontienda2.data.local.entities.ProductEntity
+import com.example.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.room.entities.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +16,7 @@ class InventoryViewModel @Inject constructor(
     private val productDao: ProductDao
 ) : ViewModel() {
 
+    val error: Any
     private val _products = MutableStateFlow<List<ProductEntity>>(emptyList())
     val products: StateFlow<List<ProductEntity>> = _products.asStateFlow()
 
@@ -23,7 +24,7 @@ class InventoryViewModel @Inject constructor(
         getAllProducts()
     }
 
-    fun getAllProducts() {
+    private fun getAllProducts() {
         viewModelScope.launch {
             productDao.getAllProducts().collect { productList ->
                 _products.value = productList

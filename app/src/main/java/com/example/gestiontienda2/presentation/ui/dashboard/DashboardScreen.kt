@@ -1,7 +1,10 @@
-package com.gestiontienda2.presentation.ui.dashboard
+package com.example.gestiontienda2.presentation.ui.dashboard
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier

@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.remote.firebase.models
+package com.example.gestiontienda2.data.remote.firebase.models
 
 import com.example.gestiontienda2.data.remote.firebase.models.PurchaseItemFirebase
 

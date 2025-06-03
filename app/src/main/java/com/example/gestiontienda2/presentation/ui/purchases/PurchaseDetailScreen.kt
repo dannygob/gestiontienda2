@@ -17,7 +17,7 @@ import androidx.compose.ui.clickable
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import com.gestiontienda2.presentation.viewmodels.PurchaseDetailViewModel
 import com.gestiontienda2.util.SavingState
 import java.text.SimpleDateFormat

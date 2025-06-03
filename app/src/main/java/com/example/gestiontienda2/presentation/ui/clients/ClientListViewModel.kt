@@ -1,9 +1,9 @@
-package com.inventory.app.presentation.ui.clients
+package com.example.gestiontienda2.presentation.ui.clients
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.inventory.app.domain.model.Client
-import com.inventory.app.domain.usecases.GetClientsUseCase
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

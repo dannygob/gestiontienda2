@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.remote.firebase.datasource.impl
+package com.example.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class ProviderFirebaseDataSourceImpl @Inject constructor
 
-private val firestore: FirebaseFirestore
+private val firestore: FirebaseFirestore = TODO()
 ) : ProviderFirebaseDataSource {
 
     private val providersCollection = firestore.collection("providers")

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gestiontienda2.domain.models.Provider
 import com.gestiontienda2.domain.usecases.GetProviderByIdUseCase
-import com.gestiontienda2.domain.usecases.UpdateProviderUseCase
+import com.example.gestiontienda2.domain.usecases.UpdateProviderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

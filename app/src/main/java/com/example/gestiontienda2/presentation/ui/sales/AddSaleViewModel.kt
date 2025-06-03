@@ -6,7 +6,7 @@ import com.example.gestiontienda2.domain.models.Client
 import com.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
-import com.gestiontienda2.domain.usecases.AddSaleUseCase
+import com.example.gestiontienda2.domain.usecases.AddSaleUseCase
 import com.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.gestiontienda2.util.Resource

@@ -1,7 +1,7 @@
-package com.example.minimarket.domain.usecases
+package com.example.gestiontienda2.domain.usecases
 
-import com.example.minimarket.domain.models.Product
-import com.example.minimarket.domain.repositories.ProductRepository
+import com.example.gestiontienda2.domain.models.Product
+import com.gestiontienda2.domain.repository.ProductRepository
 import javax.inject.Inject
 
 class UpdateProductUseCase @Inject constructor(

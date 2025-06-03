@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.local.room.dao
+package com.example.gestiontienda2.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.gestiontienda2.data.local.room.entities.ServiceExpenseEntity
+import com.example.gestiontienda2.data.local.room.entities.ServiceExpenseEntity
 
 @Dao
 interface ServiceExpenseDao {

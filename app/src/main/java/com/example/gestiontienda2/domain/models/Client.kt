@@ -1,6 +1,5 @@
 package com.example.gestiontienda2.domain.models
 
-
 data class Client(
     // Added id field
     val id: Int = 0,

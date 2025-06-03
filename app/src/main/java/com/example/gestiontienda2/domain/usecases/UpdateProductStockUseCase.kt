@@ -1,6 +1,6 @@
-package com.example.minimistore.domain.usecases
+package com.example.gestiontienda2.domain.usecases
 
-import com.example.minimistore.domain.repository.ProductRepository
+import com.gestiontienda2.domain.repository.ProductRepository
 import javax.inject.Inject
 
 class UpdateProductStockUseCase @Inject constructor(

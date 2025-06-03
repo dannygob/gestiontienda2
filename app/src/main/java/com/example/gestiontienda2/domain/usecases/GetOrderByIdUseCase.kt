@@ -1,7 +1,8 @@
-package app.domain.usecases
+package com.example.gestiontienda2.domain.usecases
 
-import app.domain.models.Order
-import app.domain.repository.OrderRepository
+
+import com.example.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.repository.OrderRepository
 import javax.inject.Inject
 
 class GetOrderByIdUseCase @Inject constructor(

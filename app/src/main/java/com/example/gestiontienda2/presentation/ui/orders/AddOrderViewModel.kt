@@ -6,9 +6,14 @@ import app.domain.models.Client
 import app.domain.models.Order
 import app.domain.models.OrderItem
 import app.domain.models.Product
-import app.domain.usecases.AddOrderUseCase
+import com.example.gestiontienda2.domain.usecases.AddOrderUseCase
 import app.domain.usecases.GetClientsUseCase
 import app.domain.usecases.GetProductsUseCase
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.OrderItem
+import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,6 +1,5 @@
 package com.example.gestiontienda2.domain.models
 
-import Product
 
 data class OrderItem(
     val id: Int = 0,

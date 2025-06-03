@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.Client
 import com.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.models.SaleItem
-import com.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import com.gestiontienda2.presentation.viewmodels.AddSaleViewModel
 import com.gestiontienda2.util.SavingState
 import java.text.SimpleDateFormat

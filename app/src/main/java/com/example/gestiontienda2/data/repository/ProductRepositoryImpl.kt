@@ -1,6 +1,7 @@
 package com.example.gestiontienda2.data.repository
 
-import com.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.domain.models.Product
 import com.gestiontienda2.data.remote.api.OpenFoodFactsApiService
 import com.gestiontienda2.data.remote.firebase.ProductFirebaseDataSource
 import com.gestiontienda2.domain.models.Product

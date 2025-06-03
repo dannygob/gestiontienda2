@@ -1,7 +1,7 @@
-package com.gestiontienda2.data.local.room.dao
+package com.example.gestiontienda2.data.local.room.dao
 
 import androidx.room.*
-import com.gestiontienda2.data.local.room.entities.ClientEntity
+import com.example.gestiontienda2.data.local.room.entities.ClientEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

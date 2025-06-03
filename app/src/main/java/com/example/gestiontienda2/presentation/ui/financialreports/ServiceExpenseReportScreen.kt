@@ -92,9 +92,9 @@ fun PreviewServiceExpenseReportScreen() {
                     ServiceExpense(3, "Internet", 60.0, System.currentTimeMillis())
                 )
             ).asStateFlow()
-        }
-}
-}
+
+
+        },
 
 @Preview(showBackground = true)
 @Composable

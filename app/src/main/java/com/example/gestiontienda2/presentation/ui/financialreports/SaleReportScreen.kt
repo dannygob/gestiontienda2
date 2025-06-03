@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.ui.financialreports // Replace with your actual package name
+package com.example.gestiontienda2.presentation.ui.financialreports // Replace with your actual package name
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -6,6 +6,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -13,8 +18,7 @@ import androidx.compose.ui.Modifier
 // import androidx.compose.ui.tooling.preview.Preview // Keep commented out or remove if not needed
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gestiontienda2.domain.models.Sale // Replace with your actual Sale model
-import com.gestiontienda2.presentation.viewmodels.SaleReportViewModel // Replace with your actual ViewModel
+import app.presentation.viewmodels.SaleReportViewModel
 
 @Composable
 fun SaleReportScreen(
@@ -74,7 +78,7 @@ fun SaleReportScreen(
 }
 
 @Composable
-fun SaleReportListItem(sale: Sale) {
+fun <Sale> SaleReportListItem(sale: Sale) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

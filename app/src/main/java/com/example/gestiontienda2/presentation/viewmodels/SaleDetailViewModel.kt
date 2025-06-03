@@ -7,7 +7,7 @@ import com.example.gestiontienda2.domain.models.Client
 import com.gestiontienda2.domain.models.Product
 import com.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
-import com.gestiontienda2.domain.repository.ClientRepository
+import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.gestiontienda2.domain.repository.ProductRepository
 import com.gestiontienda2.domain.repository.SaleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

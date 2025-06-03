@@ -1,6 +1,7 @@
 package com.gestiontienda2.domain.repository
 
-import com.gestiontienda2.domain.models.Sale
+import com.example.gestiontienda2.domain.models.Sale
+import com.example.gestiontienda2.domain.models.SaleDetail
 import kotlinx.coroutines.flow.Flow
 
 interface SaleRepository {
@@ -14,4 +15,7 @@ interface SaleRepository {
         startDate: Long?,
         endDate: Long?
     ): Flow<List<Sale>> // Or Flow<List<SaleWithItems>> if needed
+
+    fun insertSaleWithDetails   (sale: Sale, saleDetails: List<SaleDetail>)
+    suspend fun getSales(): Flow<List<Sale>>
 }

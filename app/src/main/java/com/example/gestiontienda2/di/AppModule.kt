@@ -1,5 +1,6 @@
-package com.gestiontienda2.di
+package com.example.gestiontienda2.di
 
+import SaleRepositoryImpl
 import android.content.Context
 import androidx.room.Room
 import com.example.gestiontienda2.data.repository.OrderRepositoryImpl
@@ -7,7 +8,12 @@ import com.example.gestiontienda2.data.repository.ProductRepositoryImpl
 import com.example.gestiontienda2.data.repository.ProviderRepositoryImpl
 import com.example.gestiontienda2.data.repository.PurchaseRepositoryImpl
 import com.example.gestiontienda2.data.repository.ServiceExpenseRepositoryImpl
-import com.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.repository.ClientRepositoryImpl
+import com.example.gestiontienda2.domain.repository.ClientRepository
+import com.example.gestiontienda2.domain.repository.OrderRepository
+import com.example.gestiontienda2.domain.repository.PurchaseRepository
+import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
 import com.gestiontienda2.data.local.database.AppDatabase
 import com.gestiontienda2.data.remote.api.OpenFoodFactsApiService
 import com.gestiontienda2.data.repository.*
