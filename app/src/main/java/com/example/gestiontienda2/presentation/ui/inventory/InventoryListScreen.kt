@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.gestiontienda2.presentation.screens.inventory.viewmodel.InventoryViewModel
-import com.gestiontienda2.presentation.viewmodels.InventoryViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

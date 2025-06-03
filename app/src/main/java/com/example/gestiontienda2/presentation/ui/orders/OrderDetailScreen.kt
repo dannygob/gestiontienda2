@@ -1,32 +1,43 @@
+package com.example.gestiontienda2.presentation.ui.orders
+
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.gestiontienda2.presentation.ui.addproduct.SavingState
 import com.gestiontienda2.domain.models.OrderStatus
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
-import com.gestiontienda2.presentation.viewmodels.OrderDetailViewModel.SavingState
-import java.text.SimpleDateFormat
+
 import java.util.*
 
-ppackage com.your_app_name.presentation.ui.orders
-
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Delete // Import Delete icon
-import androidx.compose.material.icons.filled.ArrowBack // Import ArrowBack for the back icon
+
 import androidx.compose.material.icons.filled.CalendarToday // Import CalendarToday
-import androidx.compose.material.icons.filled.Edit // Import Edit icon
+
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gestiontienda2.domain.models.OrderStatus // Import OrderStatus
-import com.gestiontienda2.presentation.viewmodels.OrderDetailViewModel.SavingState // Import SavingState
+
 
 @Composable
 fun OrderDetailScreen(
