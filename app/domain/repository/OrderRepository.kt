@@ -13,4 +13,6 @@ interface OrderRepository {
     suspend fun updateOrder(order: Order)
 
     suspend fun deleteOrder(order: Order)
+
+    suspend fun updateOrderStatus(orderId: Long, newStatus: String)
 }

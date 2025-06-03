@@ -45,9 +45,9 @@ class PurchaseRepositoryImpl @Inject constructor(
         return purchaseDao.getTotalPurchaseAmount(startDate, endDate)
     }
 
- override fun getPurchasesByDateRange(startDate: Long?, endDate: Long?): Flow<List<PurchaseWithItems>> {
+ override fun getPurchasesByDateRange(startDate: Long?, endDate: Long?): Flow<List<Purchase>> {
  return purchaseDao.getPurchasesWithItemsByDateRange(startDate, endDate).map { entities ->
-            entities.map { it.toDomain() }
+            entities.map { it.toDomain() } // Assuming this results in List<Purchase>
  }
  }
 

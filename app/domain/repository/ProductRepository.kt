@@ -10,4 +10,8 @@ interface ProductRepository {
     suspend fun getProductById(id: Int): Product?
     suspend fun updateProduct(product: Product) // This line is already present, confirming it remains
     suspend fun deleteProduct(product: Product)
+
+    suspend fun insertProduct(product: Product)
+    suspend fun updateProductStockQuantity(productId: Long, newStock: Int)
+    suspend fun updateProductReservedStockQuantity(productId: Long, newReservedStock: Int)
 }
