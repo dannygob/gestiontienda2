@@ -1,4 +1,4 @@
-package com.example.inventorymanagement.presentation.ui.productdetail
+package com.your_app_name.presentation.ui.productdetail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.inventorymanagement.domain.model.Product
+import com.your_app_name.domain.models.Product
 
 @Composable
 fun ProductDetailScreen(
@@ -106,15 +106,15 @@ fun ProductDetailScreen(
                                 modifier = Modifier.fillMaxWidth()
                             )
                             OutlinedTextField(
-                                value = product.stock.toString(),
-                                onValueChange = { viewModel.updateProductStock(it.toIntOrNull() ?: 0) }, // Assuming update function exists
-                                label = { Text("Stock") },
+                                value = product.stockQuantity.toString(), // Assuming product.stockQuantity is the field to edit
+                                onValueChange = { viewModel.updateProductStock(it.toIntOrNull() ?: 0) },
+                                label = { Text("Stock Quantity") }, // Changed label
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 modifier = Modifier.fillMaxWidth()
                             )
                             OutlinedTextField(
-                                value = product.providerId,
-                                onValueChange = { viewModel.updateProductProviderId(it) }, // Assuming update function exists
+                                value = product.providerId ?: "", // Assuming providerId can be null
+                                onValueChange = { viewModel.updateProductProviderId(it) },
                                 label = { Text("Provider ID") },
                                 modifier = Modifier.fillMaxWidth()
                             )
@@ -126,14 +126,14 @@ fun ProductDetailScreen(
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(text = "Name: ${product.name}", style = MaterialTheme.typography.h6)
-                            Text(text = "Barcode: ${product.barcode}")
+                            Text(text = "Barcode: ${product.barcode ?: "N/A"}")
                             Text(text = "Purchase Price: ${product.purchasePrice}")
                             Text(text = "Sale Price: ${product.salePrice}")
-                            Text(text = "Category: ${product.category}")
-                            Text(text = "Stock Available: ${product.availableStock}")
-                            Text(text = "Stock Total: ${product.stockQuantity}") // Display total stock
-                            Text(text = "Stock Reserved: ${product.reservedStockQuantity}") // Display reserved stock
-                            Text(text = "Provider ID: ${product.providerId}")
+                            Text(text = "Category: ${product.category ?: "N/A"}")
+                            Text(text = "Available Stock: ${product.availableStock ?: 0}")
+                            Text(text = "Total Stock: ${product.stockQuantity ?: 0}")
+                            Text(text = "Reserved Stock: ${product.reservedStockQuantity ?: 0}")
+                            Text(text = "Provider ID: ${product.providerId ?: "N/A"}")
 
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(text = "Stock Adjustment", style = MaterialTheme.typography.h6)
@@ -181,7 +181,7 @@ fun ProductDetailScreen(
 
                             // Basic saving state indication for edit mode
                             if (editMode && savingState == ProductDetailViewModel.SavingState.Saving) CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-                            if (editMode && savingState is ProductDetailViewModel.SavingState.Error) Text("Save Error: ${savingState.message}", color = MaterialTheme.colors.error, modifier = Modifier.align(Alignment.CenterHorizontally))
+                            if (editMode && savingState is ProductDetailViewModel.SavingState.Error) Text("Save Error: ${(savingState as ProductDetailViewModel.SavingState.Error).message}", color = MaterialTheme.colors.error, modifier = Modifier.align(Alignment.CenterHorizontally))
                         }
                     }
                 }

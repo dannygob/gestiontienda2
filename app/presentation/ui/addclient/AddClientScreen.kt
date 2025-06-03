@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.util.SavingState // Assuming you have a SavingState sealed class
+// SavingState is defined in AddClientViewModel.kt in the same package
 
 @Composable
 fun AddClientScreen(
