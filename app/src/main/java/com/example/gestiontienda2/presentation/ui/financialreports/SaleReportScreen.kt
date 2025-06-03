@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 // import androidx.compose.ui.tooling.preview.Preview // Keep commented out or remove if not needed
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.presentation.viewmodels.SaleReportViewModel
+import com.example.gestiontienda2.presentation.viewmodels.SaleReportViewModel
 
 @Composable
 fun SaleReportScreen(

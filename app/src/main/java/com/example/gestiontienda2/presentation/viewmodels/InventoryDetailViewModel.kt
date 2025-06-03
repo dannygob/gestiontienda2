@@ -1,4 +1,4 @@
-package com.example.your_app_name.presentation.viewmodels.inventory
+package com.example.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.your_app_name.presentation.viewmodels.inventory.InventoryDetailViewModel
+import com.example.gestiontienda2.presentation.viewmodels.InventoryDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

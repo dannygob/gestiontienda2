@@ -4,8 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Client
-import com.gestiontienda2.domain.models.Product
-import com.gestiontienda2.domain.models.Sale
+import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.models.Sale
+
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.gestiontienda2.domain.repository.ProductRepository

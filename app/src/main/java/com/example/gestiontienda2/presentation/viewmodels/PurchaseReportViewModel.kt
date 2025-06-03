@@ -1,9 +1,9 @@
-package com.gestiontienda2.presentation.viewmodels
+package com.example.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gestiontienda2.domain.models.PurchaseWithItems
+import com.example.gestiontienda2.data.local.room.entities.PurchaseWithItems
 import com.example.gestiontienda2.domain.repository.PurchaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

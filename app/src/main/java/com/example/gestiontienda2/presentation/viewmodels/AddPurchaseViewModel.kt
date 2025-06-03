@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Purchase
 import com.example.gestiontienda2.domain.models.PurchaseItem
-import com.gestiontienda2.domain.repositories.PurchaseRepository
+import com.example.gestiontienda2.domain.repository.PurchaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +32,8 @@ class AddPurchaseViewModel @Inject constructor(
             providerId = 0, // Placeholder, you'll need to handle provider selection
             purchaseDate = System.currentTimeMillis(), // Default to current time
             items = emptyList(), // Start with an empty list of items
-            totalAmount = 0.0 // Calculate based on items
+            totalAmount = 0.0,
+            date = TODO() // Calculate based on items
             // Add other fields as needed
         )
     )

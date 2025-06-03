@@ -1,3 +1,12 @@
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.models.OrderItem
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
 // In OrderDetailViewModel.kt
 @HiltViewModel
 class OrderDetailViewModel @Inject constructor(

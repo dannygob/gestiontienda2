@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.tiles.tooling.preview.Preview
-import com.gestiontienda2.presentation.viewmodels.PurchaseReportViewModel
+import com.example.gestiontienda2.presentation.viewmodels.PurchaseReportViewModel
 import com.gestiontienda2.ui.theme.YourAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
