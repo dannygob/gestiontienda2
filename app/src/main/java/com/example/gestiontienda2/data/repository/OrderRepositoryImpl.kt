@@ -41,65 +41,55 @@ class OrderRepositoryImpl @Inject constructor(
                 emit(firebaseOrders.map { it.toDomain(clients, products) })
             }
         } catch (e: Exception) {
-            val roomOrdersWithItems = orderDao.getAllOrdersWithItems()
-            val clients = clientDao.getAllClientsBlocking()
-            val products = productDao.getAllProductsBlocking()
-            emit(roomOrdersWithItems.map { it.toDomain(clients, products) })
+            emit(
+                orderDao.getAllOrdersWithItems().map {
+                    it.toDomain(
+                        clientDao.getAllClientsBlocking(),
+                        productDao.getAllProductsBlocking()
+                    )
+                })
         }
     }
 
     override suspend fun getOrderById(orderId: Int): Order? = withContext(ioDispatcher) {
         try {
-            val firebaseOrder = orderFirebaseDataSource.getOrderById(orderId.toString())
-            firebaseOrder?.let {
-                val roomEntity = it.toRoomEntity()
-                orderDao.insertOrder(roomEntity)
-
-                val clients = clientDao.getAllClientsBlocking()
-                val products = productDao.getAllProductsBlocking()
-                return@withContext it.toDomain(clients, products)
+            orderFirebaseDataSource.getOrderById(orderId.toString())?.let {
+                orderDao.insertOrder(it.toRoomEntity())
+                return@withContext it.toDomain(
+                    clientDao.getAllClientsBlocking(),
+                    productDao.getAllProductsBlocking()
+                )
             }
-        } catch (e: Exception) {
-            val roomOrderWithItems = orderDao.getOrderWithItemsById(orderId)
-            return@withContext roomOrderWithItems?.toDomain(
-                clientDao.getAllClientsBlocking(),
-                productDao.getAllProductsBlocking()
-            )
+        } catch (_: Exception) {
+            return@withContext orderDao.getOrderWithItemsById(orderId)
+                ?.toDomain(clientDao.getAllClientsBlocking(), productDao.getAllProductsBlocking())
         }
     }
 
     override suspend fun addOrder(order: Order): Long = withContext(ioDispatcher) {
         val orderId = orderDao.insertOrder(order.toEntity())
-        val orderItemEntities = order.items.map { it.toEntity(orderId.toInt()) }
-        orderDao.insertOrderItems(orderItemEntities)
-
+        orderDao.insertOrderItems(order.items.map { it.toEntity(orderId.toInt()) })
         try {
             orderFirebaseDataSource.addOrder(order.toFirebaseModel(orderId.toString()))
-        } catch (e: Exception) {
-            // Manejo de error en Firebase
+        } catch (_: Exception) {
         }
-
         return@withContext orderId
     }
 
     override suspend fun updateOrder(order: Order) = withContext(ioDispatcher) {
         orderDao.updateOrder(order.toEntity())
-
         try {
-            val firebaseOrder = order.toFirebaseModel(order.id.toString())
-            orderFirebaseDataSource.updateOrder(firebaseOrder)
-        } catch (e: Exception) {
-            // Manejo de error en Firebase
+            orderFirebaseDataSource.updateOrder(order.toFirebaseModel(order.id.toString()))
+        } catch (_: Exception) {
         }
     }
 
     override suspend fun deleteOrder(order: Order) = withContext(ioDispatcher) {
+        orderDao.deleteOrder(order.toEntity())
+        orderDao.deleteOrderItemsForOrder(order.id)
         try {
             orderFirebaseDataSource.deleteOrder(order.id.toString())
-            orderDao.deleteOrder(order.toEntity())
-            orderDao.deleteOrderItemsForOrder(order.id)
-        } catch (e: Exception) {
-            // Manejo de error en Firebase
+        } catch (_: Exception) {
         }
     }
 
