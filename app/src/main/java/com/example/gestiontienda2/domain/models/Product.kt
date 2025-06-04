@@ -9,5 +9,7 @@ data class Product(
     val salePrice: Double,
     val category: String,
     val stock: Int,
-    val providerId: Int
-)
+    val providerId: Int,
+) {
+    annotation class SaleItem
+}

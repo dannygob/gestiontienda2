@@ -12,7 +12,7 @@ import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
-import com.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -24,137 +24,83 @@ import kotlin.coroutines.CoroutineContext
 class OrderRepositoryImpl @Inject constructor(
     private val orderDao: OrderDao,
     private val orderFirebaseDataSource: OrderFirebaseDataSource,
-    private val productDao: ProductDao, // Inject ProductDao
-    private val clientDao: ClientDao,    // Inject ClientDao
-    private val ioDispatcher: CoroutineContext // Inject dispatcher
+    private val productDao: ProductDao,
+    private val clientDao: ClientDao,
+    private val ioDispatcher: CoroutineContext,
 ) : OrderRepository {
 
-    override fun getOrders(): Flow<List<Order>> =
-        // Combine flows from Room, ClientDao, and ProductDao
-        orderDao.getAllOrdersWithItems()
-            .combine(clientDao.getAllClients()) { ordersWithItems, clients ->
-                Pair(ordersWithItems, clients)
+    override suspend fun getOrders(): Flow<List<Order>> = flow {
+        try {
+            orderFirebaseDataSource.getOrders().collect { firebaseOrders ->
+                val roomOrders = firebaseOrders.map { it.toRoomEntity() }
+                orderDao.insertOrders(roomOrders)
+
+                val clients = clientDao.getAllClientsBlocking()
+                val products = productDao.getAllProductsBlocking()
+
+                emit(firebaseOrders.map { it.toDomain(clients, products) })
             }
-            .combine(productDao.getAllProducts()) { (ordersWithItems, clients), products ->
-                // Map Room entities to domain models using fetched clients and products
-                ordersWithItems.map { it.toDomain(clients, products) }
-            }
-            .onEach {
-                // Try to fetch from Firebase in the background and update Room
-                // This ensures the UI gets data quickly from Room while syncing with Firebase
-                // TODO: Implement a more robust synchronization strategy
-                // For now, a basic fetch and insert if online
-            }
-    try
-    {
-        orderFirebaseDataSource.getOrders().collect { firebaseOrders ->
-            val roomOrders = firebaseOrders.map { it.toRoomEntity() }
-            orderDao.insertOrders(roomOrders) // Insert into Room
-            // Fetch clients and products for mapping to domain
-            val clients =
-                clientDao.getAllClientsBlocking() // Blocking call for simplicity, consider Flow
-            val products =
-                productDao.getAllProductsBlocking() // Blocking call for simplicity, consider Flow
-            emit(firebaseOrders.map {
-                it.toDomain(
-                    clients,
-                    products
+        } catch (e: Exception) {
+            emit(
+                orderDao.getAllOrdersWithItems().map {
+                    it.toDomain(
+                        clientDao.getAllClientsBlocking(),
+                        productDao.getAllProductsBlocking()
+                    )
+                })
+        }
+    }
+
+    override suspend fun getOrderById(orderId: Int): Order? = withContext(ioDispatcher) {
+        try {
+            orderFirebaseDataSource.getOrderById(orderId.toString())?.let {
+                orderDao.insertOrder(it.toRoomEntity())
+                return@withContext it.toDomain(
+                    clientDao.getAllClientsBlocking(),
+                    productDao.getAllProductsBlocking()
                 )
-            }) // Emit Firebase data mapped to domain
-        }
-    } catch (e: Exception)
-    {
-        // If offline or Firebase error, rely on Room
-        orderDao.getAllOrdersWithItems().map { roomOrdersWithItems ->
-            // Fetch clients and products for mapping to domain
-            val clients = clientDao.getAllClientsBlocking()
-            val products = productDao.getAllProductsBlocking()
-            roomOrdersWithItems.map { it.toDomain(clients, products) }
-        }.collect { emit(it) }
-    }
-}
-
-override suspend fun updateOrderStatus(orderId: Long, newStatus: String) =
-    withContext(ioDispatcher) {
-        orderDao.updateOrderStatus(orderId, newStatus) // Update status in Room
-        // TODO: Consider updating status in Firebase as well if needed for synchronization
-    }
-
-
-override suspend fun getOrderById(orderId: Int): Order? = withContext(ioDispatcher) {
-    // Try Firebase first
-    try {
-        val firebaseOrder = orderFirebaseDataSource.getOrderById(orderId.toString())
-        if (firebaseOrder != null) {
-            val roomEntity = firebaseOrder.toRoomEntity()
-            orderDao.insertOrder(roomEntity) // Cache in Room
-            // Fetch clients and products for mapping to domain
-            val clients = clientDao.getAllClientsBlocking()
-            val products = productDao.getAllProductsBlocking()
-            return@withContext firebaseOrder.toDomain(clients, products)
-        }
-    } catch (e: Exception) {
-        // If Firebase fails, get from Room
-        val roomOrderWithItems = orderDao.getOrderWithItemsById(orderId)
-        if (roomOrderWithItems != null) {
-            // Fetch clients and products for mapping to domain
-            val clients = clientDao.getAllClientsBlocking()
-            val products = productDao.getAllProductsBlocking()
-            return@withContext roomOrderWithItems.toDomain(clients, products)
+            }
+        } catch (_: Exception) {
+            return@withContext orderDao.getOrderWithItemsById(orderId)
+                ?.toDomain(clientDao.getAllClientsBlocking(), productDao.getAllProductsBlocking())
         }
     }
-    // If not found in Firebase, try Room
-    val roomOrderWithItems = orderDao.getOrderWithItemsById(orderId)
-    if (roomOrderWithItems != null) {
-        val clients = clientDao.getAllClientsBlocking()
-        val products = productDao.getAllProductsBlocking()
-        return@withContext roomOrderWithItems.toDomain(clients, products)
-    }
-    return@withContext null
-}
 
-override suspend fun addOrder(order: Order): Long = withContext(ioDispatcher) {
-    val orderId = orderDao.insertOrder(order.toEntity()) // Insert into Room first
-    val orderItemEntities = order.items.map { it.toEntity(orderId.toInt()) }
-    orderDao.insertOrderItems(orderItemEntities)
-
-    // Add to Firebase
-    try {
-        val firebaseOrder = order.toFirebaseModel(orderId.toString())
-        orderFirebaseDataSource.addOrder(firebaseOrder)
-    } catch (e: Exception) {
-        // Handle Firebase add error (e.g., log, show message)
+    override suspend fun addOrder(order: Order): Long = withContext(ioDispatcher) {
+        val orderId = orderDao.insertOrder(order.toEntity())
+        orderDao.insertOrderItems(order.items.map { it.toEntity(orderId.toInt()) })
+        try {
+            orderFirebaseDataSource.addOrder(order.toFirebaseModel(orderId.toString()))
+        } catch (_: Exception) {
+        }
+        return@withContext orderId
     }
 
-    return@withContext orderId
-}
+    override suspend fun updateOrder(order: Order) = withContext(ioDispatcher) {
+        orderDao.updateOrder(order.toEntity())
+        try {
+            orderFirebaseDataSource.updateOrder(order.toFirebaseModel(order.id.toString()))
+        } catch (_: Exception) {
+        }
+    }
 
-override suspend fun updateOrder(order: Order) = withContext(ioDispatcher) {
-    orderDao.updateOrder(order.toEntity()) // Update Room
-    // TODO: Update order items in Room (delete old and insert new)
+    override suspend fun deleteOrder(order: Order) = withContext(ioDispatcher) {
+        orderDao.deleteOrder(order.toEntity())
+        orderDao.deleteOrderItemsForOrder(order.id)
+        try {
+            orderFirebaseDataSource.deleteOrder(order.id.toString())
+        } catch (_: Exception) {
+        }
+    }
 
-    // Update Firebase
-    try {
-        val firebaseOrder = order.toFirebaseModel(order.id.toString())
-        orderFirebaseDataSource.updateOrder(firebaseOrder)
-    } catch (e: Exception) {
-        // Handle Firebase update error
+    override suspend fun updateOrderStatus(orderId: Long, newStatus: String) {
+        withContext(ioDispatcher) {
+            orderDao.updateOrderStatus(orderId, newStatus)
+        }
     }
 }
 
-override suspend fun deleteOrder(order: Order) = withContext(ioDispatcher) {
-    orderDao.deleteOrder(order.toEntity()) // Delete from Room
-    orderDao.deleteOrderItemsForOrder(order.id) // Delete associated items
-
-    // Delete from Firebase
-    try {
-        orderFirebaseDataSource.deleteOrder(order.id.toString())
-    } catch (e: Exception) {
-        // Handle Firebase delete error
-    }
-}
-
-// region Mappers
+// region Mapeos y funciones auxiliares
 
 private fun OrderFirebase.toRoomEntity(): OrderEntity {
     return OrderEntity(
@@ -188,7 +134,7 @@ private fun OrderItemEntity.toDomain(products: Map<Int, Product>): OrderItem {
         productId = this.productId,
         quantity = this.quantity,
         priceAtOrder = this.priceAtOrder,
-        product = products[this.productId] // Get product details
+        product = products[this.productId]
     )
 }
 
@@ -234,8 +180,8 @@ private fun OrderItem.toFirebaseModel(): OrderItemFirebase {
 private fun OrderFirebase.toDomain(clients: List<Client>, products: List<Product>): Order {
     val client = clients.find { it.id.toString() == this.clientId }
     return Order(
-        id = this.id.toIntOrNull() ?: 0, // Handle potential ID conversion issues
-        clientId = this.clientId.toIntOrNull() ?: 0,
+        id = this.id.toIntOrNull() ?: -1,
+        clientId = this.clientId.toIntOrNull() ?: -1,
         orderDate = this.orderDate,
         status = this.status,
         totalAmount = this.totalAmount,
@@ -245,26 +191,13 @@ private fun OrderFirebase.toDomain(clients: List<Client>, products: List<Product
 
 private fun OrderItemFirebase.toDomain(products: Map<Int, Product>): OrderItem {
     return OrderItem(
-        id = 0, // Firebase items might not have a separate ID like Room
-        orderId = 0, // Order ID will be set when mapping the whole order
+        id = 0,
+        orderId = 0,
         productId = this.productId.toIntOrNull() ?: 0,
         quantity = this.quantity,
         priceAtOrder = this.priceAtOrder,
-        product = products[this.productId.toIntOrNull() ?: 0] // Get product details
-    )
-}
-
-// Helper function for RoomEntity to Domain mapping (used by OrderWithItems)
-private fun OrderEntity.toDomain(client: Client?, items: List<OrderItem>): Order {
-    return Order(
-        id = this.id,
-        clientId = this.clientId,
-        orderDate = this.orderDate,
-        status = this.status,
-        totalAmount = this.totalAmount,
-        items = items
+        product = products[this.productId.toIntOrNull() ?: 0]
     )
 }
 
 // endregion
-}

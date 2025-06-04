@@ -30,6 +30,7 @@ android {
 
 dependencies {
     // Room + KSP
+
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     implementation(libs.firebase.firestore.ktx)
@@ -84,7 +85,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx.v270)
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
-
+    implementation (libs.hilt.android)
+    implementation (libs.androidx.hilt.navigation.compose)
 
 
 }

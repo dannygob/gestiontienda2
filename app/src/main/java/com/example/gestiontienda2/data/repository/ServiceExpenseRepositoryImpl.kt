@@ -1,11 +1,16 @@
 package com.example.gestiontienda2.data.repository
 
+import android.R.attr.description
+import android.R.attr.id
+import android.R.attr.type
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
+import com.example.gestiontienda2.data.local.room.entities.ServiceExpenseEntity
 import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
-import com.gestiontienda2.data.local.entities.ServiceExpenseEntity
-import com.gestiontienda2.domain.models.ServiceExpense
+
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ServiceExpenseRepositoryImpl @Inject constructor(
@@ -13,7 +18,9 @@ class ServiceExpenseRepositoryImpl @Inject constructor(
 ) : ServiceExpenseRepository {
 
     override suspend fun insertServiceExpense(serviceExpense: ServiceExpense) {
-        serviceExpenseDao.insertServiceExpense(serviceExpense.toEntity())
+        withContext(Dispatchers.IO) {
+            serviceExpenseDao.insertServiceExpense(serviceExpense.toEntity())
+        }
     }
 
     override fun getAllServiceExpenses(): Flow<List<ServiceExpense>> {
@@ -29,28 +36,34 @@ class ServiceExpenseRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateServiceExpense(serviceExpense: ServiceExpense) {
-        serviceExpenseDao.updateServiceExpense(serviceExpense.toEntity())
+        withContext(Dispatchers.IO) {
+            serviceExpenseDao.updateServiceExpense(serviceExpense.toEntity())
+        }
     }
 
     override suspend fun deleteServiceExpense(serviceExpense: ServiceExpense) {
-        serviceExpenseDao.deleteServiceExpense(serviceExpense.toEntity())
+        withContext(Dispatchers.IO) {
+            serviceExpenseDao.deleteServiceExpense(serviceExpense.toEntity())
+        }
     }
 
     override suspend fun getTotalServiceExpenseAmount(startDate: Long?, endDate: Long?): Double {
-        return serviceExpenseDao.getTotalServiceExpenseAmount(startDate, endDate) ?: 0.0
+        return withContext(Dispatchers.IO) {
+            serviceExpenseDao.getTotalServiceExpenseAmount(startDate, endDate) ?: 0.0
+        }
+    }
+
+    override fun getServiceExpensesByDateRange(
+        startDate: Long?,
+        endDate: Long?,
+    ): Flow<List<ServiceExpense>> {
+        return serviceExpenseDao.getServiceExpensesByDateRange(startDate, endDate).map { entities ->
+            entities.map { it.toDomain() }
+        }
     }
 }
 
-override fun getServiceExpensesByDateRange(
-    startDate: Long?,
-    endDate: Long?
-): Flow<List<ServiceExpense>> {
-    return serviceExpenseDao.getServiceExpensesByDateRange(startDate, endDate).map { entities ->
-        entities.map { it.toDomain() }
-    }
-}
-
-// Mapper functions (you might want to put these in a separate mapping file)
+// Mapper functions
 fun ServiceExpense.toEntity(): ServiceExpenseEntity {
     return ServiceExpenseEntity(
         id = id,

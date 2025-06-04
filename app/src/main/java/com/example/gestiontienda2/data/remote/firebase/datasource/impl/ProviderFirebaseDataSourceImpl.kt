@@ -1,8 +1,11 @@
 package com.example.gestiontienda2.data.remote.firebase.datasource.impl
 
-import com.google.firebase.firestore.FirebaseFirestore
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
+ fix/repository-consistency
 import com.example.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
+
+import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -11,10 +14,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+
 class ProviderFirebaseDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : ProviderFirebaseDataSource {
 
+
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val providersCollection = firestore.collection("providers")
 
     override fun getAllProviders(): Flow<List<ProviderFirebase>> = flow {
@@ -22,7 +28,6 @@ class ProviderFirebaseDataSourceImpl @Inject constructor(
         val providers = snapshot.documents.mapNotNull { it.toObject(ProviderFirebase::class.java) }
         emit(providers)
     }.catch { e ->
-        // Log or handle the error
         emit(emptyList()) // Emit empty list on error
     }
 
@@ -31,7 +36,6 @@ class ProviderFirebaseDataSourceImpl @Inject constructor(
             providersCollection.document(providerId).get().await()
                 .toObject(ProviderFirebase::class.java)
         } catch (e: Exception) {
-            // Log or handle the error
             null
         }
     }
@@ -40,18 +44,15 @@ class ProviderFirebaseDataSourceImpl @Inject constructor(
         try {
             providersCollection.document(provider.id).set(provider).await()
         } catch (e: Exception) {
-            // Log or handle the error
-            throw e // Re-throw or handle as needed
+            throw e
         }
     }
 
     override suspend fun updateProvider(provider: ProviderFirebase) {
         try {
-            providersCollection.document(provider.id).set(provider)
-                .await() // Firestore set updates or creates
+            providersCollection.document(provider.id).set(provider).await()
         } catch (e: Exception) {
-            // Log or handle the error
-            throw e // Re-throw or handle as needed
+            throw e
         }
     }
 
@@ -59,8 +60,7 @@ class ProviderFirebaseDataSourceImpl @Inject constructor(
         try {
             providersCollection.document(provider.id).delete().await()
         } catch (e: Exception) {
-            // Log or handle the error
-            throw e // Re-throw or handle as needed
+            throw e
         }
     }
 }

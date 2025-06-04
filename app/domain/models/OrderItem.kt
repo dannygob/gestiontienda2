@@ -1,5 +1,7 @@
 package com.your_app_name.domain.models
 
+import com.your_app_name.domain.models.Product
+
 data class OrderItem(
     val id: Int = 0,
     val orderId: Int,
