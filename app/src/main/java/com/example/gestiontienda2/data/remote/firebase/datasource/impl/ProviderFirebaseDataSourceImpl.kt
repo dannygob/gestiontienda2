@@ -1,6 +1,9 @@
 package com.example.gestiontienda2.data.remote.firebase.datasource.impl
 
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
+ fix/repository-consistency
+import com.example.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
+
 import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +14,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProviderFirebaseDataSourceImpl @Inject constructor() : ProviderFirebaseDataSource {
+
+class ProviderFirebaseDataSourceImpl @Inject constructor(
+    private val firestore: FirebaseFirestore
+) : ProviderFirebaseDataSource {
+
 
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val providersCollection = firestore.collection("providers")
