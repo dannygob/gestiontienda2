@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.repository.ClientRepository
+import com.example.gestiontienda2.presentation.viewmodels.SaleListViewModel.SaleWithClient
 import com.gestiontienda2.domain.repository.SaleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SaleListViewModel @Inject constructor(
-    private val saleRepository: SaleRepository
-    private val clientRepository: ClientRepository // Inject ClientRepository
+    private val saleRepository: SaleRepository,
+    private val clientRepository: ClientRepository, // Inject ClientRepository
 ) : ViewModel() {
 
     // Data class to combine Sale and Client for the UI

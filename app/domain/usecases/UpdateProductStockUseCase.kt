@@ -1,6 +1,6 @@
-package com.your_app_name.domain.usecases
+package com.example.gestiontienda2.domain.usecases
 
-import com.your_app_name.domain.repository.ProductRepository
+import com.example.gestiontienda2.domain.repository.ProductRepository
 import javax.inject.Inject
 
 class UpdateProductStockUseCase @Inject constructor(
@@ -18,7 +18,7 @@ class UpdateProductStockUseCase @Inject constructor(
         // A more accurate approach might involve fetching the product first:
          val product = productRepository.getProductById(productId)
          product?.let {
-             val updatedProduct = it.copy(stock = newStock)
+             val updatedProduct = it.copy(stockQuantity = newStock)
              productRepository.updateProduct(updatedProduct)
          }
     }

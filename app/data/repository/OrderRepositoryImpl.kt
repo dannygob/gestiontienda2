@@ -1,18 +1,18 @@
-package com.your_app_name.data.repository
+package com.example.gestiontienda2.data.repository
 
-import com.your_app_name.data.local.room.dao.ClientDao
-import com.your_app_name.data.local.room.dao.OrderDao
-import com.your_app_name.data.local.room.dao.ProductDao
-import com.your_app_name.data.local.room.entities.OrderEntity
-import com.your_app_name.data.local.room.entities.OrderItemEntity
-import com.your_app_name.data.remote.firebase.datasource.OrderFirebaseDataSource
-import com.your_app_name.data.remote.firebase.models.OrderFirebase
-import com.your_app_name.data.remote.firebase.models.OrderItemFirebase
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Order
-import com.your_app_name.domain.models.OrderItem
-import com.your_app_name.domain.models.Product
-import com.your_app_name.domain.repository.OrderRepository
+import com.example.gestiontienda2.data.local.room.dao.ClientDao
+import com.example.gestiontienda2.data.local.room.dao.OrderDao
+import com.example.gestiontienda2.data.local.room.dao.ProductDao
+import com.example.gestiontienda2.data.local.room.entities.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.OrderItemEntity
+import com.example.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource
+import com.example.gestiontienda2.data.remote.firebase.models.OrderFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.models.OrderItem
+import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
@@ -155,14 +155,18 @@ class OrderRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun com.your_app_name.data.local.room.entities.OrderWithItems.toDomain(clients: List<Client>, products: List<Product>): Order {
-        return OrderEntity(
+private fun com.example.gestiontienda2.data.local.room.entities.OrderWithItems.toDomain(
+    clients: List<Client>,
+    products: List<Product>,
+): Order {
+    return Order(
             id = this.order.id,
             clientId = this.order.clientId,
             orderDate = this.order.orderDate,
             status = this.order.status,
-            totalAmount = this.order.totalAmount
-        ).toDomain(clients.find { it.id == this.order.clientId }, this.items.map { it.toDomain(products.associateBy { it.id }) })
+        totalAmount = this.order.totalAmount,
+        items = this.items.map { it.toDomain(products.associateBy { it.id }) }
+    )
     }
 
     private fun OrderItemEntity.toDomain(products: Map<Int, Product>): OrderItem {
@@ -172,7 +176,7 @@ class OrderRepositoryImpl @Inject constructor(
             productId = this.productId,
             quantity = this.quantity,
             priceAtOrder = this.priceAtOrder,
-            product = products[this.productId] // Get product details
+            product = products[this.productId]
         )
     }
 

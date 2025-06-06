@@ -9,17 +9,29 @@ import app.domain.models.Product
 import app.domain.usecases.AddOrderUseCase
 import app.domain.usecases.GetClientsUseCase
 import app.domain.usecases.GetProductsUseCase
+import app.domain.usecases.UpdateProductStockUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+enum class OrderStatus {
+    PENDING,
+    PROCESSING,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED
+}
 
 @HiltViewModel
 class AddOrderViewModel @Inject constructor(
     private val addOrderUseCase: AddOrderUseCase,
     private val getClientsUseCase: GetClientsUseCase,
-    private val getProductsUseCase: GetProductsUseCase
+    private val getProductsUseCase: GetProductsUseCase,
+    private val updateProductStockUseCase: UpdateProductStockUseCase,
 ) : ViewModel() {
 
     private val _selectedClient = MutableStateFlow<Client?>(null)
@@ -32,7 +44,7 @@ class AddOrderViewModel @Inject constructor(
     val totalAmount = _totalAmount.asStateFlow()
 
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
-    val savingState = _savingState.asStateFlow()
+    val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
     // State for lists to display in pickers (optional, can be fetched on demand)
     private val _clients = MutableStateFlow<List<Client>>(emptyList())
@@ -108,12 +120,12 @@ class AddOrderViewModel @Inject constructor(
 
     fun saveOrder() {
         viewModelScope.launch {
-            _savingState.value = SavingState.Loading
+            _savingState.update { SavingState.Loading }
             val client = _selectedClient.value
             val items = _selectedItems.value
 
             if (client == null || items.isEmpty()) {
-                _savingState.value = SavingState.Error("Please select a client and add items.")
+                _savingState.update { SavingState.Error("Please select a client and add items.") }
                 return@launch
             }
 
@@ -127,10 +139,23 @@ class AddOrderViewModel @Inject constructor(
             )
 
             try {
-                addOrderUseCase.execute(order)
-                _savingState.value = SavingState.Success
+                val orderId = addOrderUseCase.execute(order)
+
+                // Update product stock
+                items.forEach { item ->
+                    val product = item.product!!
+                    val newStock = product.stockQuantity - item.quantity
+                    try {
+                        updateProductStockUseCase.execute(product.id, newStock)
+                    } catch (e: Exception) {
+                        _savingState.update { SavingState.Error("Failed to update stock for product ${product.name}: ${e.message}") }
+                        return@launch
+                    }
+                }
+
+                _savingState.update { SavingState.Success }
             } catch (e: Exception) {
-                _savingState.value = SavingState.Error("Failed to save order: ${e.message}")
+                _savingState.update { SavingState.Error("Failed to save order: ${e.message}") }
             }
         }
     }
