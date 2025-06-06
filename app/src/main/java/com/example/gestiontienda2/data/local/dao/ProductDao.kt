@@ -21,6 +21,9 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProduct(product: ProductEntity)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAllProducts(products: List<ProductEntity>)
+
     @Update
     suspend fun updateProduct(product: ProductEntity)
 
@@ -32,5 +35,4 @@ interface ProductDao {
 
     @Query("UPDATE products SET reservedStockQuantity = :newReservedStock WHERE id = :productId")
     suspend fun updateReservedStockQuantity(productId: Long, newReservedStock: Int)
-suspend fun insertAllProducts(map: Any)
 }

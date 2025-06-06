@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.viewmodels // Adjust package name as needed
+package com.example.gestiontienda2.presentation.viewmodels // Adjust package name as needed
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

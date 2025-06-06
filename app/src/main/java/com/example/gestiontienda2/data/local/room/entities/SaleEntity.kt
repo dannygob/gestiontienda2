@@ -3,11 +3,11 @@ package com.example.gestiontienda2.data.local.room.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "sales")
 data class SaleEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val clientId: Int,
-    val saleDate: Long, // Or use String if you prefer
-    val totalAmount: Double
+    val id: Long = 0L,
+    val clientId: Long,
+    val date: Long,
+    val total: Double,
 )

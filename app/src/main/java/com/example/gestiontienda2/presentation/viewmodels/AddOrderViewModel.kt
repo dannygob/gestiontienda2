@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.viewmodels
+package com.example.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -101,7 +101,7 @@ class AddOrderViewModel @Inject constructor(
             }
 
             // If all items have sufficient stock, proceed to save and reserve
-            val orderId = orderRepository.insertOrder(orderToSave)
+            orderRepository.insertOrder(orderToSave)
             _savingState.value = SavingState.Success
             // Optionally reset _newOrder or navigate
 

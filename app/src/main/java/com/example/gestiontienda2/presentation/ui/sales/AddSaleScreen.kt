@@ -12,16 +12,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.clickable
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Product
-import com.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
-import com.gestiontienda2.presentation.viewmodels.AddSaleViewModel
+import com.example.gestiontienda2.presentation.viewmodels.AddSaleViewModel
 import com.gestiontienda2.util.SavingState
 import java.text.SimpleDateFormat
 import java.util.Date

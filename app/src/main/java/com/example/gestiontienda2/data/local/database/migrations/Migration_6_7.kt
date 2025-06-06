@@ -1,4 +1,4 @@
-package com.gestiontienda2.data.local.database.migrations // Make sure this package matches your project structure
+package com.example.gestiontienda2.data.local.database.migrations // Make sure this package matches your project structure
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase

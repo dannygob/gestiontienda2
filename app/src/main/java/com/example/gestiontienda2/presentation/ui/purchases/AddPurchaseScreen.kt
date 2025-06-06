@@ -20,9 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.models.PurchaseItem
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
-import com.gestiontienda2.presentation.viewmodels.AddPurchaseViewModel
-import com.gestiontienda2.presentation.viewmodels.SavingState
-import com.gestiontienda2.util.SavingState
+import com.example.gestiontienda2.presentation.viewmodels.AddPurchaseViewModel
+import com.example.gestiontienda2.presentation.viewmodels.SavingState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

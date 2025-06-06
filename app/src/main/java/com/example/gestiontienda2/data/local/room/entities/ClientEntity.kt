@@ -3,11 +3,13 @@ package com.example.gestiontienda2.data.local.room.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "orders")
+@Entity(tableName = "clients")
 data class ClientEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val clientId: Int,
-    val orderDate: Long, // Using Long for timestamp
-    val status: String,
-    val totalAmount: Double
+    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    val name: String,
+    val phone: String,
+    val address: String,
+    val email: String,
+    val paymentPreference: String,
 )
+

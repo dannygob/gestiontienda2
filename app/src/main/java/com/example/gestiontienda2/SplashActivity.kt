@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import com.example.gestiontienda2.presentation.ui.dashboard.DashboardScreen
 
 class SplashActivity : AppCompatActivity() {

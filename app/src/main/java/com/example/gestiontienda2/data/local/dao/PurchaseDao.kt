@@ -1,11 +1,18 @@
 package com.example.gestiontienda2.data.local.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import com.example.gestiontienda2.data.local.room.entities.PurchaseEntity
 import com.example.gestiontienda2.data.local.room.entities.PurchaseItemEntity
 import com.example.gestiontienda2.data.local.room.entities.PurchaseWithItems
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface PurchaseDao {
 
     @Transaction

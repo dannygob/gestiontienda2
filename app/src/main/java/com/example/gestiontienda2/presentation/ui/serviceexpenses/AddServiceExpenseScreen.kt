@@ -15,9 +15,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.domain.models.ServiceExpense
-import com.gestiontienda2.presentation.ui.common.SavingState
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
-import com.gestiontienda2.presentation.viewmodels.AddServiceExpenseViewModel
+import com.example.gestiontienda2.presentation.viewmodels.AddServiceExpenseViewModel
+import com.gestiontienda2.presentation.ui.common.SavingState
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,14 +34,13 @@ fun AddServiceExpenseScreen(
     val category = remember { mutableStateOf("") }
     val notes = remember { mutableStateOf("") }
     val savingState by viewModel.savingState.collectAsState()
-    val scaffoldState = rememberScaffoldState()
+    rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
     // Basic date formatting for display
-    val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 
     // State for date picker dialog
-    var showDatePickerDialog by remember { mutableStateOf(false) }
 
     // Date formatting for display
     val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())

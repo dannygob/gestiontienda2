@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.SaleItem
-import com.gestiontienda2.presentation.viewmodels.SaleDetailViewModel
+import com.example.gestiontienda2.presentation.viewmodels.SaleDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 
@@ -28,7 +28,6 @@ private fun SaleDetailScreen(
     navigateBack: () -> Unit
 ) {
     val editMode by viewModel.editMode.collectAsState()
-    val savingState by viewModel.savingState.collectAsState() // Assuming savingState is a Flow in ViewModel
 
     // State for delete confirmation dialog
     var showDeleteConfirmation by remember { mutableStateOf(false) }
@@ -38,8 +37,8 @@ private fun SaleDetailScreen(
     val savingState by viewModel.savingState.collectAsState()
 
     val sale = detailedSaleState.sale
-    val client = detailedSaleState.client
-    val itemsWithProducts = detailedSaleState.itemsWithProducts
+    detailedSaleState.client
+    detailedSaleState.itemsWithProducts
     val loading = detailedSaleState.isLoading
     topBar = {
         TopAppBar(

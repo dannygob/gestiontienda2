@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.local.dao
+package com.example.gestiontienda2.data.remote.firebase.datasource.impl
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -33,4 +33,3 @@ interface ClientDao {
     @Query("SELECT * FROM clients")
     fun getAllClientsBlocking(): List<ClientEntity>
 }
-
