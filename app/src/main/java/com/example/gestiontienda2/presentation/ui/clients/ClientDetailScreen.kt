@@ -139,9 +139,9 @@ fun ClientDetailScreen(
                         } else {
                             Text(text = "Name: ${client.name}", style = MaterialTheme.typography.h6)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(text = "Phone: ${client.phone ?: "N/A"}")
+                            Text(text = "Phone: ${client.phone}")
                             Text(text = "Email: ${client.email ?: "N/A"}")
-                            Text(text = "Address: ${client.address ?: "N/A"}")
+                            Text(text = "Address: ${client.address}")
                             // Display other client details here
                         }
                     }

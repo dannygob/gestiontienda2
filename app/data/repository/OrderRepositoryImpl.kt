@@ -1,10 +1,11 @@
 package com.example.gestiontienda2.data.repository
 
-import com.example.gestiontienda2.data.local.room.dao.ClientDao
-import com.example.gestiontienda2.data.local.room.dao.OrderDao
-import com.example.gestiontienda2.data.local.room.dao.ProductDao
-import com.example.gestiontienda2.data.local.room.entities.OrderEntity
-import com.example.gestiontienda2.data.local.room.entities.OrderItemEntity
+import com.example.gestiontienda2.data.local.dao.ClientDao
+import com.example.gestiontienda2.data.local.dao.OrderDao
+import com.example.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.room.entities.OrderWithItems
+import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
 import com.example.gestiontienda2.data.remote.firebase.datasource.OrderFirebaseDataSource
 import com.example.gestiontienda2.data.remote.firebase.models.OrderFirebase
 import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
@@ -18,6 +19,8 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.example.gestiontienda2.data.local.room.entities.mapper.toDomain
+import com.example.gestiontienda2.data.remote.firebase.toDomain as toFirebaseDomain
 
 @Singleton
 class OrderRepositoryImpl @Inject constructor(
@@ -133,7 +136,7 @@ class OrderRepositoryImpl @Inject constructor(
 
     override suspend fun deleteOrder(order: Order) = withContext(ioDispatcher) {
         orderDao.deleteOrder(order.toEntity()) // Delete from Room
- orderDao.deleteOrderItemsForOrder(order.id) // Delete associated items
+        orderDao.deleteOrderItemsForOrder(order.id) // Delete associated items
 
         // Delete from Firebase
         try {
@@ -177,26 +180,6 @@ private fun com.example.gestiontienda2.data.local.room.entities.OrderWithItems.t
             quantity = this.quantity,
             priceAtOrder = this.priceAtOrder,
             product = products[this.productId]
-        )
-    }
-
-    private fun Order.toEntity(): OrderEntity {
-        return OrderEntity(
-            id = this.id,
-            clientId = this.clientId,
-            orderDate = this.orderDate,
-            status = this.status,
-            totalAmount = this.totalAmount
-        )
-    }
-
-    private fun OrderItem.toEntity(orderId: Int): OrderItemEntity {
-        return OrderItemEntity(
-            id = this.id,
-            orderId = orderId,
-            productId = this.productId,
-            quantity = this.quantity,
-            priceAtOrder = this.priceAtOrder
         )
     }
 

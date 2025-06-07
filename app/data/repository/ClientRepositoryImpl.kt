@@ -3,8 +3,8 @@ package com.your_app_name.data.repository
 import com.your_app_name.data.local.dao.ClientDao
 import com.your_app_name.data.local.entities.toEntity
 import com.your_app_name.data.remote.firebase.ClientFirebaseDataSource
-import com.your_app_name.data.remote.firebase.toDomain
-import com.your_app_name.data.remote.firebase.toFirebase
+import com.example.gestiontienda2.data.remote.firebase.toDomain as firebaseToDomain
+import com.example.gestiontienda2.data.remote.firebase.toFirebase
 import com.your_app_name.domain.models.Client
 import com.your_app_name.domain.repository.ClientRepository
 import kotlinx.coroutines.Dispatchers

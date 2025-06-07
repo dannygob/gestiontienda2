@@ -1,23 +1,23 @@
-package com.your_app_name.data.repository
+package com.example.gestiontienda2.data.repository
 
-import com.your_app_name.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.domain.models.Product
-import com.your_app_name.domain.models.toDomain
-import com.your_app_name.domain.models.toFirebase
-import com.your_app_name.domain.repository.ProductRepository
+import com.example.gestiontienda2.domain.models.toDomain
+import com.example.gestiontienda2.domain.models.toFirebase
+import com.example.gestiontienda2.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.your_app_name.data.remote.firebase.ProductFirebaseDataSource
-import com.your_app_name.data.remote.firebase.toDomain as productFirebaseToDomain
-import com.your_app_name.data.remote.api.OpenFoodFactsApiService
+import com.example.gestiontienda2.data.remote.firebase.ProductFirebaseDataSource
+import com.example.gestiontienda2.data.remote.firebase.toDomain as productFirebaseToDomain
+import com.example.gestiontienda2.data.remote.api.OpenFoodFactsApiService
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.tasks.await
-import com.your_app_name.data.local.entities.toDomain as productEntityToDomain
-import com.your_app_name.data.local.entities.toEntity as productDomainToEntity
+import com.example.gestiontienda2.data.local.entities.toDomain as productEntityToDomain
+import com.example.gestiontienda2.data.local.entities.toEntity as productDomainToEntity
 
 class ProductRepositoryImpl @Inject constructor(
     private val productDao: ProductDao,
@@ -46,7 +46,7 @@ class ProductRepositoryImpl @Inject constructor(
             }
         }
         // Always return the flow from the local database
- return productDao.getAllProducts().map { entities -> entities.map { it.toDomain() } }
+        return productDao.getAllProducts().map { entities -> entities.map { it.toDomain() } }
     }
 
     override suspend fun getProductById(id: Int): Product? {
@@ -71,7 +71,7 @@ class ProductRepositoryImpl @Inject constructor(
          return try {
              val response = openFoodFactsApiService.getProductByBarcode(barcode)
              if (response.isSuccessful && response.body() != null) {
-                 response.body()!!.toDomain() // Assume mapping function exists
+                 response.body()!!.toDomain()
              } else {
                  null
              }

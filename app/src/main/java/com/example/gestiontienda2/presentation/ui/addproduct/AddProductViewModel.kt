@@ -86,7 +86,11 @@ class AddProductViewModel @Inject constructor(
                     category = _category.value,
                     stock = _stock.value.toIntOrNull() ?: 0,
                     providerId = _providerId.value.toIntOrNull() ?: 0,
-                    imageUrl = null // Assuming image handling is not implemented yet
+                    price = _salePrice.value.toDoubleOrNull() ?: 0.0,
+                    stockQuantity = _stock.value.toIntOrNull() ?: 0,
+                    description = null, // Assuming description is not provided in this case
+                    reservedStockQuantity = 0 // Assuming reserved stock quantity is not provided
+                    // Assuming image handling is not implemented yet
                 )
 
                 addProductUseCase(newProduct)

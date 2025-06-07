@@ -16,7 +16,7 @@ class AddClientViewModel @Inject constructor(
     private val addClientUseCase: AddClientUseCase
 ) : ViewModel() {
 
-    val errorMessage: Any = TODO()
+
     private val _name = MutableStateFlow("")
     val name: StateFlow<String> = _name.asStateFlow()
 
@@ -31,6 +31,9 @@ class AddClientViewModel @Inject constructor(
 
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
+
+    private val _errorMessage = MutableStateFlow<SavingState>(SavingState.Idle)
+    val errorMessage: StateFlow<SavingState> = _errorMessage.asStateFlow()
 
 
     fun onNameChange(newName: String) {
