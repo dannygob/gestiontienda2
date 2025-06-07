@@ -23,7 +23,8 @@ class OrderDetailViewModel @Inject constructor(
     private val updateOrderUseCase: UpdateOrderUseCase,
     private val deleteOrderUseCase: DeleteOrderUseCase,
     private val getClientsUseCase: GetClientsUseCase, // Potentially needed for client details display/editing
-    private val getProductsUseCase: GetProductsUseCase // Potentially needed for product details display/editing in items
+    private val getProductsUseCase: GetProductsUseCase, // Potentially needed for product details display/editing in items
+
 ) : ViewModel() {
 
     private val orderId: Int = checkNotNull(savedStateHandle["orderId"])
@@ -43,6 +44,14 @@ class OrderDetailViewModel @Inject constructor(
     // State for editing
     private val _editingOrder = MutableStateFlow<Order?>(null)
     val editingOrder: StateFlow<Order?> = _editingOrder.asStateFlow()
+
+    private val _detailedOrder = MutableStateFlow<Order?>(null)
+    val detailedOrder: StateFlow<Order?> = _detailedOrder.asStateFlow()
+
+    private val _savingState = MutableStateFlow<Order?>(null)
+    val savingState: StateFlow<Order?> = _savingState.asStateFlow()
+
+
 
     init {
         fetchOrder()
