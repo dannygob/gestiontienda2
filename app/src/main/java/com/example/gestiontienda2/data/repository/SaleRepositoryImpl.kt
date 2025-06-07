@@ -129,11 +129,12 @@ class SaleRepositoryImpl @Inject constructor(
             saleId = saleId,
             productId = productId,
             quantity = quantity,
-            priceAtSale = unitPrice
+            priceAtSale = priceAtSale,
+            unitPrice = priceAtSale
         )
     }
 
-    private fun SaleItemEntity.toDomain(product: com.gestiontienda2.domain.models.Product? = null): SaleItem {
+    private fun SaleItemEntity.toDomain(product: com.example.gestiontienda2.domain.models.Product? = null): SaleItem {
         return SaleItem(
             id = id,
             saleId = saleId,
