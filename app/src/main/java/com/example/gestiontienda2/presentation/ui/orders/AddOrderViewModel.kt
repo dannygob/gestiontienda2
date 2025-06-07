@@ -2,11 +2,11 @@ package com.example.gestiontienda2.presentation.ui.orders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.domain.models.Order
-import com.example.gestiontienda2.domain.usecases.AddOrderUseCase
 import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.usecases.AddOrderUseCase
 import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

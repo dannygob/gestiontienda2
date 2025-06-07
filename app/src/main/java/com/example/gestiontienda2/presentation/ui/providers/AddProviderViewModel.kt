@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.ui.providers
+package com.example.gestiontienda2.presentation.ui.providers
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

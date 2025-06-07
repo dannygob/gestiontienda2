@@ -89,7 +89,8 @@ fun AddSaleScreen(
                         name = "Sample Client",
                         phone = "123-456-7890",
                         email = "sample@example.com",
-                        address = "123 Main St"
+                        address = "123 Main St",
+                        paymentPreference = "Cash"
                     )
                 )
             }) {
@@ -110,7 +111,15 @@ fun AddSaleScreen(
                         salePrice = 20.0,
                         category = "Category",
                         stock = 100,
-                        providerId = null
+                        description = "Sample product description",
+                        stockQuantity = 100,
+                        reservedStockQuantity = 0,
+                        availableStock = 100,
+                        providerId = 1
+
+
+
+
                     )
                 )
             }) {

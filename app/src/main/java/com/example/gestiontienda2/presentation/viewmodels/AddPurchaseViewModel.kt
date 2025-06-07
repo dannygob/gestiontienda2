@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.nio.channels.spi.SelectorProvider
 import javax.inject.Inject
 
 // Define a simple SavingState sealed class if you don't have one
@@ -40,6 +41,15 @@ class AddPurchaseViewModel @Inject constructor(
     val newPurchase: StateFlow<Purchase> = _newPurchase.asStateFlow()
 
     // State for saving process
+    private val _totalAmount = MutableStateFlow<TotalAmount>(SavingState.Idle)
+    val totalAmount: StateFlow<SavingState> = _totalAmount.asStateFlow()
+
+    private val _selectedProvider = MutableStateFlow<SelectorProvider>(SavingState.Idle)
+    val selectedProvider: StateFlow<SavingState> = _selectedProvider.asStateFlow()
+
+    private val _purchaseItems = MutableStateFlow<PurchaseItem>(SavingState.Idle)
+    val purchaseItems: StateFlow<SavingState> = _purchaseItems.asStateFlow()
+
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 

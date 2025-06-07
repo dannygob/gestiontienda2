@@ -41,8 +41,8 @@ class ProductDetailViewModel @Inject constructor(
             }
             // Assuming productRepository is available or injected
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
-    private val _product = MutableStateFlow<Product?>(null)
-    val product: StateFlow<Product?> = _product.asStateFlow()
+    private val _Product = MutableStateFlow<Product?>(null)
+    val Product: StateFlow<Product?> = _Product.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
