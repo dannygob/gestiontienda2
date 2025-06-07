@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.presentation.screens.inventory.viewmodel
+package com.example.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InventoryViewModel @Inject constructor(
-    private val productDao: ProductDao
+    private val productDao: ProductDao,
 ) : ViewModel() {
 
     val error: Any = TODO()

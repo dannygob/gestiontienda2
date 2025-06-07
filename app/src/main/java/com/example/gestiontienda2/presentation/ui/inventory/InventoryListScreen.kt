@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.gestiontienda2.presentation.screens.inventory.viewmodel.InventoryViewModel
+import com.example.gestiontienda2.presentation.viewmodels.InventoryViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
