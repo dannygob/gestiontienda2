@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.tiles.tooling.preview.Preview
+import com.example.gestiontienda2.presentation.ui.theme.GestionTiendaAppTheme
 import com.example.gestiontienda2.presentation.viewmodels.PurchaseReportViewModel
-import com.gestiontienda2.ui.theme.YourAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,7 +89,7 @@ fun PurchaseReportScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewPurchaseReportScreen() {
-    YourAppTheme { // Replace with your actual theme
+    GestionTiendaAppTheme { // Replace with your actual theme
         PurchaseReportScreen(onBackClick = {})
     }
 }
