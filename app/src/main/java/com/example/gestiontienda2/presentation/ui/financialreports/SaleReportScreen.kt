@@ -106,3 +106,4 @@ fun PreviewSaleReportScreen() {
 
 // You will need to create a SaleReportViewModel and potentially
 // update your SaleRepository and Dao to fetch sales by date range.
+*/

@@ -3,7 +3,7 @@ package com.your_app_name.presentation.ui.productdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.your_app_name.domain.repository.ProductRepository // Import ProductRepository
 import com.your_app_name.domain.usecases.GetProductByIdUseCase // You'll need to create this
 import com.your_app_name.domain.usecases.UpdateProductUseCase // You'll need to create this

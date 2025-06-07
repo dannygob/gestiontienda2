@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 
 
 @Composable

@@ -1,4 +1,4 @@
-package com.your_app_name.your_package
+package com.example.gestiontienda2
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

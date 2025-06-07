@@ -1,4 +1,4 @@
-package com.your_app_name.domain.usecases
+package com.example.gestiontienda2.domain.usecases
 
 import com.your_app_name.domain.models.Order
 import com.your_app_name.domain.repository.OrderRepository

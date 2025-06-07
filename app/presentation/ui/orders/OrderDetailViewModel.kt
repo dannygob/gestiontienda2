@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.your_app_name.domain.models.Client
 import com.your_app_name.domain.models.Order
 import com.your_app_name.domain.models.OrderItem
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.your_app_name.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

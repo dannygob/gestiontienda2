@@ -1,7 +1,7 @@
 package com.your_app_name.data.repository
 
 import com.your_app_name.data.local.dao.ProductDao
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.your_app_name.domain.models.toDomain
 import com.your_app_name.domain.models.toFirebase
 import com.your_app_name.domain.repository.ProductRepository

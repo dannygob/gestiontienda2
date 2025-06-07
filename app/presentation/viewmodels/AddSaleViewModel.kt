@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.your_app_name.domain.models.Sale // Assuming Sale data class exists
-import com.your_app_name.domain.models.Product // Assuming Product data class exists
+import com.example.gestiontienda2.domain.models.Product // Assuming Product data class exists
 import com.your_app_name.domain.models.SaleItem // Assuming SaleItem data class exists
 import com.your_app_name.domain.repository.ProductRepository // Assuming ProductRepository interface exists
 import com.your_app_name.domain.repository.SaleRepository // Assuming SaleRepository interface exists

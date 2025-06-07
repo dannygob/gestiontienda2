@@ -16,16 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.gestiontienda2.presentation.viewmodels.FinancialReportsViewModel
 import java.text.NumberFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FinancialReportsScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: FinancialReportsViewModel = viewModel(),
 ) {
-    Scaffold(
-        // Collect the financial data from the ViewModel
-        val totalSales by viewModel . totalSales . collectAsState ()
+    // Collect the financial data from the ViewModel
+    val totalSales by viewModel.totalSales.collectAsState()
     val totalExpenses by viewModel.totalExpenses.collectAsState()
     val netProfit by viewModel.netProfit.collectAsState()
 

@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import com.example.gestiontienda2.domain.models.Client
 
 @Composable
-public fun (
+fun ClientListItem(
     client: Client,
-    onClientClick: (Client) -> Unit
+    onClientClick: (Client) -> Unit,
 ) {
     Card(
         modifier = Modifier

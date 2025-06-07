@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 
 @Composable
 fun ProductDetailScreen(

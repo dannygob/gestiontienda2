@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.your_app_name.domain.models.SaleItem
 import com.your_app_name.presentation.viewmodels.AddSaleViewModel // Assuming AddSaleViewModel is in viewmodels package
 import com.your_app_name.presentation.ui.components.DatePickerDialog

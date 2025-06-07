@@ -1,6 +1,6 @@
 package com.your_app_name.data.remote.api
 
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 
 data class ProductApiResponse(
     val product_name: String?,

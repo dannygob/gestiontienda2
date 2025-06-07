@@ -2,7 +2,7 @@ package com.your_app_name.presentation.ui.addproduct
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.your_app_name.domain.usecases.AddProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -3,7 +3,7 @@ package com.your_app_name.presentation.ui.sales
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.models.Product
+import com.example.gestiontienda2.domain.models.Product
 import com.your_app_name.domain.models.Sale
 import com.your_app_name.domain.models.SaleItem
 import com.your_app_name.domain.usecases.AddSaleUseCase

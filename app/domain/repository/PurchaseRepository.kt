@@ -1,4 +1,4 @@
-package com.your_app_name.domain.repository
+package com.example.gestiontienda2.domain.repository
 
 import com.your_app_name.domain.models.Purchase
 import com.your_app_name.domain.models.PurchaseDetail

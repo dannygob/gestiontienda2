@@ -109,8 +109,12 @@ class AddSaleViewModel @Inject constructor(
                     clientId = saleClientId.value ?: -1, // Handle null client ID
                     saleDate = saleDate.value,
                     items = saleItems.value,
-                    totalAmount = saleItems.value.sumOf { it.quantity * it.priceAtSale } // Calculate total,
-                    // Add other fields as needed
+                    totalAmount = saleItems.value.sumOf { it.quantity * it.priceAtSale },
+                    date = System.currentTimeMillis()
+                        .toString(), // Convert timestamp to string or format as needed
+                    paymentMethod = "Cash", // Placeholder for payment method, adjust as needed
+                    total = saleItems.value.sumOf { it.quantity * it.priceAtSale } // Assuming priceAtSale is a field in SaleItem
+
                 )
                 saleRepository.insertSale(sale) // Call the repository to insert
                 _savingState.value = SavingState.Success

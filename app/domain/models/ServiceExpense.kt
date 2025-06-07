@@ -1,4 +1,4 @@
-package com.your_app_name.domain.models
+package com.example.gestiontienda2.domain.models
 
 data class ServiceExpense(
     val id: Int,
