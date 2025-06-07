@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "sales",
+    tableName = "sale_items",
     foreignKeys = [
         ForeignKey(
             entity = SaleEntity::class,
@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
     ],
     indices = [Index("sales")]
 )
-data class SaleItemEntity(
+data class SaleItemsEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     val saleId: Long,

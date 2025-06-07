@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemsEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,7 +16,7 @@ interface SaleDao {
     suspend fun insertSale(sale: SaleEntity): Long
 
     @Insert
-    suspend fun insertSaleItems(items: List<SaleItemEntity>)
+    suspend fun insertSaleItems(items: List<SaleItemsEntity>)
 
     @Query("SELECT * FROM sales")
     fun getAllSales(): Flow<List<SaleEntity>>
@@ -25,7 +25,7 @@ interface SaleDao {
     suspend fun getSaleById(saleId: Long): SaleEntity?
 
     @Query("SELECT * FROM sale_items WHERE saleId = :saleId")
-    suspend fun getSaleItemsBySaleId(saleId: Long): List<SaleItemEntity>
+    suspend fun getSaleItemsBySaleId(saleId: Long): List<SaleItemsEntity>
 
     @Update
     suspend fun updateSale(sale: SaleEntity)

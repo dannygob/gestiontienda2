@@ -9,6 +9,6 @@ data class SaleWithItems(
         parentColumn = "id",
         entityColumn = "saleId"
     )
-    val items: List<SaleItemEntity>,
+    val items: List<SaleItemsEntity>,
 )
 
