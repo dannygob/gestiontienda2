@@ -5,8 +5,8 @@ import android.R.attr.id
 import android.R.attr.type
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
 import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
+import com.example.gestiontienda2.domain.models.ServiceExpense
 import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -74,6 +74,9 @@ fun ServiceExpense.toEntity(): ServiceExpenseEntity {
     )
 }
 
+import com.example.gestiontienda2.domain.models.ServiceExpense
+
+// Mapper functions
 fun ServiceExpenseEntity.toDomain(): ServiceExpense {
     return ServiceExpense(
         id = id,
