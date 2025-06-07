@@ -39,7 +39,7 @@ class ProductRepositoryImpl @Inject constructor(
             try {
                 val firebaseProducts = productFirebaseDataSource.getAllProducts()
                 // If successful, update the local database
-                productDao.insertAllProducts(firebaseProducts.map { it.productFirebaseToDomain().productDomainToEntity() })
+                productDao.insertAllProducts(firebaseProducts.map { productFirebaseToDomain(it).productDomainToEntity() })
             } catch (e: Exception) {
                 // Handle Firebase fetch failure (e.g., log error, no network)
                 e.printStackTrace() // For debugging

@@ -23,6 +23,7 @@ interface PurchaseDao {
     @Query("SELECT * FROM purchases WHERE id = :purchaseId")
     suspend fun getPurchaseWithItemsById(purchaseId: Long): PurchaseWithItems?
 
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPurchase(purchase: PurchaseEntity): Long
 
