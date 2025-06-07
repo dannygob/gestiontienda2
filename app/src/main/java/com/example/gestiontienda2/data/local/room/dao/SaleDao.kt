@@ -11,7 +11,6 @@ import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
 import kotlinx.coroutines.flow.Flow
 
-// This file is an interface for the Sale data access object (DAO).
 @Dao
 interface SaleDao {
 
@@ -35,10 +34,9 @@ interface SaleDao {
     @Delete
     suspend fun deleteSale(sale: SaleEntity)
 
-    @Query("DELETE FROM saleitems WHERE saleId = :saleId")
+    @Query("DELETE FROM sale_items WHERE saleId = :saleId")
     suspend fun deleteSaleItemsForSale(saleId: Long)
 
-    // Optional: Method to update a list of sale items if needed
     @Update
     suspend fun updateSaleItems(items: List<SaleItemEntity>)
 }

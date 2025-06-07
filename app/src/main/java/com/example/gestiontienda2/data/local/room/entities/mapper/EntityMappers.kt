@@ -9,7 +9,7 @@ fun ClientEntity.toDomain(): Client = Client(
     name = this.name,
     phone = this.phone,
     address = this.address,
-    email = this.email // Aquí tu modelo lo tiene nullable, asumo que en DB es no null, si puede ser null, cambiar
+    email = this.email
 )
 
 // De Domain a Entity

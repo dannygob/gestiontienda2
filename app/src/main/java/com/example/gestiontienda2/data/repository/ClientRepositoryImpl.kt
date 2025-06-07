@@ -1,6 +1,9 @@
 package com.example.gestiontienda2.data.repository
 
 import com.example.gestiontienda2.data.local.room.dao.ClientDao
+import com.example.gestiontienda2.data.local.room.entities.mapper.toFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.ClientFirebase
+import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +30,7 @@ class ClientFirebaseDataSource {
         // Implementación para agregar cliente a Firebase
     }
 
-    suspend fun updateClient(client: ClientFirebase) {
+    suspend fun updateClient(client: ProviderFirebase) {
         // Implementación para actualizar cliente en Firebase
     }
 

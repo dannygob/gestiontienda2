@@ -19,7 +19,7 @@ fun ClientEntity.toDomain(): Client = Client(
 )
 
 fun Client.toEntity(): ClientEntity = ClientEntity(
-    id = this.id.toLong(),
+    id = this.id,
     name = this.name,
     phone = this.phone,
     address = this.address,
@@ -60,8 +60,8 @@ fun OrderEntity.toDomain(client: Client?, items: List<OrderItem>): Order = Order
 )
 
 fun Order.toEntity(): OrderEntity = OrderEntity(
-    id = this.id.toLong(),
-    clientId = this.clientId.toLong(),
+    id = this.id,
+    clientId = this.clientId,
     orderDate = this.orderDate,
     status = this.status,
     totalAmount = this.totalAmount
@@ -79,9 +79,9 @@ fun OrderItemEntity.toDomain(products: Map<Long, Product>): OrderItem = OrderIte
 )
 
 fun OrderItem.toEntity(): OrderItemEntity = OrderItemEntity(
-    id = this.id.toLong(),
-    orderId = this.orderId.toLong(),
-    productId = this.productId.toLong(),
+    id = this.id,
+    orderId = this.orderId,
+    productId = this.productId,
     quantity = this.quantity,
     priceAtOrder = this.priceAtOrder
 )
