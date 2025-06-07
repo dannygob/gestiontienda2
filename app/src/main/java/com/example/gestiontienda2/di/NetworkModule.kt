@@ -13,18 +13,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://world.openfoodfacts.org/"
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://world.openfoodfacts.org/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    @Provides
-    @Singleton
-    fun provideOpenFoodFactsApiService(retrofit: Retrofit): OpenFoodFactsApiService =
-        retrofit.create(OpenFoodFactsApiService::class.java)
+    fun provideOpenFoodFactsApiService(retrofit: Retrofit): OpenFoodFactsApiService {
+        return retrofit.create(OpenFoodFactsApiService::class.java)
+    }
 }
-

@@ -93,6 +93,10 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
 
+    implementation(libs.hilt.android.v248) // Example, use your actual version
+    ksp(libs.hilt.android.compiler.v248) // Make sure this matches the implementation version
+
+
 
 
 }

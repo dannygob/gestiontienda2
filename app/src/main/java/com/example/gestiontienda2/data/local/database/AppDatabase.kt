@@ -1,9 +1,6 @@
 package com.example.gestiontienda2.data.local.database
 
-import Migration_1_2
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.gestiontienda2.data.local.dao.ClientDao
@@ -16,12 +13,15 @@ import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
 import com.example.gestiontienda2.data.local.room.converters.MyConverters
 import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.ProductEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.ProviderEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseDetailEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseItemEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleDetailEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
 
 @Database(
@@ -34,14 +34,16 @@ import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpense
         PurchaseDetailEntity::class,
         ProviderEntity::class,
         OrderEntity::class,
-        ServiceExpenseEntity::class
+        ServiceExpenseEntity::class,
+        SaleItemEntity::class,
+        PurchaseItemEntity::class,
+        OrderItemEntity::class
     ],
-    version = 2,
+    version = 7,
     exportSchema = false
 )
 @TypeConverters(MyConverters::class)
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun productDao(): ProductDao
     abstract fun clientDao(): ClientDao
     abstract fun saleDao(): SaleDao
@@ -49,23 +51,4 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun providerDao(): ProviderDao
     abstract fun orderDao(): OrderDao
     abstract fun serviceExpenseDao(): ServiceExpenseDao
-
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "app_database"
-                )
-                    .addMigrations(Migration_1_2) // Agregar la migración aquí ✅
-                    .build()
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
 }

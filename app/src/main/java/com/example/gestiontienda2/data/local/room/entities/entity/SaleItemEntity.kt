@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index("sales")]
+    indices = [Index("saleId")]
 )
 data class SaleItemEntity(
     @PrimaryKey(autoGenerate = true)

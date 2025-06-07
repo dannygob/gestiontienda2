@@ -2,6 +2,8 @@
 # Kotlin y Android Gradle Plugin
 comGoogleDevtoolsKspGradlePlugin = "2.1.10-1.0.0"
 firebaseBom = "33.15.0"
+hiltAndroidCompilerVersion = "2.48"
+hiltAndroidVersion = "2.48"
 kotlin = "2.1.10"
 ksp = "2.0.21-1.0.27"
 agp = "8.10.1"
@@ -84,6 +86,8 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltA
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 
 # Room
+hilt-android-compiler-v248 = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompilerVersion" }
+hilt-android-v248 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
