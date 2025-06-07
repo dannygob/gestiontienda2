@@ -93,11 +93,11 @@ fun AddPurchaseScreen(
                         salePrice = 20.0,
                         category = "Category",
                         stock = 100,
-                        providerId = null,)
+                        providerId = null
                     )
                 )
             }) {
-                Text("Add Product") // Add closing parenthesis
+                Text("Add Product")
             }
             Spacer(modifier = Modifier.height(16.dp))
 
