@@ -1,9 +1,11 @@
 package com.example.gestiontienda2.data.local.database
 
+import Migration_1_2
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.gestiontienda2.data.local.dao.ClientDao
 import com.example.gestiontienda2.data.local.dao.OrderDao
 import com.example.gestiontienda2.data.local.dao.ProductDao
@@ -11,6 +13,7 @@ import com.example.gestiontienda2.data.local.dao.ProviderDao
 import com.example.gestiontienda2.data.local.dao.PurchaseDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
+import com.example.gestiontienda2.data.local.room.converters.MyConverters
 import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.ProductEntity
@@ -33,23 +36,18 @@ import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpense
         OrderEntity::class,
         ServiceExpenseEntity::class
     ],
-    version = 7,
+    version = 2,
     exportSchema = false
 )
+@TypeConverters(MyConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun productDao(): ProductDao  // Aquí está el método que faltaba
-
+    abstract fun productDao(): ProductDao
     abstract fun clientDao(): ClientDao
-
     abstract fun saleDao(): SaleDao
-
     abstract fun purchaseDao(): PurchaseDao
-
     abstract fun providerDao(): ProviderDao
-
     abstract fun orderDao(): OrderDao
-
     abstract fun serviceExpenseDao(): ServiceExpenseDao
 
     companion object {
@@ -63,8 +61,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "app_database"
                 )
-                    // .addMigrations(MIGRATION_6_7) // Descomenta si tienes migraciones
-                    .fallbackToDestructiveMigration() // Puedes añadirlo si quieres eliminar datos en migraciones destructivas
+                    .addMigrations(Migration_1_2) // Agregar la migración aquí ✅
                     .build()
                 INSTANCE = instance
                 instance

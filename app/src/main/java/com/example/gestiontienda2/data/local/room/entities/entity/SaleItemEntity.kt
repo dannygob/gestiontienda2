@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "sale_items",
+    tableName = "sales",
     foreignKeys = [
         ForeignKey(
             entity = SaleEntity::class,
@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index("saleId")]
+    indices = [Index("sales")]
 )
 data class SaleItemEntity(
     @PrimaryKey(autoGenerate = true)

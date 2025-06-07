@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "orders")
 data class OrderEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val orderId: Int, // Assuming this is a foreign key to an Order entity
     val clientId: Int,
     val orderDate: Long, // Using Long for timestamp
     val status: String,

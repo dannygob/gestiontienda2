@@ -4,6 +4,9 @@ plugins {
     //alias(libs.plugins.kotlin.ksp) // ✅ Migrado a KSP
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+//    id("com.android.application")
+    id("com.google.gms.google-services")
+  
 }
 
 android {
@@ -86,5 +89,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
+
+
 }
 
