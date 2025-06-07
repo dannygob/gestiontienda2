@@ -33,7 +33,7 @@ private fun SaleDetailScreen(
     var showDeleteConfirmation by remember { mutableStateOf(false) }
 
     Scaffold(
-        val detailedSaleState by viewModel . detailedSaleState . collectAsState ()
+        val detailedSalesState by viewModel . detailedSaleState . collectAsState ()
     val savingState by viewModel.savingState.collectAsState()
 
     val sale = detailedSaleState.sale

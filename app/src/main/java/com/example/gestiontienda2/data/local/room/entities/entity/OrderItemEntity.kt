@@ -1,10 +1,9 @@
-package com.example.gestiontienda2.data.local.room.entities
+package com.example.gestiontienda2.data.local.room.entities.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.gestiontienda2.data.local.room.entities.OrderEntity
 
 @Entity(
     tableName = "order_items",
@@ -12,7 +11,7 @@ import com.example.gestiontienda2.data.local.room.entities.OrderEntity
         entity = OrderEntity::class,
         parentColumns = ["id"],
         childColumns = ["orderId"],
-        onDelete = ForeignKey.CASCADE
+        onDelete = ForeignKey.Companion.CASCADE
     )],
     indices = [Index("orderId"), Index("productId")]
 )
@@ -21,5 +20,5 @@ data class OrderItemEntity(
     val orderId: Int,
     val productId: Int,
     val quantity: Int,
-    val priceAtOrder: Double
+    val priceAtOrder: Double,
 )

@@ -93,7 +93,9 @@ class AddPurchaseViewModel @Inject constructor(
                     providerId = 0,
                     purchaseDate = System.currentTimeMillis(),
                     items = emptyList(),
-                    totalAmount = 0.0
+                    totalAmount = 0.0,
+                    date = selectedDateTimestamp,
+                    // Reset date to the selected date
                     // Add other fields as needed
                 )
             } catch (e: Exception) {

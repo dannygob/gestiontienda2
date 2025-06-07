@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.gestiontienda2.data.local.room.entities.ServiceExpenseEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

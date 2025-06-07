@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.local.room.entities
+package com.example.gestiontienda2.data.local.room.entities.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,5 +9,5 @@ data class PurchaseDetailEntity(
     val clientId: Int,
     val orderDate: Long, // Using Long for timestamp
     val status: String,
-    val totalAmount: Double
+    val totalAmount: Double,
 )

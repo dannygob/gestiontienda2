@@ -4,7 +4,7 @@ import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.example.gestiontienda2.domain.repository.OrderRepository
-import com.gestiontienda2.domain.repository.ProductRepository
+import com.example.gestiontienda2.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

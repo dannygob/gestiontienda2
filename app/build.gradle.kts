@@ -29,65 +29,62 @@ android {
 }
 
 dependencies {
-    // Room + KSP
+    // 🔹 Jetpack Compose
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.ui.tooling.preview.android)
 
+    // 🔹 Navigation
+    implementation(libs.androidx.navigation.runtime)
+    implementation(libs.androidx.navigation.compose)
+
+    // 🔹 Room (con KSP)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.play.services.analytics.impl)
-    implementation(libs.ads.mobile.sdk)
-    implementation(libs.androidx.navigation.runtime.android)
-    implementation(libs.androidx.navigation.runtime.jvmstubs)
-    implementation(libs.androidx.navigation.runtime.desktop)
-    implementation(libs.androidx.camera.core)
-    implementation(libs.androidx.ui.tooling.preview.android)
-    implementation(libs.androidx.glance.preview)
-    implementation(libs.androidx.tiles.tooling.preview)
-    implementation(libs.androidx.room.runtime.android)
-    implementation(libs.androidx.junit.ktx)
-    ksp(libs.room.compiler.ksp) // ✅ KSP en lugar de kapt
+    ksp(libs.room.compiler.ksp)
+
+    // 🔹 Hilt (con KSP)
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    // Jetpack Compose
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    // 🔹 Firebase
+    implementation(libs.firebase.firestore.ktx)
 
-    // Core
+    // 🔹 Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // 🔹 Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // 🔹 Google Play / Ads / Analytics
+    implementation(libs.play.services.analytics.impl)
+    implementation(libs.ads.mobile.sdk)
+
+    // 🔹 CameraX
+    implementation(libs.androidx.camera.core)
+
+    // 🔹 Preview / Glance
+    implementation(libs.androidx.glance.preview)
+    implementation(libs.androidx.tiles.tooling.preview)
+
+    // 🔹 Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    implementation (libs.androidx.lifecycle.viewmodel.ktx)
-
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-
+    // 🔹 Kotlin Stdlib
     implementation(libs.kotlin.stdlib)
 
-    implementation(libs.androidx.lifecycle.viewmodel.ktx.v270)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-
-    implementation (libs.hilt.android)
-    implementation (libs.androidx.hilt.navigation.compose)
-
-
+    // 🔹 Test (si aplican)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.junit.ktx)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
+

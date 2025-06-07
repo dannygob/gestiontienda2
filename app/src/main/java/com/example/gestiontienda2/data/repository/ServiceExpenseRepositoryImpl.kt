@@ -4,7 +4,7 @@ import android.R.attr.description
 import android.R.attr.id
 import android.R.attr.type
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
-import com.example.gestiontienda2.data.local.room.entities.ServiceExpenseEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
 import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
 
 import kotlinx.coroutines.Dispatchers

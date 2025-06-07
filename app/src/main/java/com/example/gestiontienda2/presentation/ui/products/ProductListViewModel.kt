@@ -1,9 +1,6 @@
-package com.example.app.presentation.ui.products
+package com.example.gestiontienda2.presentation.ui.products
 
 import androidx.lifecycle.*
-import androidx.lifecycle.viewModelScope
-import com.example.app.domain.models.Product
-import com.example.app.domain.usecases.GetProductsUseCase
 import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

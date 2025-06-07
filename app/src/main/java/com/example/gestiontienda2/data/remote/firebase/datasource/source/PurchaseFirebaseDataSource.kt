@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.remote.firebase.datasource
+package com.example.gestiontienda2.data.remote.firebase.datasource.source
 
 import com.example.gestiontienda2.data.remote.firebase.models.PurchaseFirebase
 import kotlinx.coroutines.flow.Flow

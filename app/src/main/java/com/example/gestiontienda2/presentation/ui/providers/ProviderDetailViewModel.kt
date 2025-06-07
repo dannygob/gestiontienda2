@@ -1,12 +1,11 @@
-package com.gestiontienda2.presentation.ui.providers
+package com.example.gestiontienda2.presentation.ui.providers
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.copy
+import com.example.gestiontienda2.domain.models.Provider
 import com.example.gestiontienda2.domain.usecases.GetProviderByIdUseCase
 import com.example.gestiontienda2.domain.usecases.UpdateProviderUseCase
-import com.gestiontienda2.domain.models.Provider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -117,9 +116,9 @@ class ProviderDetailViewModel @Inject constructor(
         // Create an updated Provider object from editable fields
         val updatedProvider = currentProvider.copy(
             name = _editableName.value,
-            phone = if (_editablePhone.value.isNotBlank()) _editablePhone.value else null,
+            phone = (if (_editablePhone.value.isNotBlank()) _editablePhone.value else null).toString(),
             email = if (_editableEmail.value.isNotBlank()) _editableEmail.value else null,
-            address = if (_editableAddress.value.isNotBlank()) _editableAddress.value else null
+            address = (if (_editableAddress.value.isNotBlank()) _editableAddress.value else null).toString()
         )
 
         viewModelScope.launch {

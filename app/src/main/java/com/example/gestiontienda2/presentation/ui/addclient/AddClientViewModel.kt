@@ -32,6 +32,7 @@ class AddClientViewModel @Inject constructor(
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
+
     fun onNameChange(newName: String) {
         _name.value = newName
     }
@@ -56,7 +57,8 @@ class AddClientViewModel @Inject constructor(
                 name = _name.value,
                 phone = _phone.value,
                 email = _email.value,
-                address = _address.value
+                address = _address.value,
+                paymentPreference = "Cash" // Default value, can be changed later
             )
             try {
                 addClientUseCase(client)

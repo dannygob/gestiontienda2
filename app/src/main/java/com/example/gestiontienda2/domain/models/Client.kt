@@ -7,5 +7,7 @@ data class Client(
     val phone: String,
     // Added email field
     val address: String,
-    val email: String? // Made email nullable
+    val email: String?,
+    val paymentPreference: String,// Made email nullable
 )
+

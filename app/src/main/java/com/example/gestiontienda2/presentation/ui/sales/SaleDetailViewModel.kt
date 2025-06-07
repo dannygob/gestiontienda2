@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.ui.sales
+package com.example.gestiontienda2.presentation.ui.sales
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

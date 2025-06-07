@@ -1,4 +1,4 @@
-package com.gestiontienda2.presentation.ui.serviceexpenses
+package com.example.gestiontienda2.presentation.ui.serviceexpenses
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,12 +8,20 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.wear.protolayout.modifiers.padding
 import kotlinx.coroutines.launch
 
 @Composable
@@ -96,8 +104,7 @@ fun ServiceExpenseDetailScreen(
         }
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .padding(paddingValues)
+            modifier = padding(paddingValues)
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
@@ -156,7 +163,10 @@ fun ServiceExpenseDetailScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(120.dp),
-                                singleLine = false
+                                singleLine = false,
+                                maxLines = 5,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+
                             )
                         } else {
                             Text("Description: ${serviceExpense.description}")

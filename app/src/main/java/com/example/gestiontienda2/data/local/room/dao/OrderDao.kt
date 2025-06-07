@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.example.gestiontienda2.data.local.room.entities.OrderEntity
 import com.example.gestiontienda2.data.local.room.entities.OrderWithItems
+import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

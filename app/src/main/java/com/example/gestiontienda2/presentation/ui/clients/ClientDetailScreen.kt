@@ -29,7 +29,7 @@ fun ClientDetailScreen(
     val clientState by viewModel.client.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
-    val isEditMode by viewModel.isEditMode.collectAsState()
+    val isEditMode by viewModel.editMode.collectAsState()
     val savingState by viewModel.savingState.collectAsState()
 
     Scaffold(

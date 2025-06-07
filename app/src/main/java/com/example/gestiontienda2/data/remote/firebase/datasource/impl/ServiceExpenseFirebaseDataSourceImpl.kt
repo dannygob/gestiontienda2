@@ -1,8 +1,8 @@
 package com.example.gestiontienda2.data.remote.firebase.datasource.impl
 
-import com.example.gestiontienda2.data.remote.firebase.datasource.ServiceExpenseFirebaseDataSource
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.gestiontienda2.data.remote.firebase.datasource.source.ServiceExpenseFirebaseDataSource
 import com.example.gestiontienda2.data.remote.firebase.models.ServiceExpenseFirebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

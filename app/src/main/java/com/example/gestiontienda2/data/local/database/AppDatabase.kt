@@ -11,15 +11,15 @@ import com.example.gestiontienda2.data.local.dao.ProviderDao
 import com.example.gestiontienda2.data.local.dao.PurchaseDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
-import com.example.gestiontienda2.data.local.room.entities.ClientEntity
-import com.example.gestiontienda2.data.local.room.entities.OrderEntity
-import com.example.gestiontienda2.data.local.room.entities.ProductEntity
-import com.example.gestiontienda2.data.local.room.entities.ProviderEntity
-import com.example.gestiontienda2.data.local.room.entities.PurchaseDetailEntity
-import com.example.gestiontienda2.data.local.room.entities.PurchaseEntity
-import com.example.gestiontienda2.data.local.room.entities.SaleDetailEntity
-import com.example.gestiontienda2.data.local.room.entities.SaleEntity
-import com.example.gestiontienda2.data.local.room.entities.ServiceExpenseEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ProductEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ProviderEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseDetailEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleDetailEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
 
 @Database(
     entities = [

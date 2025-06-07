@@ -10,6 +10,12 @@ data class Product(
     val category: String,
     val stock: Int,
     val providerId: Int,
-) {
+    val stockQuantity: Int,
+    val description: String?,
+    val reservedStockQuantity: Int,
+
+    ) {
     annotation class SaleItem
 }
+
+

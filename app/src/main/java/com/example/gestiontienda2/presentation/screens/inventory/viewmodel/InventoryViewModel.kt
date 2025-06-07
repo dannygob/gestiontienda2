@@ -3,7 +3,7 @@ package com.example.gestiontienda2.presentation.screens.inventory.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.data.local.dao.ProductDao
-import com.example.gestiontienda2.data.local.room.entities.ProductEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

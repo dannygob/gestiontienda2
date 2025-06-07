@@ -6,13 +6,13 @@ import android.net.NetworkCapabilities
 import com.example.gestiontienda2.data.local.dao.ClientDao
 import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
-import com.example.gestiontienda2.data.local.room.entities.SaleEntity
-import com.example.gestiontienda2.data.local.room.entities.SaleItemEntity
 import com.example.gestiontienda2.data.local.room.entities.SaleWithItems
-import com.example.gestiontienda2.data.remote.firebase.datasource.SaleFirebaseDataSource
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
+import com.example.gestiontienda2.data.remote.firebase.datasource.source.SaleFirebaseDataSource
 import com.example.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
-import com.gestiontienda2.domain.repository.SaleRepository
+import com.example.gestiontienda2.domain.repository.SaleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

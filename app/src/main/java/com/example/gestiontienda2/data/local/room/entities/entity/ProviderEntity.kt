@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.local.room.entities
+package com.example.gestiontienda2.data.local.room.entities.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,5 +10,5 @@ data class ProviderEntity(
     val name: String,
     val phone: String?,
     val email: String?,
-    val address: String?
+    val address: String?,
 )

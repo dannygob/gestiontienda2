@@ -1,7 +1,12 @@
 package com.example.gestiontienda2.data.local.room.dao
 
-import androidx.room.*
-import com.example.gestiontienda2.data.local.room.entities.ClientEntity
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
+import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

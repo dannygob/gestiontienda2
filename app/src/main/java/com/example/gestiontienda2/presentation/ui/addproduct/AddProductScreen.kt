@@ -29,7 +29,7 @@ fun AddProductScreen(
     viewModel: AddProductViewModel = hiltViewModel(),
     navigateBack: () -> Unit
 ) {
-    val productName by viewModel.productName.collectAsState()
+    val productName by viewModel.productname.collectAsState()
     val productBarcode by viewModel.productBarcode.collectAsState()
     val productPurchasePrice by viewModel.productPurchasePrice.collectAsState()
     val productSalePrice by viewModel.productSalePrice.collectAsState()

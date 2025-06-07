@@ -1,4 +1,4 @@
-package com.gestiontienda2.domain.repository
+package com.example.gestiontienda2.domain.repository
 
 import com.example.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleDetail

@@ -14,11 +14,11 @@ import com.example.gestiontienda2.data.repository.SaleRepositoryImpl
 import com.example.gestiontienda2.data.repository.ServiceExpenseRepositoryImpl
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.example.gestiontienda2.domain.repository.OrderRepository
+import com.example.gestiontienda2.domain.repository.ProductRepository
+import com.example.gestiontienda2.domain.repository.ProviderRepository
 import com.example.gestiontienda2.domain.repository.PurchaseRepository
+import com.example.gestiontienda2.domain.repository.SaleRepository
 import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
-import com.gestiontienda2.domain.repository.ProductRepository
-import com.gestiontienda2.domain.repository.ProviderRepository
-import com.gestiontienda2.domain.repository.SaleRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

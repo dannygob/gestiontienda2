@@ -1,4 +1,4 @@
-package com.example.inventorymanagement.presentation.ui.productdetail
+package com.example.gestiontienda2.presentation.ui.productdetail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.app.presentation.ui.productdetail.ProductDetailViewModel
 
 @Composable
 fun ProductDetailScreen(

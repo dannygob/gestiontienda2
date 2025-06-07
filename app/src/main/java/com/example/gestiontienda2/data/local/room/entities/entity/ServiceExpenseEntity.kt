@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.local.room.entities
+package com.example.gestiontienda2.data.local.room.entities.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,5 +11,5 @@ data class ServiceExpenseEntity(
     val date: Long, // Or String, depending on how you store dates
     val amount: Double,
     val category: String,
-    val notes: String?
+    val notes: String?,
 )

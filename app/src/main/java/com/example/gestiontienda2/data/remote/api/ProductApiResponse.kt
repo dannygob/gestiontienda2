@@ -17,6 +17,11 @@ fun ProductApiResponse.toDomainProduct(): Product {
         salePrice = 0.0,
         category = "Unknown",
         stock = 0,
-        providerId = 0
+        providerId = 0,
+        stockQuantity = 0,
+        description = null,
+        reservedStockQuantity = 0,
+        price = 0.0 // Assuming price is not available in the API response
+
     )
 }

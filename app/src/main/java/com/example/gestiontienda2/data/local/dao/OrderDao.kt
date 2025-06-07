@@ -7,8 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.example.gestiontienda2.data.local.room.entities.OrderEntity
 import com.example.gestiontienda2.data.local.room.entities.OrderWithItems
+import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,7 +19,13 @@ interface OrderDao {
     suspend fun updateOrderStatus(orderId: Long, newStatus: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrder(order: OrderEntity)
+    suspend fun insertOrder(order: OrderEntity): Long  // Retorna ID insertado
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrders(orders: List<OrderEntity>)  // Inserción masiva
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrderItems(orderItems: List<OrderItemEntity>)  // Inserción masiva de items
 
     @Update
     suspend fun updateOrder(order: OrderEntity)

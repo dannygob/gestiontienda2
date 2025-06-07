@@ -2,8 +2,8 @@ package com.example.gestiontienda2.data.local.room.entities
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.example.gestiontienda2.data.local.room.entities.PurchaseEntity
-import com.example.gestiontienda2.data.local.room.entities.PurchaseItemEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseItemEntity
 
 data class PurchaseWithItems(
     @Embedded val purchase: PurchaseEntity,

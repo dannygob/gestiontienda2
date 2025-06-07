@@ -4,11 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.example.gestiontienda2.data.local.dao.ProviderDao
-import com.example.gestiontienda2.data.local.room.entities.ProviderEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.ProviderEntity
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
 import com.example.gestiontienda2.domain.models.Provider
+import com.example.gestiontienda2.domain.repository.ProviderRepository
 import com.gestiontienda2.data.remote.firebase.datasource.ProviderFirebaseDataSource
-import com.gestiontienda2.domain.repository.ProviderRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

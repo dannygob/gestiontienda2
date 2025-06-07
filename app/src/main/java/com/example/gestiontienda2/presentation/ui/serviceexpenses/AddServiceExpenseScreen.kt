@@ -5,6 +5,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -17,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import app.domain.models.ServiceExpense
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import com.example.gestiontienda2.presentation.viewmodels.AddServiceExpenseViewModel
-import com.gestiontienda2.presentation.ui.common.SavingState
+import com.example.gestiontienda2.presentation.viewmodels.SavingState
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*

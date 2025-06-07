@@ -1,4 +1,4 @@
-package app.presentation.ui.orders
+package com.example.gestiontienda2.presentation.ui.orders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

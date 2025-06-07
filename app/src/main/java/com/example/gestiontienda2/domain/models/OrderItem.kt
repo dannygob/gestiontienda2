@@ -7,5 +7,5 @@ data class OrderItem(
     val productId: Int,
     val quantity: Int,
     val priceAtOrder: Double,
-    val product: Product? = null
+    val product: Product? = null,
 )
