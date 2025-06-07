@@ -30,7 +30,7 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateProductReservedStockQuantity(productId: Long, newReservedStock: Int) {
-        productDao.updateReservedStockQuantity(productId, newReservedStock)
+        productDao.updateReservedStockQuantity(productId, newStock)
     }
 
     override fun getAllProducts(): Flow<List<Product>> {

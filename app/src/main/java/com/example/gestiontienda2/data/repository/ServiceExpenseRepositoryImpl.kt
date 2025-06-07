@@ -3,6 +3,7 @@ package com.example.gestiontienda2.data.repository
 import android.R.attr.description
 import android.R.attr.id
 import android.R.attr.type
+import android.R.string
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
 import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
 import com.example.gestiontienda2.domain.models.ServiceExpense
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
 
 class ServiceExpenseRepositoryImpl @Inject constructor(
     private val serviceExpenseDao: ServiceExpenseDao
@@ -69,12 +71,15 @@ fun ServiceExpense.toEntity(): ServiceExpenseEntity {
         id = id,
         type = type,
         amount = amount,
-        date = date,
-        description = description
+        date = string,
+        description = description,
+        notes = notes,
+        category = category,
+
+
     )
 }
 
-import com.example.gestiontienda2.domain.models.ServiceExpense
 
 // Mapper functions
 fun ServiceExpenseEntity.toDomain(): ServiceExpense {
