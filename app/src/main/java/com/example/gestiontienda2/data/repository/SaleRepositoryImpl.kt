@@ -8,7 +8,7 @@ import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
 import com.example.gestiontienda2.data.local.room.entities.SaleWithItems
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemsEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
 import com.example.gestiontienda2.data.remote.firebase.datasource.source.SaleFirebaseDataSource
 import com.example.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
@@ -123,8 +123,8 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun SaleItem.toSaleItemEntity(saleId: Int): SaleItemsEntity {
-        return SaleItemsEntity(
+    private fun SaleItem.toSaleItemEntity(saleId: Int): SaleItemEntity {
+        return SaleItemEntity(
             id = id,
             saleId = saleId,
             productId = productId,
@@ -134,7 +134,7 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun SaleItemsEntity.toDomain(product: com.example.gestiontienda2.domain.models.Product? = null): SaleItem {
+    private fun SaleItemEntity.toDomain(product: com.example.gestiontienda2.domain.models.Product? = null): SaleItem {
         return SaleItem(
             id = id,
             saleId = saleId,

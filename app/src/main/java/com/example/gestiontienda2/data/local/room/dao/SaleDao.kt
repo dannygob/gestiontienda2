@@ -8,7 +8,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.example.gestiontienda2.data.local.room.entities.SaleWithItems
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemsEntity
+import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,7 +26,7 @@ interface SaleDao {
     suspend fun insertSale(sale: SaleEntity): Long
 
     @Insert
-    suspend fun insertSaleItems(items: List<SaleItemsEntity>)
+    suspend fun insertSaleItems(items: List<SaleItemEntity>)
 
     @Update
     suspend fun updateSale(sale: SaleEntity)
@@ -38,5 +38,5 @@ interface SaleDao {
     suspend fun deleteSaleItemsForSale(saleId: Long)
 
     @Update
-    suspend fun updateSaleItems(items: List<SaleItemsEntity>)
+    suspend fun updateSaleItems(items: List<SaleItemEntity>)
 }

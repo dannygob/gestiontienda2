@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
     ],
     indices = [Index("sales")]
 )
-data class SaleItemsEntity(
+data class SaleItemEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     val saleId: Long,
