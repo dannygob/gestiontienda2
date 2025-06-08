@@ -22,8 +22,8 @@ import javax.inject.Inject
 class ProductDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getProductByIdUseCase: GetProductByIdUseCase,
-    private val updateProductUseCase: UpdateProductUseCase // You'll need to inject this
-    private val productRepository: ProductRepository // Inject ProductRepository for stock updates
+    private val updateProductUseCase: UpdateProductUseCase, // You'll need to inject this
+    private val productRepository: ProductRepository, // Inject ProductRepository for stock updates
 ) : ViewModel() {
 
     private val productId: Int? =

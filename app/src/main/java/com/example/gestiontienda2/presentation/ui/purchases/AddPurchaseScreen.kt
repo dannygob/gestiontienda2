@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -32,7 +30,7 @@ import java.util.ServiceLoader
 @Composable
 fun AddPurchaseScreen(
     viewModel: AddPurchaseViewModel = hiltViewModel(),
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
 ) {
     val selectedProvider by viewModel.selectedProvider.collectAsState()
     val purchaseItems by viewModel.purchaseItems.collectAsState()
@@ -93,7 +91,17 @@ fun AddPurchaseScreen(
                         salePrice = 20.0,
                         category = "Category",
                         stock = 100,
-                        providerId = null
+                        description = "Sample product description",
+                        imageUrl = "https://example.com/image.jpg",
+                        availableStock = 100,
+                        reservedStockQuantity = 0,
+                        stockQuantity = 100,
+                        providerId = 1,
+                        price = 10.0 // Assuming price is the purchase price for simplicity
+
+
+
+
                     )
                 )
             }) {
@@ -118,8 +126,8 @@ fun AddPurchaseScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { showDatePicker = true } // Make the entire field clickable
-        })
+                    .clickable { showDatePicker = true }) // Make the entire field clickable
+
         Spacer(modifier = Modifier.height(16.dp))
 
         // List of Added Products
@@ -190,6 +198,7 @@ fun AddPurchaseScreen(
             else -> {} // Idle or Saving, no extra text needed below button
         }
     }
+    }
 
     // DatePickerDialog
     if (showDatePicker) {
@@ -200,15 +209,16 @@ fun AddPurchaseScreen(
             },
             onDismiss = { showDatePicker = false }
         )
+
     }
 }
-}
+
 
 @Composable
 fun PurchaseItemInputRow(
     purchaseItem: PurchaseItem,
     onQuantityChange: (Int) -> Unit,
-    onRemoveClick: () -> Unit
+    onRemoveClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier

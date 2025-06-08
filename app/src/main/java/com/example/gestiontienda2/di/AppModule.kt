@@ -5,21 +5,6 @@ import androidx.room.Room
 import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.local.database.AppDatabase
 import com.example.gestiontienda2.data.remote.api.OpenFoodFactsApiService
-import com.example.gestiontienda2.data.repository.ClientRepositoryImpl
-import com.example.gestiontienda2.data.repository.OrderRepositoryImpl
-import com.example.gestiontienda2.data.repository.ProductRepositoryImpl
-import com.example.gestiontienda2.data.repository.ProviderRepositoryImpl
-import com.example.gestiontienda2.data.repository.PurchaseRepositoryImpl
-import com.example.gestiontienda2.data.repository.SaleRepositoryImpl
-import com.example.gestiontienda2.data.repository.ServiceExpenseRepositoryImpl
-import com.example.gestiontienda2.domain.repository.ClientRepository
-import com.example.gestiontienda2.domain.repository.OrderRepository
-import com.example.gestiontienda2.domain.repository.ProductRepository
-import com.example.gestiontienda2.domain.repository.ProviderRepository
-import com.example.gestiontienda2.domain.repository.PurchaseRepository
-import com.example.gestiontienda2.domain.repository.SaleRepository
-import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,17 +18,27 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // Provee una instancia de AppDatabase como Singleton
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, "app_database")
-            .fallbackToDestructiveMigration()
+    fun provideDatabase(
+        @ApplicationContext context: Context,
+    ): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "app_database"
+        ).fallbackToDestructiveMigration()
             .build()
     }
 
+    // Provee el ProductDao desde la instancia de AppDatabase
     @Provides
-    fun provideProductDao(database: AppDatabase): ProductDao = database.productDao()
+    fun provideProductDao(database: AppDatabase): ProductDao {
+        return database.productDao()
+    }
 
+    // Provee una instancia de Retrofit
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -53,49 +48,10 @@ object AppModule {
             .build()
     }
 
+    // Provee el servicio de OpenFoodFacts a partir de Retrofit
     @Provides
     @Singleton
     fun provideOpenFoodFactsApiService(retrofit: Retrofit): OpenFoodFactsApiService {
         return retrofit.create(OpenFoodFactsApiService::class.java)
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
-
-    @Binds
-    abstract fun bindProductRepository(
-        productRepositoryImpl: ProductRepositoryImpl
-    ): ProductRepository
-
-    @Binds
-    abstract fun bindClientRepository(
-        clientRepositoryImpl: ClientRepositoryImpl
-    ): ClientRepository
-
-    @Binds
-    abstract fun bindSaleRepository(
-        saleRepositoryImpl: SaleRepositoryImpl
-    ): SaleRepository
-
-    @Binds
-    abstract fun bindPurchaseRepository(
-        purchaseRepositoryImpl: PurchaseRepositoryImpl
-    ): PurchaseRepository
-
-    @Binds
-    abstract fun bindProviderRepository(
-        providerRepositoryImpl: ProviderRepositoryImpl
-    ): ProviderRepository
-
-    @Binds
-    abstract fun bindOrderRepository(
-        orderRepositoryImpl: OrderRepositoryImpl
-    ): OrderRepository
-
-    @Binds
-    abstract fun bindServiceExpenseRepository(
-        serviceExpenseRepositoryImpl: ServiceExpenseRepositoryImpl
-    ): ServiceExpenseRepository
 }

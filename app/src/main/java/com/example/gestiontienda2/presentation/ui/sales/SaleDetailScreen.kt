@@ -20,60 +20,54 @@ import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.presentation.viewmodels.SaleDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SaleDetailScreen(
+fun SaleDetailScreen(
     viewModel: SaleDetailViewModel = hiltViewModel(),
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
 ) {
     val editMode by viewModel.editMode.collectAsState()
-
-    // State for delete confirmation dialog
-    var showDeleteConfirmation by remember { mutableStateOf(false) }
-
-    Scaffold(
-        val detailedSalesState by viewModel . detailedSaleState . collectAsState ()
+    val detailedSaleState by viewModel.detailedSaleState.collectAsState()
     val savingState by viewModel.savingState.collectAsState()
 
     val sale = detailedSaleState.sale
-    detailedSaleState.client
-    detailedSaleState.itemsWithProducts
     val loading = detailedSaleState.isLoading
-    topBar = {
-        TopAppBar(
-            title = { Text("Sale Details") },
-            navigationIcon = {
-                IconButton(onClick = navigateBack) {
-                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-                }
-            },
-            actions = {
-                if (!editMode) {
-                    IconButton(onClick = { viewModel.toggleEditMode() }) {
-                        Icon(Icons.Filled.Edit, contentDescription = "Edit Sale")
-                    }
-                } else {
-                    IconButton(onClick = { viewModel.saveSale() }) {
-                        Icon(Icons.Filled.Save, contentDescription = "Save Sale")
-                    }
-                }
-                if (!editMode && sale != null) {
-                    IconButton(onClick = { showDeleteConfirmation = true }) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete Sale")
-                    }
-                }
 
-            }
-        )
-    }
+    var showDeleteConfirmation by remember { mutableStateOf(false) }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Sale Details") },
+                navigationIcon = {
+                    IconButton(onClick = navigateBack) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    if (!editMode) {
+                        IconButton(onClick = { viewModel.toggleEditMode() }) {
+                            Icon(Icons.Filled.Edit, contentDescription = "Edit Sale")
+                        }
+                    } else {
+                        IconButton(onClick = { viewModel.saveSale() }) {
+                            Icon(Icons.Filled.Save, contentDescription = "Save Sale")
+                        }
+                    }
+                    if (!editMode && sale != null) {
+                        IconButton(onClick = { showDeleteConfirmation = true }) {
+                            Icon(Icons.Default.Delete, contentDescription = "Delete Sale")
+                        }
+                    }
+                }
+            )
+        }
     ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.TopStart
         ) {
             when {
                 loading -> CircularProgressIndicator()
@@ -81,21 +75,19 @@ private fun SaleDetailScreen(
                     "Error: ${detailedSaleState.error}",
                     color = MaterialTheme.colorScheme.error
                 )
-
                 sale == null -> Text("Sale not found")
                 else -> {
                     if (editMode) {
-                        // Edit Mode UI
+                        var saleDateText by remember { mutableStateOf(sale.saleDate.toString()) }
+
                         Column(
-                            modifier = Modifier.fillMaxSize()
-                                .padding(bottom = 60.dp), // Add padding for FAB
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(bottom = 60.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text("Edit Sale", style = MaterialTheme.typography.headlineSmall)
 
-                            // Basic sale details editing (e.g., date, client - might need pickers)
-                            // This is a simplified example
-                            var saleDateText by remember { mutableStateOf(sale.saleDate.toString()) }
                             OutlinedTextField(
                                 value = saleDateText,
                                 onValueChange = {
@@ -103,10 +95,8 @@ private fun SaleDetailScreen(
                                     // TODO: Update ViewModel state for sale date
                                 },
                                 label = { Text("Sale Date") },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number) // Assuming date as timestamp
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                             )
-
-                            // TODO: Add UI for selecting/changing client
 
                             Text("Items", style = MaterialTheme.typography.bodyLarge)
                             LazyColumn(modifier = Modifier.weight(1f)) {
@@ -119,12 +109,9 @@ private fun SaleDetailScreen(
                                         onRemoveItem = { itemId ->
                                             viewModel.removeSaleItem(itemId)
                                         }
-                                        // TODO: Add price editing if needed
                                     )
                                 }
                             }
-
-                            // TODO: Add Button to add new items to the sale
 
                             Text(
                                 "Total: ${sale.totalAmount}",
@@ -137,24 +124,21 @@ private fun SaleDetailScreen(
                                     "Save Error: ${(savingState as SaleDetailViewModel.SavingState.Error).message}",
                                     color = MaterialTheme.colorScheme.error
                                 )
-
                                 SaleDetailViewModel.SavingState.Success -> {
-                                    // Optionally show a success message briefly or rely on navigation
+                                    // Optionally show a success message
                                 }
-
                                 else -> {}
                             }
                         }
                     } else {
-                        // View Mode UI
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text("Sale Details", style = MaterialTheme.typography.headlineSmall)
                             Text("Sale ID: ${sale.id}")
-                            Text("Client ID: ${sale.clientId}") // TODO: Display Client Name
-                            Text("Sale Date: ${sale.saleDate}") // TODO: Format date
+                            Text("Client ID: ${sale.clientId}")
+                            Text("Sale Date: ${sale.saleDate}")
 
                             Spacer(modifier = Modifier.height(16.dp))
 
@@ -176,7 +160,6 @@ private fun SaleDetailScreen(
         }
     }
 
-    // Delete Confirmation Dialog
     if (showDeleteConfirmation) {
         AlertDialog(
             onDismissRequest = { showDeleteConfirmation = false },
@@ -184,17 +167,18 @@ private fun SaleDetailScreen(
             text = { Text("Are you sure you want to delete this sale?") },
             confirmButton = {
                 Button(onClick = {
-                    viewModel.deleteSale() // Call delete function in ViewModel
+                    viewModel.deleteSale()
                     showDeleteConfirmation = false
                 }) {
                     Text("Delete")
                 }
             },
             dismissButton = {
-                Button(onClick = {
-                    showDeleteConfirmation = false
-                }) { Text("Cancel") }
-            })
+                Button(onClick = { showDeleteConfirmation = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
 
@@ -205,7 +189,7 @@ fun SaleItemViewRow(item: SaleItem) {
             .fillMaxWidth()
             .padding(vertical = 4.dp)
     ) {
-        Text("Product ID: ${item.productId}") // TODO: Display Product Name
+        Text("Product ID: ${item.productId}")
         Text("Quantity: ${item.quantity}")
         Text("Price at Sale: ${item.priceAtSale}")
         Text("Subtotal: ${item.quantity * item.priceAtSale}")
@@ -216,7 +200,7 @@ fun SaleItemViewRow(item: SaleItem) {
 fun SaleItemEditRow(
     item: SaleItem,
     onQuantityChange: (Int) -> Unit,
-    onRemoveItem: (Int) -> Unit // Assuming item has an ID
+    onRemoveItem: (Int) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -226,8 +210,7 @@ fun SaleItemEditRow(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text("Product ID: ${item.productId}") // TODO: Display Product Name
-            // TODO: Display price
+            Text("Product ID: ${item.productId}")
         }
         OutlinedTextField(
             value = item.quantity.toString(),
@@ -241,8 +224,7 @@ fun SaleItemEditRow(
         )
         IconButton(onClick = { onRemoveItem(item.id) }) {
             Icon(
-                // TODO: Replace with a more appropriate remove icon
-                imageVector = Icons.Filled.ArrowBack,
+                imageVector = Icons.Default.Delete,
                 contentDescription = "Remove Item"
             )
         }
