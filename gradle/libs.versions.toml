@@ -1,13 +1,14 @@
 [versions]
 # Kotlin y Android Gradle Plugin
-comGoogleDevtoolsKspGradlePlugin = "2.1.10-1.0.0"
+comGoogleDevtoolsKspGradlePlugin = "1.9.0-1.0.6"
 firebaseBom = "33.15.0"
 googleHiltAndroid = "X.X.X"
-hiltAndroidCompilerVersion = "2.48"
-hiltAndroidVersion = "2.48"
-kotlin = "2.1.10"
-ksp = "2.0.21-1.0.27"
+hiltAndroidCompilerVersion = "2.56.2"
+hiltAndroidVersion = "2.56.2"
+kotlin = "1.9.0"
+ksp = "1.9.0-1.0.6"
 agp = "8.10.1"
+
 
 # Core y UI
 coreKtx = "1.16.0"
@@ -18,7 +19,9 @@ material = "1.12.0"
 material3 = "1.3.2"
 
 # Compose
+roomCompiler = "2.6.0"
 roomRuntime = "X.X.X"
+roomVersion = "2.6.0"
 symbolProcessingApi = "X.X.X"
 ui = "1.8.2"
 lifecycleRuntimeKtx = "2.9.1"
@@ -72,6 +75,8 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 # Compose
+androidx-room-compiler-v260 = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-runtime-v260 = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 androidx-room-runtime-vxxx = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
@@ -134,5 +139,7 @@ symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-ap
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
+ksp = { id = "com.google.devtools.ksp", version = "1.9.0-1.0.6" }
+hilt = { id = "dagger.hilt.android.plugin", version.ref = "hiltAndroid" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.2" }

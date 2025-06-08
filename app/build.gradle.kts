@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    //alias(libs.plugins.kotlin.ksp) // ✅ Migrado a KSP
+    //alias(libs.plugins.kotlin.android) version "1.9.0"
+    //alias(libs.plugins.ksp) version "1.9.0-1.0.6"
+    // id("com.android.application")
+    id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
-//    id("com.android.application")
-    id("com.google.gms.google-services")
-  
 }
 
 android {
@@ -29,6 +27,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -50,11 +52,13 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler.ksp)
 
-    // 🔹 Hilt (con KSP)
+    // 🔹 Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
     // 🔹 Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore.ktx)
 
     // 🔹 Retrofit
@@ -65,14 +69,14 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // 🔹 Google Play / Ads / Analytics
+    // 🔹 Google Play Services / Ads
     implementation(libs.play.services.analytics.impl)
     implementation(libs.ads.mobile.sdk)
 
     // 🔹 CameraX
     implementation(libs.androidx.camera.core)
 
-    // 🔹 Preview / Glance
+    // 🔹 Glance & Tiles
     implementation(libs.androidx.glance.preview)
     implementation(libs.androidx.tiles.tooling.preview)
 
@@ -80,21 +84,19 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-
-    // 🔹 Kotlin Stdlib
     implementation(libs.kotlin.stdlib)
 
-    // 🔹 Test (si aplican)
+    // 🔹 Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
 
-    implementation(libs.hilt.android) // Example, use your actual version
-    ksp(libs.hilt.android.compiler) // Make sure this matches the implementation version
+
+    implementation(libs.androidx.room.runtime.v260)
+    annotationProcessor(libs.androidx.room.compiler.v260) // For Java Annotation Processing
+    // Or if you are using KSP for Room:
+    ksp(libs.androidx.room.compiler.v260)
 
 }
-
