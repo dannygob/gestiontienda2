@@ -1,7 +1,5 @@
 package com.yourstoreapp.domain.models
 
-import com.yourstoreapp.domain.models.PurchaseItem
-
 data class Purchase(
     val id: Int = 0,
     val date: Long,

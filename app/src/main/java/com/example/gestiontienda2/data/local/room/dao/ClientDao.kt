@@ -19,7 +19,7 @@ interface ClientDao {
     suspend fun deleteClient(client: ClientEntity)
 
     @Query("SELECT * FROM clients WHERE id = :clientId")
-    suspend fun getClientById(clientId: Long): ClientEntity?
+    suspend fun getClientById(clientId: Int): ClientEntity?
 
     @Query("SELECT * FROM clients")
     fun getAllClients(): Flow<List<ClientEntity>>

@@ -6,6 +6,7 @@ import com.example.gestiontienda2.data.local.room.entities.PurchaseItemEntity
 import com.example.gestiontienda2.data.local.room.entities.PurchaseWithItems
 import kotlinx.coroutines.flow.Flow
 
+@androidx.room.Dao
 interface PurchaseDao {
 
     @Transaction
@@ -14,7 +15,7 @@ interface PurchaseDao {
 
     @Transaction
     @Query("SELECT * FROM purchases WHERE id = :purchaseId")
-    suspend fun getPurchaseWithItemsById(purchaseId: Long): PurchaseWithItems?
+    suspend fun getPurchaseWithItemsById(purchaseId: Int): PurchaseWithItems?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPurchase(purchase: PurchaseEntity): Long
@@ -29,5 +30,5 @@ interface PurchaseDao {
     suspend fun deletePurchase(purchase: PurchaseEntity)
 
     @Query("DELETE FROM purchase_items WHERE purchaseId = :purchaseId")
-    suspend fun deletePurchaseItemsForPurchase(purchaseId: Long)
+    suspend fun deletePurchaseItemsForPurchase(purchaseId: Int)
 }

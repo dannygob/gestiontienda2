@@ -1,7 +1,7 @@
-package com.your_app_name.domain.usecases
+package com.example.android.ministore.domain.usecases
 
-import com.your_app_name.domain.models.Product
-import com.your_app_name.domain.repository.ProductRepository
+import com.example.android.ministore.domain.model.Product
+import com.example.android.ministore.domain.repository.ProductRepository
 import javax.inject.Inject
 
 class GetProductByIdUseCase @Inject constructor(

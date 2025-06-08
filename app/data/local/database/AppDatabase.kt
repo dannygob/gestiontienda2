@@ -12,7 +12,6 @@ import com.your_app_name.data.local.dao.OrderDao
 import com.your_app_name.data.local.dao.ProviderDao
 import com.your_app_name.data.local.dao.ServiceExpenseDao
 import com.your_app_name.data.local.entities.ProductEntity
-import com.your_app_name.data.local.entities.ProductEntity // Added import
 import com.your_app_name.data.local.entities.OrderEntity
 import com.your_app_name.data.local.entities.PurchaseDetailEntity
 
@@ -51,8 +50,7 @@ import com.your_app_name.data.local.database.migrations.MIGRATION_6_7 // Assumin
     abstract fun saleDao(): SaleDao
 
     abstract fun purchaseDao(): PurchaseDao
-abstract fun providerDao(): ProviderDao
-abstract fun productDao(): ProductDao
+    abstract fun providerDao(): ProviderDao
  abstract fun orderDao(): OrderDao
  abstract fun serviceExpenseDao(): ServiceExpenseDao
 }

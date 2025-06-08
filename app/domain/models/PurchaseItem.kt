@@ -1,7 +1,5 @@
 package com.your_app_name.domain.models
 
-import com.your_app_name.domain.models.Product
-
 data class PurchaseItem(
     val id: Int = 0,
     val purchaseId: Int,

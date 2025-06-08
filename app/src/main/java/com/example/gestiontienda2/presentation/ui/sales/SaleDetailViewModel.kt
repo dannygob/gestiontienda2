@@ -4,11 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Sale
+import com.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.domain.usecases.DeleteSaleUseCase
 import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
-import com.example.gestiontienda2.domain.usecases.GetSaleByIdUseCase
+import com.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.gestiontienda2.domain.usecases.GetProductsUseCase
+import com.gestiontienda2.domain.usecases.GetSaleByIdUseCase
 import com.example.gestiontienda2.domain.usecases.UpdateSaleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

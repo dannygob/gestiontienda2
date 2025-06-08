@@ -5,6 +5,5 @@ data class PurchaseDetail(
     val purchaseId: Int,
     val productId: Int,
     val quantity: Int,
-    val unitPrice: Double,
-    val total: Double
+    val unitPrice: Double
 )

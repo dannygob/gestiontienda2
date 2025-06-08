@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.example.gestiontienda2.presentation.ui.theme.GestionTiendaAppTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            YourAppTheme { // Replace YourAppTheme with your actual theme composable
+            GestionTiendaAppTheme { // Replace YourAppTheme with your actual theme composable
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -47,17 +48,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    YourAppTheme { // Replace YourAppTheme with your actual theme composable
+    GestionTiendaAppTheme { // Replace YourAppTheme with your actual theme composable
         Greeting("World")
     }
-}
-
-// You will need to define your theme here, e.g., in ui.theme.Theme.kt
-// Example (replace with your actual theme implementation):
-@Composable
-fun YourAppTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        // Configure your color schemes, typography, etc.
-        content = content
-    )
 }

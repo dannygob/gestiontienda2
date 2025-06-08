@@ -3,14 +3,14 @@ package com.example.gestiontienda2.data.repository
 import com.example.gestiontienda2.data.local.dao.PurchaseDao
 import com.example.gestiontienda2.data.local.room.entities.PurchaseDetailEntity
 import com.example.gestiontienda2.data.local.room.entities.PurchaseEntity
+import com.gestiontienda2.data.local.entities.PurchaseDetailEntity
+import com.gestiontienda2.data.local.entities.PurchaseEntity
 import com.example.gestiontienda2.domain.models.Purchase
 import com.example.gestiontienda2.domain.models.PurchaseDetail
 import com.example.gestiontienda2.domain.models.PurchaseItem
 import com.example.gestiontienda2.domain.repository.PurchaseRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PurchaseRepositoryImpl @Inject constructor(
@@ -19,17 +19,11 @@ class PurchaseRepositoryImpl @Inject constructor(
 
     override suspend fun insertPurchaseWithDetails(
         purchase: Purchase,
-        details: List<PurchaseDetail>,
+        details: List<PurchaseDetail>
     ) {
-        withContext(Dispatchers.IO) {
-            try {
-                val purchaseId = purchaseDao.insertPurchase(purchase.toEntity())
-                val detailEntities = details.map { it.toEntity(purchaseId.toInt()) }
-                purchaseDao.insertPurchaseDetails(detailEntities)
-            } catch (e: Exception) {
-                e.printStackTrace() // Manejo de errores, podría ser logueado
-            }
-        }
+        val purchaseId = purchaseDao.insertPurchase(purchase.toEntity())
+        val detailEntities = details.map { it.toEntity(purchaseId.toInt()) }
+        purchaseDao.insertPurchaseDetails(detailEntities)
     }
 
     override fun getAllPurchases(): Flow<List<Purchase>> {
@@ -39,38 +33,26 @@ class PurchaseRepositoryImpl @Inject constructor(
     }
 
     override fun getPurchaseById(id: Int): Flow<Purchase?> {
-        return purchaseDao.getPurchaseById(id).map { entity -> entity?.toDomain() }
+        return purchaseDao.getPurchaseById(id).map { entity ->
+            entity?.toDomain()
+        }
     }
 
     override suspend fun updatePurchase(purchase: Purchase) {
-        withContext(Dispatchers.IO) {
-            try {
-                purchaseDao.updatePurchase(purchase.toEntity())
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        purchaseDao.updatePurchase(purchase.toEntity())
     }
 
     override suspend fun deletePurchase(purchase: Purchase) {
-        withContext(Dispatchers.IO) {
-            try {
-                purchaseDao.deletePurchase(purchase.toEntity())
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        purchaseDao.deletePurchase(purchase.toEntity())
     }
 
     override suspend fun getTotalPurchaseAmount(startDate: Long?, endDate: Long?): Double {
-        return withContext(Dispatchers.IO) {
-            purchaseDao.getTotalPurchaseAmount(startDate, endDate)
-        }
+        return purchaseDao.getTotalPurchaseAmount(startDate, endDate)
     }
 
     override fun getPurchasesByDateRange(
         startDate: Long?,
-        endDate: Long?,
+        endDate: Long?
     ): Flow<List<PurchaseItem>> {
         return purchaseDao.getPurchasesItemByDateRange(startDate, endDate).map { entities ->
             entities.map { it.toDomain() }
@@ -83,9 +65,7 @@ class PurchaseRepositoryImpl @Inject constructor(
             id = this.id,
             date = this.date,
             providerId = this.providerId,
-            total = this.total,
-            purchaseDate = TODO(),
-            totalAmount = TODO()
+            total = this.total
         )
     }
 
@@ -94,16 +74,14 @@ class PurchaseRepositoryImpl @Inject constructor(
             id = this.id,
             date = this.date,
             providerId = this.providerId,
-            total = this.total,
-            totalAmount = TODO(),
-            items = TODO()
+            total = this.total
         )
     }
 
     private fun PurchaseDetail.toEntity(purchaseId: Int): PurchaseDetailEntity {
         return PurchaseDetailEntity(
             id = this.id,
-            purchaseId = purchaseId,
+            purchaseId = purchaseId, // Use the generated purchaseId
             productId = this.productId,
             quantity = this.quantity,
             unitPrice = this.unitPrice
@@ -116,8 +94,7 @@ class PurchaseRepositoryImpl @Inject constructor(
             purchaseId = this.purchaseId,
             productId = this.productId,
             quantity = this.quantity,
-            unitPrice = this.unitPrice,
-            total = TODO()
+            unitPrice = this.unitPrice
         )
     }
     //endregion

@@ -11,8 +11,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProviderFirebaseDataSourceImpl @Inject constructor(
-    private val firestore: FirebaseFirestore,
+class ProviderFirebaseDataSourceImpl @Inject constructor
+    private val firestore: FirebaseFirestore
 ) : ProviderFirebaseDataSource {
 
     private val providersCollection = firestore.collection("providers")

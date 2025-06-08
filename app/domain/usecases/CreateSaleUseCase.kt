@@ -1,9 +1,9 @@
-package com.your_app_name.domain.usecases
+package com.example.yourstoreapp.domain.usecases
 
-import com.your_app_name.domain.models.Sale
-import com.your_app_name.domain.models.SaleDetail
-import com.your_app_name.domain.repository.ProductRepository
-import com.your_app_name.domain.repository.SaleRepository
+import com.example.yourstoreapp.domain.models.Sale
+import com.example.yourstoreapp.domain.models.SaleDetail
+import com.example.yourstoreapp.domain.repository.ProductRepository
+import com.example.yourstoreapp.domain.repository.SaleRepository
 import javax.inject.Inject
 
 class CreateSaleUseCase @Inject constructor(

@@ -1,9 +1,8 @@
 package com.example.gestiontienda2.data.repository
 
-
-import kotlinx.coroutines.Dispatchers
+import com.example.gestiontienda2.data.local.dao.StockAdjustmentDao
+import com.example.gestiontienda2.data.local.entities.StockAdjustmentEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,14 +12,7 @@ class StockAdjustmentRepository @Inject constructor(
 ) {
 
     suspend fun insertStockAdjustment(stockAdjustment: StockAdjustmentEntity): Long {
-        return withContext(Dispatchers.IO) {
-            try {
-                stockAdjustmentDao.insertStockAdjustment(stockAdjustment)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                -1L // Retorna un valor indicativo de error
-            }
-        }
+        return stockAdjustmentDao.insertStockAdjustment(stockAdjustment)
     }
 
     fun getAllStockAdjustmentsForProduct(productId: Int): Flow<List<StockAdjustmentEntity>> {
@@ -28,12 +20,6 @@ class StockAdjustmentRepository @Inject constructor(
     }
 
     suspend fun deleteStockAdjustment(stockAdjustment: StockAdjustmentEntity) {
-        withContext(Dispatchers.IO) {
-            try {
-                stockAdjustmentDao.deleteStockAdjustment(stockAdjustment)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        stockAdjustmentDao.deleteStockAdjustment(stockAdjustment)
     }
 }
