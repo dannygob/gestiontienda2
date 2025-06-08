@@ -80,12 +80,12 @@ class PurchaseRepositoryImpl @Inject constructor(
     //region Mappers
     private fun Purchase.toEntity(): PurchaseEntity {
         return PurchaseEntity(
-            id = this.id,
-            date = this.date,
-            providerId = this.providerId,
+            id = id,
+            date = date,
+            providerId = providerId,
             total = this.total,
-            purchaseDate = TODO(),
-            totalAmount = TODO()
+            purchaseDate = String(),
+            totalAmount = String(0.0) // Placeholder, should be calculated or passed as a parameter
         )
     }
 
@@ -94,9 +94,9 @@ class PurchaseRepositoryImpl @Inject constructor(
             id = this.id,
             date = this.date,
             providerId = this.providerId,
-            total = this.total,
             totalAmount = TODO(),
-            items = TODO()
+            items = TODO(),
+            total = this.total
         )
     }
 

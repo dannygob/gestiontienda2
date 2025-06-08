@@ -9,7 +9,7 @@ data class ServiceExpenseEntity(
     val id: Int = 0,
     val description: String,
     val date: String, // Or String, depending on how you store dates
-    val amount: Double,
+    val amount: String, // Or Double, depending on how you store amounts
     val category: String,
     val notes: String?,
     val type: String, // e.g., "service", "expense",

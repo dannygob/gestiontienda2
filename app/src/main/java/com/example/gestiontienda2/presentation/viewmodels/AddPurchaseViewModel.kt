@@ -29,12 +29,11 @@ class AddPurchaseViewModel @Inject constructor(
     // State for the new purchase data
     private val _newPurchase = MutableStateFlow(
         Purchase(
-            id = 0, // Assuming 0 or similar for a new entry
-            providerId = 0, // Placeholder, you'll need to handle provider selection
-            purchaseDate = System.currentTimeMillis(), // Default to current time
-            items = emptyList(), // Start with an empty list of items
-            totalAmount = 0.0,
-            date = TODO() // Calculate based on items
+            , // Assuming 0 or similar for a new entry
+            date = TODO(), // Placeholder, you'll need to handle provider selection
+            providerId = 0, // Default to current time
+            totalAmount = 0.0, // Start with an empty list of items
+            total = this.total // Calculate based on items
             // Add other fields as needed
         )
     )
@@ -99,12 +98,11 @@ class AddPurchaseViewModel @Inject constructor(
                 _savingState.value = SavingState.Success
                 // Optionally reset the newPurchase state after successful save
                 _newPurchase.value = Purchase(
-                    id = 0,
-                    providerId = 0,
-                    purchaseDate = System.currentTimeMillis(),
-                    items = emptyList(),
-                    totalAmount = 0.0,
+                    ,
                     date = selectedDateTimestamp,
+                    providerId = 0,
+                    totalAmount = 0.0,
+                    total = this.total,
                     // Reset date to the selected date
                     // Add other fields as needed
                 )

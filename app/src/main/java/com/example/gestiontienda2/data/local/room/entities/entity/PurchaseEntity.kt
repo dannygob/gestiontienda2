@@ -10,4 +10,6 @@ data class PurchaseEntity(
     val providerId: Long,
     val date: Long,
     val total: Double,
+    val purchaseDate : Long? = null,
+    val totalAmount: Double? = null,
 )

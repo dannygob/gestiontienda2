@@ -1,5 +1,6 @@
 package com.example.gestiontienda2.data.repository
 
+import android.R.attr.category
 import android.R.attr.description
 import android.R.attr.id
 import android.R.attr.type
@@ -72,7 +73,7 @@ fun ServiceExpense.toEntity(): ServiceExpenseEntity {
         type = type,
         amount = amount,
         date = string,
-        description = description,
+        description = description.toString(),
         notes = notes,
         category = category,
 
