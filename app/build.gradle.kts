@@ -3,6 +3,7 @@ plugins {
     //alias(libs.plugins.kotlin.android) version "1.9.0"
     //alias(libs.plugins.ksp) version "1.9.0-1.0.6"
     // id("com.android.application")
+    //id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
 }
@@ -98,5 +99,17 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler.v260) // For Java Annotation Processing
     // Or if you are using KSP for Room:
     ksp(libs.androidx.room.compiler.v260)
+
+    val composeBom = platform("androidx.compose:compose-bom:2024.04.01") // Or latest
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation(libs.ui)
+    // ... other Compose dependencies
+
+    implementation(libs.hilt.android.v2511) // Or latest
+
+    implementation(libs.androidx.hilt.navigation.compose.v120beta01) // Or latest
+
 
 }
