@@ -2,12 +2,12 @@
 # Kotlin y Android Gradle Plugin
 comGoogleDevtoolsKspGradlePlugin = "2.0.21-1.0.27"
 firebaseBom = "33.15.0"
-googleHiltAndroid = "2.51.1"
-googleHiltAndroidVersion = "2.51.1"
-hiltAndroidCompilerVersion = "2.51.1"
-hiltAndroidVersion = "2.51.1"
-hiltNavigationComposeVersion = "1.2.0-beta01"
-kotlin = "2.0.21"
+googleHiltAndroid = "2.56.2"
+googleHiltAndroidVersion = "2.56.2"
+hiltAndroidCompilerVersion = "2.56.2"
+hiltAndroidVersion = "2.56.2"
+hiltNavigationComposeVersion = "1.2.0"
+kotlin = "2.1.10"
 ksp = "2.0.21-1.0.27"
 agp = "8.10.1"
 
@@ -31,8 +31,8 @@ lifecycleViewmodelKtx = "2.9.1"
 navigation = "2.9.0"
 
 # Hilt
-hiltAndroid = "2.51.1"
-hiltAndroidCompiler = "2.51.1"
+hiltAndroid = "2.56.2"
+hiltAndroidCompiler = "2.56.2"
 hiltNavigationCompose = "2.51.1"
 
 # Room
