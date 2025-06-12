@@ -11,7 +11,7 @@ fun ClientFirebase.toEntity() = ClientEntity(
     email = email ?: "", // Handle null email from Firebase
     address = address ?: "", // Map Firebase address, default to empty if null
     paymentPreference = paymentPreference ?: "", // Map Firebase preference, default to empty if null
-    phone = phone
+    phone = phone ?: ""
 )
 
 fun ClientFirebase.toDomain() = Client(
@@ -20,7 +20,7 @@ fun ClientFirebase.toDomain() = Client(
     email = email, // Domain Client email is nullable
     address = address ?: "", // Map Firebase address, default to empty if null
     paymentPreference = paymentPreference ?: "", // Map Firebase preference, default to empty if null
-    phone = phone
+    phone = phone ?: ""
 )
 
 fun ClientEntity.toDomain() = Client(
