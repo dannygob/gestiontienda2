@@ -7,5 +7,6 @@ data class Purchase(
     val providerId: Int, // Corrected field name to match standard
     val totalAmount: Double,
     val items: List<PurchaseItem> = emptyList(), // Added list of items){}
-    val total: Double
+    val total: Double,
+    val purchaseDate: Long
 )
