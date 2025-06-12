@@ -11,25 +11,7 @@ import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.example.gestiontienda2.domain.models.Product
 
-// ---------- CLIENTES ----------
-
-fun ClientEntity.toDomain(): Client = Client(
-    id = this.id.toInt(),
-    name = this.name,
-    phone = this.phone,
-    address = this.address,
-    email = this.email,
-    paymentPreference = this.paymentPreference // Valor por defecto si es nulo
-)
-
-fun Client.toEntity(): ClientEntity = ClientEntity(
-    id = this.id,
-    name = this.name,
-    phone = this.phone,
-    address = this.address,
-    email = this.email ?: "",
-    paymentPreference = "efectivo" // Ajusta según lógica si tienes otras opciones
-)
+// Client mappers (ClientEntity.toDomain and Client.toEntity) removed, now centralized in ClientMapper.kt
 
 // ---------- PRODUCTOS ----------
 
