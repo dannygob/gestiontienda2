@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import com.example.gestiontienda2.data.local.entities.toDomain as productEntityToDomain
 import com.example.gestiontienda2.data.local.entities.toEntity as productDomainToEntity
 import com.example.gestiontienda2.data.remote.firebase.toDomain as productFirebaseToDomain
+import com.example.gestiontienda2.domain as productEntityToDomain
 
 class ProductRepositoryImpl @Inject constructor(
     private val productDao: ProductDao,
