@@ -1,11 +1,15 @@
 package com.example.gestiontienda2.data.local.room.entities.mapper
 
-import com.example.gestiontienda2.data.local.room.entities.*
+
 import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.ProductEntity
-import com.example.gestiontienda2.domain.models.*
+import com.example.gestiontienda2.data.repository.OrderWithItems
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.models.OrderItem
+import com.example.gestiontienda2.domain.models.Product
 
 // ---------- CLIENTES ----------
 
@@ -33,7 +37,7 @@ fun ProductEntity.toDomain(): Product = Product(
     id = this.id.toInt(),
     name = this.name,
     description = this.description,
-    price = this.price,
+    price = this.salePrice,
     stockQuantity = this.stockQuantity,
     reservedStockQuantity = this.reservedStockQuantity
 )
@@ -42,7 +46,7 @@ fun Product.toEntity(): ProductEntity = ProductEntity(
     id = this.id.toLong(),
     name = this.name,
     description = this.description,
-    price = this.price,
+    salePrice =  this.salePrice,
     stockQuantity = this.stockQuantity,
     reservedStockQuantity = this.reservedStockQuantity
 )
@@ -75,7 +79,7 @@ fun OrderItemEntity.toDomain(products: Map<Long, Product>): OrderItem = OrderIte
     productId = this.productId.toInt(),
     quantity = this.quantity,
     priceAtOrder = this.priceAtOrder,
-    product = products[this.productId]
+
 )
 
 fun OrderItem.toEntity(): OrderItemEntity = OrderItemEntity(
