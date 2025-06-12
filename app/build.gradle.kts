@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
-    //alias(libs.plugins.kotlin.android) version "1.9.0"
-    //alias(libs.plugins.ksp) version "1.9.0-1.0.6"
-    // id("com.android.application")
-    id("com.google.devtools.ksp") version "2.0.21-1.0.27" apply false
-    id("com.google.dagger.hilt.android") version "2.56.2" apply false // Add this line
-    id("org.jetbrains.kotlin.android")
+    //id("com.android.application")
+    //alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android) // Or id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.ksp)
+    //alias(libs.plugins.google.dagger.hilt.android) // Or your Hilt plugin alias
+
+
 }
 
 android {
@@ -56,6 +57,7 @@ dependencies {
     // 🔹 Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // 🔹 Firebase
     implementation(platform(libs.firebase.bom))
@@ -109,7 +111,10 @@ dependencies {
 
     implementation(libs.hilt.android.v2511) // Or latest
 
-    implementation(libs.androidx.hilt.navigation.compose.v120beta01) // Or latest
+
+    implementation(libs.androidx.hilt.navigation.compose) // Or the latest stable version
+
+
 
 
 }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.nio.channels.spi.SelectorProvider
+import java.util.TimeZone.LONG
 import javax.inject.Inject
 
 // Define a simple SavingState sealed class if you don't have one
@@ -29,11 +30,15 @@ class AddPurchaseViewModel @Inject constructor(
     // State for the new purchase data
     private val _newPurchase = MutableStateFlow(
         Purchase(
-            , // Assuming 0 or similar for a new entry
-            date = TODO(), // Placeholder, you'll need to handle provider selection
+            // Assuming 0 or similar for a new entry
+            date = LONG,// Placeholder, you'll need to handle provider selection
             providerId = 0, // Default to current time
             totalAmount = 0.0, // Start with an empty list of items
-            total = this.total // Calculate based on items
+            total = this.total,
+            id1 = TODO(),
+            id = TODO(),
+            items = TODO(),
+            // Calculate based on items
             // Add other fields as needed
         )
     )
@@ -103,6 +108,7 @@ class AddPurchaseViewModel @Inject constructor(
                     providerId = 0,
                     totalAmount = 0.0,
                     total = this.total,
+                    id1 = TODO(),
                     // Reset date to the selected date
                     // Add other fields as needed
                 )
