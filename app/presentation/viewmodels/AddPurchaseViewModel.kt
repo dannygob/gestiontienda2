@@ -3,9 +3,12 @@ package com.your_app_name.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.your_app_name.domain.models.Purchase // Assuming Purchase model exists
-import com.your_app_name.domain.models.PurchaseItem // Assuming PurchaseItem model exists
-import com.your_app_name.domain.repositories.PurchaseRepository // Assuming PurchaseRepository exists
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.gestiontienda2.domain.models.Purchase // Assuming Purchase model exists
+import com.example.gestiontienda2.domain.models.PurchaseItem // Assuming PurchaseItem model exists
+import com.example.gestiontienda2.domain.repository.PurchaseRepository // Assuming PurchaseRepository exists
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,8 +31,8 @@ class AddPurchaseViewModel @Inject constructor(
     // State for the new purchase data
     private val _newPurchase = MutableStateFlow(
         Purchase(
-            id = 0, // Assuming 0 or similar for a new entry
-            providerId = 0, // Placeholder, you'll need to handle provider selection
+            id = "0", // Assuming 0 or similar for a new entry
+            providerId = "0", // Placeholder, you'll need to handle provider selection
             purchaseDate = System.currentTimeMillis(), // Default to current time
             items = emptyList(), // Start with an empty list of items
             totalAmount = 0.0 // Calculate based on items
@@ -43,7 +46,7 @@ class AddPurchaseViewModel @Inject constructor(
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
     // Functions to update the new purchase data from UI input
-    fun updateProvider(providerId: Int) {
+    fun updateProvider(providerId: String) {
         _newPurchase.value = _newPurchase.value.copy(providerId = providerId)
     }
 
@@ -65,7 +68,7 @@ class AddPurchaseViewModel @Inject constructor(
         calculateTotalAmount()
     }
 
-    fun removeItem(itemId: Int) {
+    fun removeItem(itemId: String) {
         _newPurchase.value = _newPurchase.value.copy(
             items = _newPurchase.value.items.filterNot { it.id == itemId }
         )
@@ -74,7 +77,7 @@ class AddPurchaseViewModel @Inject constructor(
 
     // Helper function to calculate total amount
     private fun calculateTotalAmount() {
-        val total = _newPurchase.value.items.sumOf { it.quantity * it.priceAtPurchase }
+        val total = _newPurchase.value.items.sumOf { it.quantity * it.price }
         _newPurchase.value = _newPurchase.value.copy(totalAmount = total)
     }
 
@@ -88,8 +91,8 @@ class AddPurchaseViewModel @Inject constructor(
                 _savingState.value = SavingState.Success
                 // Optionally reset the newPurchase state after successful save
                 _newPurchase.value = Purchase(
-                     id = 0,
-                     providerId = 0,
+                    id = "0",
+                    providerId = "0",
                      purchaseDate = System.currentTimeMillis(),
                      items = emptyList(),
                      totalAmount = 0.0
@@ -105,4 +108,6 @@ class AddPurchaseViewModel @Inject constructor(
     fun resetSavingState() {
         _savingState.value = SavingState.Idle
     }
+
+    // TODO: Investigate the UI layer to identify where SavingState.Idle is being incorrectly passed as a PurchaseItem.
 }
