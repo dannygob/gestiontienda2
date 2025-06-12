@@ -1,8 +1,10 @@
 package com.your_app_name.data.repository
 
 import com.your_app_name.data.local.dao.ClientDao
+import com.your_app_name.data.local.entities.ClientEntity
 import com.your_app_name.data.local.entities.toEntity
 import com.your_app_name.data.remote.firebase.ClientFirebaseDataSource
+import com.example.gestiontienda2.data.remote.firebase.ClientFirebase
 import com.example.gestiontienda2.data.remote.firebase.toDomain as firebaseToDomain
 import com.example.gestiontienda2.data.remote.firebase.toFirebase
 import com.your_app_name.domain.models.Client
@@ -26,7 +28,7 @@ class ClientRepositoryImpl @Inject constructor(
                 // Assuming clientFirebaseDataSource.getClients() returns a List<ClientFirebase>
                 val firebaseClients = clientFirebaseDataSource.getClients()
                 withContext(Dispatchers.IO) {
-                    clientDao.insertAllClients(firebaseClients.map { it.toEntity() })
+                    clientDao.insertAllClients(firebaseClients.map { it.toEntity( )})
                 }
             } catch (e: Exception) {
                 // Handle Firebase fetch errors (e.g., offline)
@@ -41,7 +43,7 @@ class ClientRepositoryImpl @Inject constructor(
         return try {
             // Assuming clientFirebaseDataSource.getClientById() returns ClientFirebase?
             val firebaseClient = clientFirebaseDataSource.getClientById(id.toString()) // Assuming Firebase uses String ID
-            firebaseClient?.toDomain()
+            firebaseClient?.let { firebaseToDomain(it) }
         } catch (e: Exception) {
             // Handle Firebase fetch errors (e.g., offline)
             clientDao.getClientById(id)?.toDomain()
