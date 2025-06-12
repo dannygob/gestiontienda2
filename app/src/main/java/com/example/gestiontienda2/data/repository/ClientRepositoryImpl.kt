@@ -30,7 +30,7 @@ class ClientFirebaseDataSource {
         // Implementación para agregar cliente a Firebase
     }
 
-    suspend fun updateClient(client: ProviderFirebase) {
+    suspend fun updateClient(client: ClientFirebase) {
         // Implementación para actualizar cliente en Firebase
     }
 
