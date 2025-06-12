@@ -28,7 +28,7 @@ class ClientRepositoryImpl @Inject constructor(
                 // Assuming clientFirebaseDataSource.getClients() returns a List<ClientFirebase>
                 val firebaseClients = clientFirebaseDataSource.getClients()
                 withContext(Dispatchers.IO) {
-                    clientDao.insertAllClients(firebaseClients.map { it.toEntity( )})
+                    clientDao.insertAllClients(firebaseClients.map { it.toEntity() })
                 }
             } catch (e: Exception) {
                 // Handle Firebase fetch errors (e.g., offline)
