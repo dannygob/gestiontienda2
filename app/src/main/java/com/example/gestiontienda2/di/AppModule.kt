@@ -17,41 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    // Provee una instancia de AppDatabase como Singleton
-    @Provides
-    @Singleton
-    fun provideDatabase(
-        @ApplicationContext context: Context,
-    ): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "app_database"
-        ).fallbackToDestructiveMigration()
-            .build()
-    }
-
-    // Provee el ProductDao desde la instancia de AppDatabase
-    @Provides
-    fun provideProductDao(database: AppDatabase): ProductDao {
-        return database.productDao()
-    }
-
-    // Provee una instancia de Retrofit
-    @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://world.openfoodfacts.org/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // Provee el servicio de OpenFoodFacts a partir de Retrofit
-    @Provides
-    @Singleton
-    fun provideOpenFoodFactsApiService(retrofit: Retrofit): OpenFoodFactsApiService {
-        return retrofit.create(OpenFoodFactsApiService::class.java)
-    }
+    // Providers for Database, ProductDao, Retrofit, and OpenFoodFactsApiService
+    // have been moved to DatabaseModule.kt and NetworkModule.kt respectively.
+    // This module can be used for other general application-wide bindings if needed.
 }
