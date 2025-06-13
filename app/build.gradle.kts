@@ -1,17 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
-    //id("com.android.application")
-    //alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android) // Or id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    //alias(libs.plugins.google.dagger.hilt.android) // Or your Hilt plugin alias
-
+    alias(libs.plugins.hilt)
 
 }
 
 android {
     namespace = "com.example.gestiontienda2"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.gestiontienda2"
@@ -95,26 +92,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
 
-
-
-    implementation(libs.androidx.room.runtime.v260)
-    annotationProcessor(libs.androidx.room.compiler.v260) // For Java Annotation Processing
-    // Or if you are using KSP for Room:
-    ksp(libs.androidx.room.compiler.v260)
+    // Redundant dependencies removed below, using consolidated versions from libs.versions.toml
 
     val composeBom = platform("androidx.compose:compose-bom:2024.04.01") // Or latest
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
     implementation(libs.ui)
-    // ... other Compose dependencies
-
-    implementation(libs.hilt.android.v2511) // Or latest
+ }
 
 
-    implementation(libs.androidx.hilt.navigation.compose) // Or the latest stable version
-
-
-
-
-}
