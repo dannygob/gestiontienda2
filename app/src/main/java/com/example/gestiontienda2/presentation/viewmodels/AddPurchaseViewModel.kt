@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Purchase
 import com.example.gestiontienda2.domain.models.PurchaseItem
+import com.example.gestiontienda2.domain.models.TotalAmount
 import com.example.gestiontienda2.domain.repository.PurchaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.nio.channels.spi.SelectorProvider
+import java.util.TimeZone.LONG
 import javax.inject.Inject
 
 // Define a simple SavingState sealed class if you don't have one
@@ -29,11 +31,16 @@ class AddPurchaseViewModel @Inject constructor(
     // State for the new purchase data
     private val _newPurchase = MutableStateFlow(
         Purchase(
-            , // Assuming 0 or similar for a new entry
-            date = TODO(), // Placeholder, you'll need to handle provider selection
-            providerId = 0, // Default to current time
-            totalAmount = 0.0, // Start with an empty list of items
-            total = this.total // Calculate based on items
+            // Assuming 0 or similar for a new entry
+            id1 = TODO(),// Placeholder, you'll need to handle provider selection
+            id = TODO(), // Default to current time
+            date = LONG, // Start with an empty list of items
+            providerId = 0,
+            totalAmount = 0.0,
+            items = TODO(),
+            total = this.total,
+            purchaseDate = dateTimestamp,
+            // Calculate based on items
             // Add other fields as needed
         )
     )
@@ -103,6 +110,8 @@ class AddPurchaseViewModel @Inject constructor(
                     providerId = 0,
                     totalAmount = 0.0,
                     total = this.total,
+                    id1 = TODO(),
+                    purchaseDate = selectedDateTimestamp,
                     // Reset date to the selected date
                     // Add other fields as needed
                 )

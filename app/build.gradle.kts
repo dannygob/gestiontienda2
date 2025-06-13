@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+
 }
 
 android {
@@ -53,6 +54,7 @@ dependencies {
     // 🔹 Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // 🔹 Firebase
     implementation(platform(libs.firebase.bom))
@@ -97,7 +99,6 @@ dependencies {
     androidTestImplementation(composeBom)
 
     implementation(libs.ui)
-    // ... other Compose dependencies
+ }
 
 
-}

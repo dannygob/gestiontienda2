@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.local.room.entities
+package com.example.gestiontienda2.data.repository
 
 import androidx.room.Embedded
 import androidx.room.Relation
@@ -14,5 +14,3 @@ data class OrderWithItems(
     )
     val items: List<OrderItemEntity>,
 )
-
-

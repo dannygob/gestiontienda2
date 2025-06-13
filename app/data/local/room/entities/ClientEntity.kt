@@ -23,3 +23,13 @@ fun ClientEntity.toDomain(): Client {
         address = this.address ?: ""
     )
 }
+
+fun Client.toEntity(): ClientEntity {
+    return ClientEntity(
+        id = this.id.toIntOrNull() ?: 0,
+        name = this.name,
+        phone = this.phone,
+        email = this.email,
+        address = this.address
+    )
+}

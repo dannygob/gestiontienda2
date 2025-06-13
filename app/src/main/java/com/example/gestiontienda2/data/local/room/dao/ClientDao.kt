@@ -16,7 +16,7 @@ interface ClientDao {
     suspend fun insertClient(client: ServiceExpenseEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllClients(clients: List<R>)
+    suspend fun insertAllClients(clients: List<ClientEntity>)
 
     @Update
     suspend fun updateClient(client: ServiceExpenseEntity)
