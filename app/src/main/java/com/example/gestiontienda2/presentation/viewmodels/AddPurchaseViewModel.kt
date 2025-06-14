@@ -39,7 +39,7 @@ class AddPurchaseViewModel @Inject constructor(
             totalAmount = 0.0,
             items = TODO(),
             total = this.total,
-            purchaseDate = dateTimestamp,
+            purchaseDate = dateTimestamp = 0L, // Default to 0 or current time
             // Calculate based on items
             // Add other fields as needed
         )
@@ -105,7 +105,6 @@ class AddPurchaseViewModel @Inject constructor(
                 _savingState.value = SavingState.Success
                 // Optionally reset the newPurchase state after successful save
                 _newPurchase.value = Purchase(
-                    ,
                     date = selectedDateTimestamp,
                     providerId = 0,
                     totalAmount = 0.0,

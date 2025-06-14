@@ -3,12 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-
+    alias(libs.plugins.compose)
 }
 
 android {
     namespace = "com.example.gestiontienda2"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.gestiontienda2"
@@ -30,75 +30,76 @@ android {
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    // Si usas compose BOM, no es necesario especificar esta versión manualmente
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
-    // 🔹 Jetpack Compose
+    // Jetpack Compose
+    implementation(libs.androidx.compose.bom.v20240401)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.tooling.preview.android)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.ui.tooling.preview.android)
-
-    // 🔹 Navigation
     implementation(libs.androidx.navigation.runtime)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
-    // 🔹 Room (con KSP)
+    // Room + KSP
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler.ksp)
 
-    // 🔹 Hilt
+    // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
-    // 🔹 Firebase
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore.ktx)
 
-    // 🔹 Retrofit
+    // Retrofit + GSON
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    // 🔹 Coroutines
+    // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // 🔹 Google Play Services / Ads
+    // Google Play / Ads
     implementation(libs.play.services.analytics.impl)
     implementation(libs.ads.mobile.sdk)
 
-    // 🔹 CameraX
+    // CameraX
     implementation(libs.androidx.camera.core)
 
-    // 🔹 Glance & Tiles
+    // Glance & Tiles
     implementation(libs.androidx.glance.preview)
     implementation(libs.androidx.tiles.tooling.preview)
 
-    // 🔹 Core Android
+    // Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.kotlin.stdlib)
 
-    // 🔹 Test
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Redundant dependencies removed below, using consolidated versions from libs.versions.toml
+    implementation(libs.androidx.glance.appwidget) // Or the latest version
+    // For Jetpack Compose integration with Glance
+    implementation(libs.androidx.glance.material3)
 
-    val composeBom = platform("androidx.compose:compose-bom:2024.04.01") // Or latest
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-
-    implementation(libs.ui)
- }
-
-
+}

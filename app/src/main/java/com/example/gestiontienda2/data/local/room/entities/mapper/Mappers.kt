@@ -1,7 +1,6 @@
 package com.example.gestiontienda2.data.local.room.entities.mapper
 
 
-import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.ProductEntity
@@ -21,7 +20,15 @@ fun ProductEntity.toDomain(): Product = Product(
     description = this.description,
     price = this.salePrice,
     stockQuantity = this.stockQuantity,
-    reservedStockQuantity = this.reservedStockQuantity
+    reservedStockQuantity = this.reservedStockQuantity,
+    salePrice = this.salePrice,
+    category = this.category,
+    purchasePrice = this.purchasePrice,
+    stock = this.availableStock = this.stockQuantity - this.reservedStockQuantity,
+
+
+
+
 )
 
 fun Product.toEntity(): ProductEntity = ProductEntity(

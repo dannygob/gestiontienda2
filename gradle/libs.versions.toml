@@ -1,43 +1,39 @@
 [versions]
-# Kotlin y Android Gradle Plugin
-agp = "8.10.1"
+# Kotlin y AGP
+agp = "8.10.1" # ✅ Compatible con SDK 34 si usas gradle.properties para suprimir advertencia
+composeBom = "2024.04.01"
 kotlin = "2.0.21"
-ksp = "2.0.21-1.0.27" # KSP version defined directly for the plugin
+ksp = "2.0.21-1.0.27"
 
-# Consolidated
-hilt = "2.51.1"
-room = "2.7.1"
-hiltNavigationCompose = "1.2.0" # Stable version for Hilt Navigation Compose
+# Compose Compiler (usado por plugin compose)
+composeCompiler = "2.0.21"
+composePlugin = "2.0.21" # 🔥 obligatorio con Kotlin 2.0+
 
-# Core y UI
+my-library-version = "1.2.3"
+
+# Core Android
 coreKtx = "1.16.0"
 appcompat = "1.7.1"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
-material = "1.12.0" # General material components
-material3 = "1.3.2" # Material Design 3
-materialVersion = "1.12.0" # Explicitly for com.google.android.material:material
+material = "1.12.0"
+material3 = "1.3.2"
 
 # Compose
-
-navigationCompose = "2.7.5"
-roomCompiler = "2.7.1"
-roomRuntime = "2.7.1"
-roomVersion = "2.7.1"
-symbolProcessingApi = "2.6.1"
 ui = "1.8.2"
+uiToolingPreviewAndroid = "1.8.2"
+navigation = "2.9.0"
 lifecycleRuntimeKtx = "2.9.1"
 lifecycleViewmodelKtx = "2.9.1"
-navigation = "2.9.0"
+glancePreview = "1.1.1"
+tilesToolingPreview = "1.5.0"
 
 # Hilt
-hiltAndroid = "2.56.2"
-hiltAndroidCompiler = "2.56.2"
-hiltNavigationCompose = "1-1-0)"
+hilt = "2.51.1"
+hiltNavigationCompose = "1.2.0"
 
 # Room
 room = "2.7.1"
-
 
 # Retrofit
 retrofit = "2.11.0"
@@ -46,10 +42,8 @@ retrofit = "2.11.0"
 firebaseBom = "33.15.0"
 firebaseFirestoreKtx = "25.1.4"
 
-# Google Play Services
+# Google Play & Ads
 playServicesAnalyticsImpl = "18.2.0"
-
-# Ads
 adsMobileSdk = "0.16.0-alpha01"
 
 # CameraX
@@ -57,69 +51,71 @@ cameraCore = "1.4.2"
 
 # KotlinX
 kotlinxCoroutinesCore = "1.9.0"
-
-# UI Tooling & Preview
-uiToolingPreviewAndroid = "1.8.2" # Specific for Android UI tooling preview
-glancePreview = "1.1.1"
-tilesToolingPreview = "1.5.0"
+symbolProcessingApi = "2.6.1"
 
 # Test
 junit = "4.13.2"
-junitVersion = "1.2.1" # For androidx.test.ext:junit
+junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-junitKtx = "1.2.1" # For androidx.test.ext:junit-ktx
+junitKtx = "1.2.1"
 
 [libraries]
+
+androidx-compose-bom-v20240401 = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glancePreview" }
+androidx-glance-material3 = { module = "androidx.glance:glance-material3", version.ref = "glancePreview" }
+my-library = { module = "com.example:my-library", version.ref = "my-library-version" }
 # Core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # Compose
-
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime", version.ref = "navigation" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
-androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" } # Uses new consolidated version
-androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-glance-preview = { group = "androidx.glance", name = "glance-preview", version.ref = "glancePreview" }
+androidx-tiles-tooling-preview = { group = "androidx.wear.tiles", name = "tiles-tooling-preview", version.ref = "tilesToolingPreview" }
+
+# Compose BOM (🔥 recomedado para versiones consistentes)
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "ui" }
 
 # Hilt
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" } # Uses consolidated hilt version
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" } # Uses consolidated hilt version
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 
 # Room
-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" } # Uses consolidated room version
-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" } # Uses consolidated room version
-room-compiler-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "room" } # Uses consolidated room version (KSP)
-
-# Firebase
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" } # BOM managed
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 # Retrofit
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 
+# Firebase
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+
 # Google Play / Ads
 play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImpl" }
 ads-mobile-sdk = { group = "com.google.android.libraries.ads.mobile.sdk", name = "ads-mobile-sdk", version.ref = "adsMobileSdk" }
-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
 # CameraX
 androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraCore" }
 
-# Coroutines
+# KotlinX
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesCore" }
-
-# Preview
-androidx-glance-preview = { group = "androidx.glance", name = "glance-preview", version.ref = "glancePreview" }
-androidx-tiles-tooling-preview = { group = "androidx.wear.tiles", name = "tiles-tooling-preview", version.ref = "tilesToolingPreview" }
+symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "symbolProcessingApi" }
 
 # Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -129,13 +125,11 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 # Kotlin
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
-symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "symbolProcessingApi" }
-ui = { module = "androidx.compose.ui:ui" } # Note: androidx-ui is already defined above. This might be redundant or for a different compose artifact. Keeping as is for now.
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" } # Uses ksp version from [versions]
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" } # Consolidated hilt plugin
-google-services = { id = "com.google.gms.google-services", version = "4.4.2" } # Version defined directly
-jetbrains-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "composeCompiler" } # 🔥 obligatorio con Kotlin 2.0+
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "composePlugin" }
