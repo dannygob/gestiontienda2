@@ -56,6 +56,13 @@ class ProductDetailViewModel @Inject constructor(
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
+    val product: StateFlow<Product?> = _product
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            null
+        ) // Use stateIn to cache the product state
+
 
     init {
         loadProduct()

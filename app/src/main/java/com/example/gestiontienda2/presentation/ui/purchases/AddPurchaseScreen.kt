@@ -97,11 +97,9 @@ fun AddPurchaseScreen(
                         reservedStockQuantity = 0,
                         stockQuantity = 100,
                         providerId = 1,
-                        price = 10.0 // Assuming price is the purchase price for simplicity
-
-
-
-
+                        price = 10.0,
+                        buyingPrice = 10.0,
+                        sellingPrice = 20.0
                     )
                 )
             }) {

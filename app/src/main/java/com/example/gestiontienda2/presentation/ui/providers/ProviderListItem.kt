@@ -17,8 +17,8 @@ import com.example.gestiontienda2.domain.models.Provider
 
 @Composable
 fun ProviderListItem(
-    provider: Provider,
-    onProviderClick: (Provider) -> Unit
+    provider: Int,
+    onProviderClick: (Provider) -> Unit,
 ) {
     Card(
         modifier = Modifier

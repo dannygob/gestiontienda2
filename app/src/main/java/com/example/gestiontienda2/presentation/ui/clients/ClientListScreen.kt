@@ -1,98 +1,47 @@
 package com.example.gestiontienda2.presentation.ui.clients
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
+import com.example.gestiontienda2.presentation.ui.common.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@Composable
-fun ClientListScreen(
-    viewModel: ClientListViewModel = hiltViewModel(),
-    onClientClick: (Client) -> Unit,
-    onAddClientClick: () -> Unit
-) {
-    val clientsState by viewModel.clients.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
+@HiltViewModel
+class ClientListViewModel @Inject constructor(
+    private val getClientsUseCase: GetClientsUseCase,
+) : ViewModel() {
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = onAddClientClick) {
-                Icon(Icons.Filled.Add, "Add new client")
-            }
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            } else if (errorMessage != null) {
-                Text(
-                    text = errorMessage!!,
-                    color = MaterialTheme.colors.error,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(clientsState) { client ->
-                        ClientListItem(
-                            client = client,
-                            onClientClick = onClientClick
-                        )
-                    }
-                }
-            }
-        }
+    private val _uiState = MutableStateFlow<UiState<List<Client>>>(UiState.Loading)
+    val uiState: StateFlow<UiState<List<Client>>> = _uiState.asStateFlow()
+
+    init {
+        loadClients()
     }
-}
 
-@Composable
-fun ClientListItem(
-    client: Client,
-    onClientClick: (Client) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-            .clickable { onClientClick(client) }
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = client.name,
-                style = MaterialTheme.typography.h6,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            // Add other relevant client details you want to show in the list item, e.g.:
-            // Text(text = "Phone: ${client.phone}", style = MaterialTheme.typography.body2)
-            // Text(text = "Email: ${client.email}", style = MaterialTheme.typography.body2)
+    fun retry() {
+        loadClients()
+    }
+
+    private fun loadClients() {
+        viewModelScope.launch {
+            _uiState.value = UiState.Loading
+
+            getClientsUseCase()
+                .catch { exception ->
+                    _uiState.value = UiState.Error(
+                        exception.localizedMessage ?: "Error cargando clientes"
+                    )
+                }
+                .collect { clientList ->
+                    _uiState.value = UiState.Success(clientList)
+                }
         }
     }
 }

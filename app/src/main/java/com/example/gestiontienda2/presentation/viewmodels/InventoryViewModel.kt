@@ -16,7 +16,7 @@ class InventoryViewModel @Inject constructor(
     private val productDao: ProductDao,
 ) : ViewModel() {
 
-    val error: Any = TODO()
+    val error: Any = error@ TODO("Handle error state properly")
     private val _products = MutableStateFlow<List<ProductEntity>>(emptyList())
     val products: StateFlow<List<ProductEntity>> = _products.asStateFlow()
     var loading: Any = TODO()

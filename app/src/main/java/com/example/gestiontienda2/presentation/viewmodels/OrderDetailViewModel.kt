@@ -6,11 +6,11 @@ import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.example.gestiontienda2.domain.repository.OrderRepository
 import com.example.gestiontienda2.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // In OrderDetailViewModel.kt
 @HiltViewModel

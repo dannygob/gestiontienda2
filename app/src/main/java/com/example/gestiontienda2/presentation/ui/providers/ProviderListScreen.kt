@@ -1,6 +1,6 @@
 package com.example.gestiontienda2.presentation.ui.providers
 
-import ProviderListItem
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
