@@ -3,6 +3,7 @@ package com.example.gestiontienda2.presentation.ui.sales
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,12 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Product
-import com.example.gestiontienda2.domain.models.SaleItem
-import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
-import com.example.gestiontienda2.presentation.viewmodels.AddSaleViewModel
-import com.gestiontienda2.util.SavingState
+import com.example.gestiontienda2.domain.models.Product.SaleItem
+import com.example.gestiontienda2.presentation.viewmodels.SavingState
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,11 +34,17 @@ fun AddSaleScreen(
     val selectedClient by viewModel.selectedClient.collectAsState()
     val saleItems by viewModel.saleItems.collectAsState()
     val totalAmount by viewModel.totalAmount.collectAsState()
+    val savingState by viewModel.savingState.collectAsState()
 
     // State for DatePicker visibility
     var showDatePicker by remember { mutableStateOf(false) }
 
-    val savingState by viewModel.savingState.collectAsState()
+    // Handle successful save
+    LaunchedEffect(savingState) {
+        if (savingState is SavingState.Success) {
+            navigateBack()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -60,11 +66,7 @@ fun AddSaleScreen(
         ) {
             // Sale Date Input with DatePicker
             OutlinedTextField(
-                value = SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault()).format(
-                    Date(
-                        saleDate
-                    )
-                ),
+                value = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(saleDate)),
                 onValueChange = { /* Read-only, date is selected via picker */ },
                 label = { Text("Sale Date") },
                 readOnly = true,
@@ -75,54 +77,60 @@ fun AddSaleScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { showDatePicker = true } // Make the entire field clickable
+                    .clickable { showDatePicker = true }
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Client Selection (Basic representation, would likely be a navigation to a picker)
-            Button(onClick = {
-                // TODO: Navigate to Client Picker Screen and handle selection result
-                // For now, a placeholder:
-                viewModel.selectClient(
-                    Client(
-                        id = 1,
-                        name = "Sample Client",
-                        phone = "123-456-7890",
-                        email = "sample@example.com",
-                        address = "123 Main St",
-                        paymentPreference = "Cash"
+            // Client Selection
+            Button(
+                onClick = {
+                    // TODO: Navigate to Client Picker Screen
+                    // For now, a placeholder:
+                    viewModel.selectClient(
+                        Client(
+                            id = 1,
+                            name = "Sample Client",
+                            phone = "123-456-7890",
+                            email = "sample@example.com",
+                            address = "123 Main St",
+                            paymentPreference = "Cash"
+                        )
                     )
-                )
-            }) {
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text(selectedClient?.name ?: "Select Client")
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Product Selection (Basic representation, would likely be a navigation to a picker)
-            Button(onClick = {
-                // TODO: Navigate to Product Picker Screen and handle selection result
-                // For now, a placeholder:
-                viewModel.addProductToSale(
-                    Product(
-                        id = 1,
-                        name = "Sample Product",
-                        barcode = "111",
-                        purchasePrice = 10.0,
-                        salePrice = 20.0,
-                        category = "Category",
-                        stock = 100,
-                        description = "Sample product description",
-                        stockQuantity = 100,
-                        reservedStockQuantity = 0,
-                        availableStock = 100,
-                        providerId = 1
-
-
-
-
+            // Product Selection
+            Button(
+                onClick = {
+                    // TODO: Navigate to Product Picker Screen
+                    // For now, a placeholder:
+                    viewModel.addProductToSale(
+                        Product(
+                            id = 1,
+                            name = "Sample Product",
+                            barcode = "111",
+                            purchasePrice = 10.0,
+                            salePrice = 20.0,
+                            category = "Category",
+                            stock = 100,
+                            providerId = null,
+                            imageUrl = null,
+                            description = "Sample product description",
+                            price = 20.0,
+                            stockQuantity = 100,
+                            reservedStockQuantity = 0,
+                            availableStock = 100,
+                            buyingPrice = 10.0,
+                            sellingPrice = 20.0
+                        )
                     )
-                )
-            }) {
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text("Add Product")
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -130,18 +138,14 @@ fun AddSaleScreen(
             // List of Added Products
             Text("Items:", style = MaterialTheme.typography.titleMedium)
             LazyColumn(modifier = Modifier.weight(1f)) {
-                items(saleItems, key = { it.product?.id ?: it.productId }) { saleItem ->
+                items(saleItems, key = { it.productId }) { saleItem ->
                     SaleItemInputRow(
                         saleItem = saleItem,
                         onQuantityChange = { newQuantity ->
-                            viewModel.updateProductQuantity(
-                                saleItem.product?.id ?: saleItem.productId, newQuantity
-                            )
+                            viewModel.updateProductQuantity(saleItem.productId, newQuantity)
                         },
                         onRemoveClick = {
-                            viewModel.removeProductFromSale(
-                                saleItem.product?.id ?: saleItem.productId
-                            )
+                            viewModel.removeProductFromSale(saleItem.productId)
                         }
                     )
                 }
@@ -158,7 +162,8 @@ fun AddSaleScreen(
             // Save Button
             Button(
                 onClick = { viewModel.saveSale() },
-                enabled = savingState != SavingState.Saving
+                enabled = savingState != SavingState.Saving && selectedClient != null && saleItems.isNotEmpty(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 if (savingState == SavingState.Saving) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp))
@@ -171,23 +176,14 @@ fun AddSaleScreen(
             when (savingState) {
                 is SavingState.Error -> {
                     Text(
-                        text = "Error: ${(savingState as SavingState.Error).message}",
+                        text = "Error: ${savingState.message}",
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 }
 
-                is SavingState.Success -> {
-                    Text(
-                        text = "Sale saved successfully!",
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                    // Navigate back on success
-                    navigateBack()
+                else -> { /* No additional UI needed */
                 }
-
-                else -> {} // Idle or Saving, no extra text needed below button
             }
         }
     }
@@ -232,7 +228,9 @@ fun SaleItemInputRow(
                 value = saleItem.quantity.toString(),
                 onValueChange = { newValue ->
                     val quantity = newValue.toIntOrNull() ?: 0
-                    onQuantityChange(quantity)
+                    if (quantity >= 0) {
+                        onQuantityChange(quantity)
+                    }
                 },
                 label = { Text("Qty") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

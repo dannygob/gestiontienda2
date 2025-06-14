@@ -9,7 +9,6 @@ import com.example.gestiontienda2.domain.usecases.AddSaleUseCase
 import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.gestiontienda2.domain.models.Sale
-import com.google.rpc.context.AttributeContext
 import com.google.rpc.context.AttributeContext.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -41,6 +40,12 @@ class AddSaleViewModel @Inject constructor(
 
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products: StateFlow<List<Product>> = _products.asStateFlow()
+
+    private val _saleDate = MutableStateFlow(System.currentTimeMillis())
+    val saleDate: StateFlow<Long> = _saleDate.asStateFlow()
+
+    private val _saleItems = MutableStateFlow<List<SaleItem>>(emptyList())
+    val saleItems: StateFlow<List<SaleItem>> = _saleItems.asStateFlow()
 
 
     init {
