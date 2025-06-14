@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Gestión Tienda</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="gestiontienda2" tools:ignore="ExtraTranslation">gestiontienda2</string>
 
     <!-- Common -->
     <string name="ok">Aceptar</string>

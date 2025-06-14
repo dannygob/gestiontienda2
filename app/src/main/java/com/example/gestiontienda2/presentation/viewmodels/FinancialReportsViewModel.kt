@@ -40,6 +40,10 @@ class FinancialReportsViewModel @Inject constructor(
     private val _netProfit = MutableStateFlow(0.0)
     val netProfit: StateFlow<Double> = _netProfit.asStateFlow()
 
+    private val _totalExpenses = MutableStateFlow(0.0)
+    val totalExpenses: StateFlow<Double> = _totalExpenses.asStateFlow()
+
+
     init {
         viewModelScope.launch {
             combine(_startDate, _endDate) { startDate, endDate ->
