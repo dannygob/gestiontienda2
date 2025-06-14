@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -19,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.domain.models.ServiceExpense
+import com.example.gestiontienda2.domain.models.ServiceExpense
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import com.example.gestiontienda2.presentation.viewmodels.AddServiceExpenseViewModel
 import com.example.gestiontienda2.presentation.viewmodels.SavingState
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AddServiceExpenseScreen(
     viewModel: AddServiceExpenseViewModel = hiltViewModel(),

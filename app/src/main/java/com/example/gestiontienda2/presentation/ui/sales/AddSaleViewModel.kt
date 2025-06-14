@@ -2,13 +2,10 @@ package com.example.gestiontienda2.presentation.ui.sales
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.gestiontienda2.domain.models.Client
-import com.example.gestiontienda2.domain.models.Product
-import com.example.gestiontienda2.domain.models.SaleItem
-import com.example.gestiontienda2.domain.usecases.AddSaleUseCase
-import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
-import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
-import com.gestiontienda2.domain.models.Sale
+import com.example.gestiontienda2.domain.models.Product.SaleItem
+import com.example.gestiontienda2.presentation.viewmodels.SavingState
+import com.google.android.gms.analytics.ecommerce.Product
+import com.google.android.gms.common.api.Api.Client
 import com.google.rpc.context.AttributeContext.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -18,15 +15,18 @@ import javax.inject.Inject
 @HiltViewModel
 class AddSaleViewModel @Inject constructor(
     private val addSaleUseCase: AddSaleUseCase,
-    private val getClientsUseCase: GetClientsUseCase, // Needed for client selection
-    private val getProductsUseCase: GetProductsUseCase // Needed for product selection
+    private val getClientsUseCase: GetClientsUseCase,
+    private val getProductsUseCase: GetProductsUseCase,
 ) : ViewModel() {
+
+    private val _saleDate = MutableStateFlow(System.currentTimeMillis())
+    val saleDate: StateFlow<Long> = _saleDate.asStateFlow()
 
     private val _selectedClient = MutableStateFlow<Client?>(null)
     val selectedClient: StateFlow<Client?> = _selectedClient.asStateFlow()
 
-    private val _selectedProducts = MutableStateFlow<List<SaleItem>>(emptyList())
-    val selectedProducts: StateFlow<List<SaleItem>> = _selectedProducts.asStateFlow()
+    private val _saleItems = MutableStateFlow<List<SaleItem>>(emptyList())
+    val saleItems: StateFlow<List<SaleItem>> = _saleItems.asStateFlow()
 
     private val _totalAmount = MutableStateFlow(0.0)
     val totalAmount: StateFlow<Double> = _totalAmount.asStateFlow()
@@ -34,19 +34,12 @@ class AddSaleViewModel @Inject constructor(
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
-    // State for available clients and products for selection (optional, depending on UI approach)
+    // Available clients and products for selection
     private val _clients = MutableStateFlow<List<Client>>(emptyList())
     val clients: StateFlow<List<Client>> = _clients.asStateFlow()
 
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products: StateFlow<List<Product>> = _products.asStateFlow()
-
-    private val _saleDate = MutableStateFlow(System.currentTimeMillis())
-    val saleDate: StateFlow<Long> = _saleDate.asStateFlow()
-
-    private val _saleItems = MutableStateFlow<List<SaleItem>>(emptyList())
-    val saleItems: StateFlow<List<SaleItem>> = _saleItems.asStateFlow()
-
 
     init {
         loadClients()
@@ -60,11 +53,9 @@ class AddSaleViewModel @Inject constructor(
                     is Resource.Success -> {
                         _clients.value = resource.data ?: emptyList()
                     }
-
                     is Resource.Error -> {
                         // Handle error loading clients
                     }
-
                     is Resource.Loading -> {
                         // Handle loading state for clients
                     }
@@ -80,11 +71,9 @@ class AddSaleViewModel @Inject constructor(
                     is Resource.Success -> {
                         _products.value = resource.data ?: emptyList()
                     }
-
                     is Resource.Error -> {
                         // Handle error loading products
                     }
-
                     is Resource.Loading -> {
                         // Handle loading state for products
                     }
@@ -93,19 +82,24 @@ class AddSaleViewModel @Inject constructor(
         }
     }
 
+    fun setSaleDate(timestamp: Long) {
+        _saleDate.value = timestamp
+    }
+
     fun selectClient(client: Client) {
         _selectedClient.value = client
     }
 
     fun addProductToSale(product: Product) {
-        val currentItems = _selectedProducts.value.toMutableList()
+        val currentItems = _saleItems.value.toMutableList()
         val existingItem = currentItems.find { it.productId == product.id }
 
         if (existingItem != null) {
             // If product already exists, increase quantity
             val updatedItem = existingItem.copy(quantity = existingItem.quantity + 1)
-            _selectedProducts.value =
-                currentItems.map { if (it.productId == product.id) updatedItem else it }
+            _saleItems.value = currentItems.map {
+                if (it.productId == product.id) updatedItem else it
+            }
         } else {
             // If product is new, add with quantity 1
             val newItem = SaleItem(
@@ -113,87 +107,84 @@ class AddSaleViewModel @Inject constructor(
                 saleId = 0, // Will be set when saving the sale
                 productId = product.id,
                 quantity = 1,
-                priceAtSale = product.salePrice, // Capture price at the time of sale
-                product = product // Include product details for display
+                priceAtSale = product.salePrice,
+                product = product
             )
-            _selectedProducts.value = currentItems + newItem
+            _saleItems.value = currentItems + newItem
         }
         calculateTotal()
     }
 
-    fun updateProductQuantity(saleItem: SaleItem, quantity: Int) {
+    fun updateProductQuantity(productId: Int, quantity: Int) {
         if (quantity <= 0) {
-            removeProductFromSale(saleItem)
+            removeProductFromSale(productId)
             return
         }
-        val currentItems = _selectedProducts.value.toMutableList()
-        val index =
-            currentItems.indexOfFirst { it.id == saleItem.id } // Use unique ID if available, otherwise productId
+
+        val currentItems = _saleItems.value.toMutableList()
+        val index = currentItems.indexOfFirst { it.productId == productId }
 
         if (index != -1) {
             val updatedItem = currentItems[index].copy(quantity = quantity)
             currentItems[index] = updatedItem
-            _selectedProducts.value = currentItems
+            _saleItems.value = currentItems
             calculateTotal()
         }
     }
 
-    fun removeProductFromSale(saleItem: SaleItem) {
-        _selectedProducts.value =
-            _selectedProducts.value.filter { it.id != saleItem.id } // Use unique ID if available, otherwise productId
+    fun removeProductFromSale(productId: Int) {
+        _saleItems.value = _saleItems.value.filter { it.productId != productId } as List<SaleItem>
         calculateTotal()
     }
 
     private fun calculateTotal() {
-        _totalAmount.value = _selectedProducts.value.sumOf { it.quantity * it.priceAtSale }
+        _totalAmount.value = _saleItems.value.sumOf { it.quantity * it.priceAtSale }
     }
 
     fun saveSale() {
         viewModelScope.launch {
             _savingState.value = SavingState.Saving
+
             val client = _selectedClient.value
-            val items = _selectedProducts.value
+            val items = _saleItems.value
 
             if (client == null) {
                 _savingState.value = SavingState.Error("Please select a client.")
-                return
+                return@launch
             }
             if (items.isEmpty()) {
                 _savingState.value = SavingState.Error("Please add products to the sale.")
-                return
+                return@launch
             }
 
             val newSale = Sale(
                 id = 0, // Will be generated by repository
                 clientId = client.id,
-                saleDate = System.currentTimeMillis(), // Or use a different date source
+                saleDate = _saleDate.value,
                 totalAmount = _totalAmount.value,
-                items = items.map { // Create new SaleItem instances without potentially outdated product details
+                items = items.map { saleItem ->
                     SaleItem(
                         id = 0, // Will be generated by repository
                         saleId = 0, // Will be set by repository
-                        productId = it.productId,
-                        quantity = it.quantity,
-                        priceAtSale = it.priceAtSale,
-                        product = null // Don't save product details in the sale item itself in the domain model/data layer
+                        productId = saleItem.productId,
+                        quantity = saleItem.quantity,
+                        priceAtSale = saleItem.priceAtSale,
+                        product = null // Don't save product details in the domain layer
                     )
                 }
             )
 
             when (val result = addSaleUseCase(newSale)) {
                 is Resource.Success -> {
-                    _savingState.value = SavingState.Success(result.data)
-                    // Clear form or navigate away on success
-                    _selectedClient.value = null
-                    _selectedProducts.value = emptyList()
-                    _totalAmount.value = 0.0
+                    _savingState.value = SavingState.Success
+                    // Clear form
+                    clearForm()
                 }
-
                 is Resource.Error -> {
-                    _savingState.value =
-                        SavingState.Error(result.message ?: "Unknown error saving sale")
+                    _savingState.value = SavingState.Error(
+                        result.message ?: "Unknown error saving sale"
+                    )
                 }
-
                 is Resource.Loading -> {
                     // Saving state is already set to Saving
                 }
@@ -201,14 +192,14 @@ class AddSaleViewModel @Inject constructor(
         }
     }
 
-    fun resetSavingState() {
-        _savingState.value = SavingState.Idle
+    private fun clearForm() {
+        _selectedClient.value = null
+        _saleItems.value = emptyList()
+        _totalAmount.value = 0.0
+        _saleDate.value = System.currentTimeMillis()
     }
 
-    sealed class SavingState {
-        object Idle : SavingState()
-        object Saving : SavingState()
-        data class Success(val saleId: Long?) : SavingState()
-        data class Error(val message: String) : SavingState()
+    fun resetSavingState() {
+        _savingState.value = SavingState.Idle
     }
 }

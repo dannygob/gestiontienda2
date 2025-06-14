@@ -108,7 +108,7 @@ class SaleDetailViewModel @Inject constructor(
         // You might need logic to assign a temporary ID or handle new item state
     }
 
-    fun removeSaleItem(itemToRemove: SaleItem) {
+    fun removeSaleItem(itemToRemove: Int) {
         _editingSale.value = _editingSale.value?.copy(
             items = _editingSale.value?.items?.filter { it.id != itemToRemove.id } ?: emptyList()
         )
