@@ -96,7 +96,9 @@ class AddProductViewModel @Inject constructor(
                     stockQuantity = _stock.value.toIntOrNull() ?: 0,
                     description = null, // Assuming description is not provided in this case
                     reservedStockQuantity = _reservedStockQuantity.value.toIntOrNull() ?: 0,
-                    availableStock = _availableStock.value.toIntOrNull() ?: 0
+                    availableStock = _availableStock.value.toIntOrNull() ?: 0,
+                    buyingPrice = _purchasePrice.value.toDoubleOrNull() ?: 0.0,
+                    sellingPrice = _salePrice.value.toDoubleOrNull() ?: 0.0,
                 )
 
                 addProductUseCase(newProduct)

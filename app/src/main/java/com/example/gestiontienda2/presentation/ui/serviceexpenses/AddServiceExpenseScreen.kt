@@ -4,14 +4,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.ServiceExpense
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
-import com.example.gestiontienda2.presentation.viewmodels.AddServiceExpenseViewModel
 import com.example.gestiontienda2.presentation.viewmodels.SavingState
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -40,39 +38,41 @@ fun AddServiceExpenseScreen(
     val category = remember { mutableStateOf("") }
     val notes = remember { mutableStateOf("") }
     val savingState by viewModel.savingState.collectAsState()
-    rememberScaffoldState()
+    val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
     // Basic date formatting for display
-    SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-
-    // State for date picker dialog
-
-    // Date formatting for display
     val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 
     // State for date picker dialog
     var showDatePickerDialog by remember { mutableStateOf(false) }
 
-    val scaffoldState = rememberScaffoldState()
-
-    Scaffold(scaffoldState = scaffoldState) { paddingValues ->
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                title = { Text("Add New Service Expense") },
+                navigationIcon = {
+                    IconButton(onClick = navigateBack) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
                 .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TopAppBar(title = { Text("Add New Service Expense") })
-
             OutlinedTextField(
                 value = description.value,
                 onValueChange = { description.value = it },
                 label = { Text("Description") },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(8.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -90,16 +90,14 @@ fun AddServiceExpenseScreen(
                     Icon(Icons.Default.DateRange, contentDescription = "Select Date")
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = amount.value,
                 onValueChange = { amount.value = it },
                 label = { Text("Amount") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = category.value,
@@ -107,7 +105,6 @@ fun AddServiceExpenseScreen(
                 label = { Text("Category") },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = notes.value,
@@ -115,9 +112,11 @@ fun AddServiceExpenseScreen(
                 label = { Text("Notes") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp) // Make it multiline
+                    .height(120.dp),
+                singleLine = false
             )
-            Spacer(modifier = Modifier.height(16.dp))
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             Button(
                 onClick = {
@@ -138,9 +137,8 @@ fun AddServiceExpenseScreen(
 
             when (savingState) {
                 SavingState.Saving -> {
-                    CircularProgressIndicator(modifier = Modifier.padding(top = 16.dp))
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                 }
-
                 SavingState.Success -> {
                     LaunchedEffect(Unit) {
                         coroutineScope.launch {
@@ -149,15 +147,13 @@ fun AddServiceExpenseScreen(
                         }
                     }
                 }
-
                 is SavingState.Error -> {
                     LaunchedEffect(savingState) {
                         coroutineScope.launch {
-                            scaffoldState.snackbarHostState.showSnackbar("Error saving Service Expense: ${(savingState as SavingState.Error).message}")
+                            scaffoldState.snackbarHostState.showSnackbar("Error saving Service Expense: ${savingState.message}")
                         }
                     }
                 }
-
                 else -> {}
             }
         }
@@ -175,3 +171,21 @@ fun AddServiceExpenseScreen(
     }
 }
 
+@Composable
+fun Scaffold(
+    scaffoldState: rememberScaffoldState,
+    topBar: @Composable () -> TopAppBar,
+    content: @Composable (ERROR) -> Unit,
+) {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun Button(
+    onClick: () -> addServiceExpense,
+    enabled: Boolean,
+    modifier: Modifier,
+    content: @Composable () -> Unit,
+) {
+    TODO("Not yet implemented")
+}
