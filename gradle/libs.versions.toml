@@ -2,6 +2,9 @@
 # Kotlin y AGP
 agp = "8.10.1" # ✅ Compatible con SDK 34 si usas gradle.properties para suprimir advertencia
 composeBom = "2024.04.01"
+hiltAndroid = "your_hilt_version"
+hiltAndroidVersion = "2.56.2"
+hiltCompiler = "2.56.2"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.27"
 
@@ -29,7 +32,7 @@ glancePreview = "1.1.1"
 tilesToolingPreview = "1.5.0"
 
 # Hilt
-hilt = "2.51.1"
+hilt = "2.56.2"
 hiltNavigationCompose = "1.2.0"
 
 # Room
@@ -58,12 +61,21 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 junitKtx = "1.2.1"
+benchmarkCommon = "1.3.4"
 
 [libraries]
 
 androidx-compose-bom-v20240401 = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glancePreview" }
 androidx-glance-material3 = { module = "androidx.glance:glance-material3", version.ref = "glancePreview" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+hilt-android-v2xx = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
+hilt-android-vyourhiltversion = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
+hilt-compiler-v2xx = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 my-library = { module = "com.example:my-library", version.ref = "my-library-version" }
 # Core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -125,6 +137,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 # Kotlin
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+androidx-benchmark-common = { group = "androidx.benchmark", name = "benchmark-common", version.ref = "benchmarkCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

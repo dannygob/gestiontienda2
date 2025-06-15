@@ -28,6 +28,9 @@ class SaleReportViewModel @Inject constructor(
     private val _salesList = MutableStateFlow<List<SaleWithItems>>(emptyList())
     val salesList: StateFlow<List<SaleWithItems>> = _salesList
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     init {
         viewModelScope.launch {
             combine(_startDate, _endDate) { start, end -> Pair(start, end) }

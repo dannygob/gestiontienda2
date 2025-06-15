@@ -1,6 +1,5 @@
 package com.example.gestiontienda2.presentation.ui.clients
 
-import ads_mobile_sdk.h6
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,33 +15,50 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.gestiontienda2.domain.models.Client
 
+
 @Composable
 fun ClientListItem(
     client: Client,
     onClientClick: (Client) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .padding(horizontal = 16.dp, vertical = 4.dp)
             .clickable { onClientClick(client) }
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp)
+                .padding(16.dp)
                 .fillMaxWidth()
         ) {
             Text(
                 text = client.name,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            client.phone?.let {
-                Text(text = "Phone: $it", style = MaterialTheme.typography.body2)
+
+            client.phone?.let { phone ->
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "📞 $phone",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
-            // You can add other key details here concisely, e.g., email if space allows
+
+            client.email?.let { email ->
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = "✉️ $email",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }

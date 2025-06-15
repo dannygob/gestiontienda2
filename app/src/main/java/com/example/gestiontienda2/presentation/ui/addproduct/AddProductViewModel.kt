@@ -40,6 +40,12 @@ class AddProductViewModel @Inject constructor(
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
+    private val _reservedStockQuantity = MutableStateFlow<SavingState>(SavingState.Idle)
+    val reservedStockQuantity: StateFlow<SavingState> = _reservedStockQuantity.asStateFlow()
+
+    private val _availableStock = MutableStateFlow<SavingState>(SavingState.Idle)
+    val availableStock: StateFlow<SavingState> = _availableStock.asStateFlow()
+
     fun onNameChange(newName: String) {
         _name.value = newName
     }
@@ -89,8 +95,10 @@ class AddProductViewModel @Inject constructor(
                     price = _salePrice.value.toDoubleOrNull() ?: 0.0,
                     stockQuantity = _stock.value.toIntOrNull() ?: 0,
                     description = null, // Assuming description is not provided in this case
-                    reservedStockQuantity = 0 // Assuming reserved stock quantity is not provided
-                    // Assuming image handling is not implemented yet
+                    reservedStockQuantity = _reservedStockQuantity.value.toIntOrNull() ?: 0,
+                    availableStock = _availableStock.value.toIntOrNull() ?: 0,
+                    buyingPrice = _purchasePrice.value.toDoubleOrNull() ?: 0.0,
+                    sellingPrice = _salePrice.value.toDoubleOrNull() ?: 0.0,
                 )
 
                 addProductUseCase(newProduct)

@@ -8,8 +8,8 @@ data class Sale(
     val clientId: Int,
     val totalAmount: Double,
     val paymentMethod: String,
-    val total : Double,
+    val total: Double,
 
 
-    val items: List<Product.SaleItem>
+    val items: List<Any?>,
 )

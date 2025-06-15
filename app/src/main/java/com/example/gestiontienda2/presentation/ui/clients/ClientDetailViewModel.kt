@@ -78,11 +78,12 @@ class ClientDetailViewModel @Inject constructor(
             }
         }
     }
-}
 
-sealed class SavingState {
+
+    sealed class SavingState {
     object Idle : SavingState()
     object Saving : SavingState()
     object Success : SavingState()
     object Error : SavingState()
+    }
 }

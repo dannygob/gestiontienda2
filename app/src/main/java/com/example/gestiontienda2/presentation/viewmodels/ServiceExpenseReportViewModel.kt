@@ -2,6 +2,7 @@ package com.example.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.gestiontienda2.domain.models.ServiceExpense
 import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,10 @@ class ServiceExpenseReportViewModel @Inject constructor(
     val startDate: StateFlow<Long?> = _startDate.asStateFlow()
     private val _endDate = MutableStateFlow<Long?>(null)
     val endDate: StateFlow<Long?> = _endDate.asStateFlow()
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    private val _totalExpenses = MutableStateFlow<Double>(0.0)
+    val totalExpenses: StateFlow<Double> = _totalExpenses.asStateFlow()
 
     private val _serviceExpensesList = MutableStateFlow<List<ServiceExpense>>(emptyList())
     val serviceExpensesList: StateFlow<List<ServiceExpense>> = _serviceExpensesList.asStateFlow()

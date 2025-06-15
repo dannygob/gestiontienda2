@@ -5,17 +5,18 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,8 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.protolayout.modifiers.padding
+import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun ServiceExpenseDetailScreen(
@@ -39,11 +42,14 @@ fun ServiceExpenseDetailScreen(
 
     // State for showing delete confirmation dialog
     var showDeleteConfirmation by remember { mutableStateOf(false) }
+    // State for date picker dialog in edit mode
+    var showDatePickerDialog by remember { mutableStateOf(false) }
 
     val coroutineScope = rememberCoroutineScope()
+    val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 
     var editedDescription by remember { mutableStateOf("") }
-    var editedDate by remember { mutableStateOf("") } // Consider a proper DatePicker
+    var editedDate by remember { mutableStateOf(System.currentTimeMillis()) } // Use Long instead of String
     var editedAmount by remember { mutableStateOf("") }
     var editedCategory by remember { mutableStateOf("") }
     var editedNotes by remember { mutableStateOf("") }
@@ -51,7 +57,7 @@ fun ServiceExpenseDetailScreen(
     LaunchedEffect(serviceExpenseState) {
         serviceExpenseState?.let {
             editedDescription = it.description
-            editedDate = it.date.toString() // Convert Long date to String for TextField
+            editedDate = it.date
             editedAmount = it.amount.toString()
             editedCategory = it.category
             editedNotes = it.notes ?: ""
@@ -71,12 +77,10 @@ fun ServiceExpenseDetailScreen(
                     if (serviceExpenseState != null) {
                         if (editMode) {
                             IconButton(onClick = {
-                                // TODO: Implement save logic in ViewModel
                                 coroutineScope.launch {
                                     val updatedExpense = serviceExpenseState!!.copy(
                                         description = editedDescription,
-                                        date = editedDate.toLongOrNull()
-                                            ?: 0L, // Convert back to Long
+                                        date = editedDate,
                                         amount = editedAmount.toDoubleOrNull() ?: 0.0,
                                         category = editedCategory,
                                         notes = editedNotes.ifBlank { null }
@@ -91,11 +95,7 @@ fun ServiceExpenseDetailScreen(
                                 Icon(Icons.Default.Edit, contentDescription = "Edit")
                             }
                             IconButton(onClick = {
-                                showDeleteConfirmation = true // Show confirmation dialog
-//                                // TODO: Implement delete confirmation and logic in ViewModel
-//                                coroutineScope.launch {
-//                                   serviceExpenseState?.let { viewModel.deleteServiceExpense(it) }
-//                                }
+                                showDeleteConfirmation = true
                             }) {
                                 Icon(Icons.Default.Delete, contentDescription = "Delete")
                             }
@@ -106,7 +106,8 @@ fun ServiceExpenseDetailScreen(
         }
     ) { paddingValues ->
         Box(
-            modifier = padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
@@ -114,96 +115,111 @@ fun ServiceExpenseDetailScreen(
                 loading -> {
                     CircularProgressIndicator()
                 }
-
                 error != null -> {
                     Text("Error: $error")
                 }
-
                 serviceExpenseState != null -> {
                     val serviceExpense = serviceExpenseState!!
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         if (editMode) {
-                            TextField(
+                            OutlinedTextField(
                                 value = editedDescription,
                                 onValueChange = { editedDescription = it },
                                 label = { Text("Description") },
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            TextField(
-                                value = editedDate,
-                                onValueChange = { editedDate = it },
-                                label = { Text("Date (YYYYMMDD)") }, // Indicate expected format
+
+                            Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number) // Basic validation hint
-                                // TODO: Replace with a proper DatePicker implementation
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            TextField(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                OutlinedTextField(
+                                    value = dateFormat.format(Date(editedDate)),
+                                    onValueChange = {},
+                                    label = { Text("Date") },
+                                    readOnly = true,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                IconButton(onClick = { showDatePickerDialog = true }) {
+                                    Icon(
+                                        Icons.Default.DateRange,
+                                        contentDescription = "Select Date"
+                                    )
+                                }
+                            }
+
+                            OutlinedTextField(
                                 value = editedAmount,
                                 onValueChange = { editedAmount = it },
                                 label = { Text("Amount") },
                                 modifier = Modifier.fillMaxWidth(),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            TextField(
+
+                            OutlinedTextField(
                                 value = editedCategory,
                                 onValueChange = { editedCategory = it },
                                 label = { Text("Category") },
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            TextField(
+
+                            OutlinedTextField(
                                 value = editedNotes,
                                 onValueChange = { editedNotes = it },
                                 label = { Text("Notes") },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(120.dp),
-                                singleLine = false,
-                                maxLines = 5,
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-
+                                singleLine = false
                             )
                         } else {
-                            Text("Description: ${serviceExpense.description}")
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text("Date: ${serviceExpense.date}") // Format date nicely
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text("Amount: ${serviceExpense.amount}") // Format currency
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text("Category: ${serviceExpense.category}")
-                            Spacer(modifier = Modifier.height(8.dp))
-                            serviceExpense.notes?.let {
-                                Text("Notes: $it")
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                elevation = 4.dp
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    Text(
+                                        text = "Description: ${serviceExpense.description}",
+                                        style = MaterialTheme.typography.body1
+                                    )
+                                    Text(
+                                        text = "Date: ${dateFormat.format(Date(serviceExpense.date))}",
+                                        style = MaterialTheme.typography.body1
+                                    )
+                                    Text(
+                                        text = "Amount: $${
+                                            String.format(
+                                                "%.2f",
+                                                serviceExpense.amount
+                                            )
+                                        }",
+                                        style = MaterialTheme.typography.body1
+                                    )
+                                    Text(
+                                        text = "Category: ${serviceExpense.category}",
+                                        style = MaterialTheme.typography.body1
+                                    )
+                                    serviceExpense.notes?.let {
+                                        Text(
+                                            text = "Notes: $it",
+                                            style = MaterialTheme.typography.body1
+                                        )
+                                    }
+                                }
                             }
                         }
 
                         if (savingState) {
-                            Spacer(modifier = Modifier.height(16.dp))
                             CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-                        }
-
-                        // Observe savingState for success and navigate back
-                        LaunchedEffect(savingState) {
-                            if (savingState == false && error == null && !editMode && serviceExpenseState != null) {
-                                // Assuming savingState becomes false after successful save and editMode is turned off
-                                // and no error occurred. This is a simplified navigation trigger.
-                                // You might need a dedicated event or state in ViewModel for navigation after save/delete.
-                                // For now, just navigate back after successful save/delete.
-                                // This might not be ideal if you want to stay on the detail screen after editing.
-                                // Adjust based on desired user flow.
-                                // If deleting, ViewModel should handle navigation after successful deletion.
-                                // For simplicity, we navigate back after any save or delete attempt here.
-                                if (serviceExpenseState == null) { // Assuming null serviceExpenseState means it was deleted
-                                    navigateBack()
-                                }
-                            }
                         }
                     }
                 }
@@ -220,21 +236,29 @@ fun ServiceExpenseDetailScreen(
                     Button(onClick = {
                         serviceExpenseState?.let { viewModel.deleteServiceExpense(it) }
                         showDeleteConfirmation = false
-                    }) { Text("Delete") }
+                        navigateBack()
+                    }) {
+                        Text("Delete")
+                    }
                 },
                 dismissButton = {
-                    Button(onClick = {
-                        showDeleteConfirmation = false
-                    }) { Text("Cancel") }
+                    Button(onClick = { showDeleteConfirmation = false }) {
+                        Text("Cancel")
+                    }
                 }
+            )
+        }
+
+        // Date Picker Dialog for edit mode
+        if (showDatePickerDialog) {
+            DatePickerDialog(
+                onDateSelected = { timestamp ->
+                    editedDate = timestamp
+                    showDatePickerDialog = false
+                },
+                onDismiss = { showDatePickerDialog = false }
             )
         }
     }
 }
 
-// You would need to add Previews for this Composable
-// @Preview(showBackground = true)
-// @Composable
-// fun PreviewServiceExpenseDetailScreen() {
-//     // Create mock ViewModel and ServiceExpense data for preview
-// }

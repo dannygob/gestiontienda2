@@ -45,15 +45,15 @@ fun ClientDetailScreen(
                     if (clientState != null) {
                         IconButton(onClick = { viewModel.toggleEditMode() }) {
                             Icon(
-                                if (isEditMode) Icons.Filled.Save else Icons.Filled.Edit,
+                                imageVector = if (isEditMode) Icons.Filled.Save else Icons.Filled.Edit,
                                 contentDescription = if (isEditMode) "Save" else "Edit"
                             )
                         }
                         if (isEditMode) {
                             // Save button if separate from toggle
-                            // IconButton(onClick = { viewModel.saveClient() }) {
-                            //     Icon(Icons.Filled.Save, contentDescription = "Save")
-                            // }
+                            IconButton(onClick = { viewModel.saveClient() }) {
+                                Icon(Icons.Filled.Save, contentDescription = "Save")
+                            }
                         }
                     }
                 }
@@ -166,7 +166,9 @@ fun ClientDetailScreen(
                 Text(
                     text = "Save Error: ${(savingState as ClientDetailViewModel.SavingState.Error).message}",
                     color = MaterialTheme.colors.error,
-                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp)
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 16.dp)
                 )
             }
         }
