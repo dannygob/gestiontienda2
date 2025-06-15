@@ -3,6 +3,11 @@ package com.example.gestiontienda2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.NavHost
+import com.example.gestiontienda2.presentation.ui.auth.LoginScreen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,52 +18,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.gestiontienda2.presentation.ui.auth.LoginScreen
+//import com.example.gestiontienda2.presentation.ui.reports.Top10ProductsByProfitMarginScreen
+//import com.example.gestiontienda2.presentation.ui.reports.Top10ProductsSoldScreen
+//import com.example.gestiontienda2.presentation.ui.reports.CompanyProposalScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            YourAppTheme { // Replace YourAppTheme with your actual theme composable
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                )
-                {
-                    Greeting("World")
+            val navController = rememberNavController()
+            YourAppTheme {
+                NavHost(navController = navController, startDestination = "login") {
+                    composable("login") { LoginScreen() }
+                    //composable("top10profit") { Top10ProductsByProfitMarginScreen() }
+                    //composable("top10sold") { Top10ProductsSoldScreen() }
+                    //composable("companyproposal") { CompanyProposalScreen() }
+                    // TODO: Add registration route
                 }
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Hello, $name!",
-            style = MaterialTheme.typography.headlineMedium
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    YourAppTheme { // Replace YourAppTheme with your actual theme composable
-        Greeting("World")
-    }
-}
-
-// You will need to define your theme here, e.g., in ui.theme.Theme.kt
-// Example (replace with your actual theme implementation):
-@Composable
-fun YourAppTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        // Configure your color schemes, typography, etc.
-        content = content
-    )
 }

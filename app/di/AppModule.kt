@@ -9,13 +9,12 @@ import com.your_app_name.domain.repository.*
 import com.your_app_name.data.remote.api.OpenFoodFactsApiService
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 import javax.inject.Singleton
 
 @Module
@@ -46,10 +45,10 @@ object AppModule {
         return retrofit.create(OpenFoodFactsApiService::class.java)
     }
 
-    @Binds
-    abstract fun bindProductRepository(
-        productRepositoryImpl: ProductRepositoryImpl
-    ): ProductRepository
+    //@Binds
+    //abstract fun bindProductRepository(
+    //    productRepositoryImpl: ProductRepositoryImpl
+    //): ProductRepository
 
     @Binds
     abstract fun bindClientRepository(
@@ -76,8 +75,18 @@ object AppModule {
         orderRepositoryImpl: OrderRepositoryImpl
     ): OrderRepository
 
-    @Binds
-    abstract fun bindServiceExpenseRepository(
-        serviceExpenseRepositoryImpl: ServiceExpenseRepositoryImpl
-    ): ServiceExpenseRepository
+    //@Binds
+    //abstract fun bindServiceExpenseRepository(
+    //    serviceExpenseRepositoryImpl: ServiceExpenseRepositoryImpl
+    //): ServiceExpenseRepository
+
 }
+
+//@Module
+//@InstallIn(SingletonComponent::class)
+//interface OrderDetailViewModelModule {
+//    @Binds
+//    fun bindOrderDetailViewModelFactory(
+//        factory: com.example.gestiontienda2.presentation.ui.orders.OrderDetailViewModelFactoryImpl
+//    ): com.example.gestiontienda2.presentation.ui.orders.OrderDetailViewModelFactory
+//}
