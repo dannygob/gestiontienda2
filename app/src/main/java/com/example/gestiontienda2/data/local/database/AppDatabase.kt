@@ -10,7 +10,6 @@ import com.example.gestiontienda2.data.local.dao.ProviderDao
 import com.example.gestiontienda2.data.local.dao.PurchaseDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
-import com.example.gestiontienda2.data.local.room.converters.MyConverters
 import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
@@ -23,6 +22,7 @@ import com.example.gestiontienda2.data.local.room.entities.entity.SaleDetailEnti
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
+import com.example.gestiontienda2.data.mapper.MyConverters
 
 @Database(
     entities = [
