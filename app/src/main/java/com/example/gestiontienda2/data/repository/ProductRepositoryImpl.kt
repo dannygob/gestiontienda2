@@ -2,18 +2,16 @@ package com.example.gestiontienda2.data.repository
 
 import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.remote.api.OpenFoodFactsApiService
+import com.example.gestiontienda2.data.remote.firebase.datasource.source.ProductFirebaseDataSource
 import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.repository.ProductRepository
-import com.gestiontienda2.data.remote.firebase.ProductFirebaseDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import com.example.gestiontienda2.data.local.entities.toEntity as productDomainToEntity
-import com.example.gestiontienda2.data.remote.firebase.toDomain as productFirebaseToDomain
-import com.example.gestiontienda2.domain as productEntityToDomain
+
 
 class ProductRepositoryImpl @Inject constructor(
     private val productDao: ProductDao,
