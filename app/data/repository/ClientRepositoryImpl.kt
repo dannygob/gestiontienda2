@@ -1,91 +1,114 @@
-package com.your_app_name.data.repository
+package com.example.gestiontienda2.data.repository
 
-import com.your_app_name.data.local.dao.ClientDao
-import com.your_app_name.data.local.entities.ClientEntity
-import com.your_app_name.data.local.entities.toEntity
-import com.your_app_name.data.remote.firebase.ClientFirebaseDataSource
-import com.example.gestiontienda2.data.remote.firebase.ClientFirebase
-import com.example.gestiontienda2.data.remote.firebase.toDomain as firebaseToDomain
-import com.example.gestiontienda2.data.remote.firebase.toFirebase
-import com.your_app_name.domain.models.Client
-import com.your_app_name.domain.repository.ClientRepository
+import com.example.gestiontienda2.data.local.room.dao.ClientDao
+import com.example.gestiontienda2.data.remote.firebase.datasource.ClientFirebaseDataSource // Ensure this interface exists
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.domain.repository.ClientRepository
+import com.example.gestiontienda2.data.mappers.toDomain
+import com.example.gestiontienda2.data.mappers.toEntity
+import com.example.gestiontienda2.data.mappers.toFirebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
+// Note: Assuming ClientFirebaseDataSourceImpl will be provided by Hilt for ClientFirebaseDataSource interface
+@Singleton // Typically repositories are singletons
 class ClientRepositoryImpl @Inject constructor(
     private val clientDao: ClientDao,
-    private val clientFirebaseDataSource: ClientFirebaseDataSource
-    ) : ClientRepository {
+    private val clientFirebaseDataSource: ClientFirebaseDataSource 
+) : ClientRepository {
 
     override fun getAllClients(): Flow<List<Client>> {
         return flow {
-            // Try to fetch from Firebase first
             try {
-                // Assuming clientFirebaseDataSource.getClients() returns a List<ClientFirebase>
-                val firebaseClients = clientFirebaseDataSource.getClients()
-                withContext(Dispatchers.IO) {
-                    clientDao.insertAllClients(firebaseClients.map { it.toEntity() })
+                // Attempt to fetch from Firebase and update Room
+                // This is a simplified sync; real-world sync can be more complex (e.g., handling conflicts, timestamping)
+                // Assuming clientFirebaseDataSource.getAllClients() returns Flow<List<ClientFirebase>>
+                clientFirebaseDataSource.getAllClients().collect { firebaseClients ->
+                    val clientEntities = firebaseClients.map { it.toDomain().toEntity() } // Firebase -> Domain -> Entity
+                    // Consider more sophisticated insert/update logic if needed (e.g. insertAll an onConflictStrategy in DAO)
+                    clientDao.insertAllClients(clientEntities) 
                 }
             } catch (e: Exception) {
-                // Handle Firebase fetch errors (e.g., offline)
+                // Log.e("ClientRepo", "Error fetching from Firebase, proceeding with local data", e)
+                // Optionally emit an error state or specific signal to UI if Firebase sync fails
             }
-        emitAll(clientDao.getAllClients().map { entities ->
-            entities.map { it.toDomain() }
-        })
+            // Always emit from Room as the primary source of truth for the UI
+            emitAll(clientDao.getAllClients().map { entities ->
+                entities.map { it.toDomain() }
+            })
+        }.flowOn(Dispatchers.IO) // Perform operations on IO dispatcher
     }
 
     override suspend fun getClientById(id: Int): Client? {
-        // Prioritize Firebase if online, otherwise get from Room
-        return try {
-            // Assuming clientFirebaseDataSource.getClientById() returns ClientFirebase?
-            val firebaseClient = clientFirebaseDataSource.getClientById(id.toString()) // Assuming Firebase uses String ID
-            firebaseClient?.let { firebaseToDomain(it) }
-        } catch (e: Exception) {
-            // Handle Firebase fetch errors (e.g., offline)
+        return withContext(Dispatchers.IO) {
+            try {
+                val firebaseClient = clientFirebaseDataSource.getClientById(id.toString()) // Firebase ID is String
+                if (firebaseClient != null) {
+                    val domainClient = firebaseClient.toDomain()
+                    // Cache in Room
+                    clientDao.insertClient(domainClient.toEntity()) // insertClient handles conflict with OnConflictStrategy.REPLACE
+                    return@withContext domainClient
+                }
+            } catch (e: Exception) {
+                // Log.e("ClientRepo", "Error fetching client $id from Firebase", e)
+            }
+            // Fetch from Room if Firebase fails or client not found
             clientDao.getClientById(id)?.toDomain()
         }
     }
 
     override suspend fun insertClient(client: Client) {
-        // Example: Insert into Room and Firebase
+        // client.id from domain is Int. If it's 0, it's a new client.
+        // client.toEntity() will map this appropriately. Room will auto-generate ID if entity's id is 0.
+        // client.toFirebase() will map domain id to String. If domain id is 0, it maps to empty string for Firebase ID.
+        // The ClientFirebaseDataSource.addClient implementation needs to handle empty string ID (e.g., by letting Firestore auto-generate).
+        
         withContext(Dispatchers.IO) {
-            clientDao.insertClient(client.toEntity())
-        }
-        try {
-            clientFirebaseDataSource.addClient(client.toFirebase())
-        } catch (e: Exception) {
-            // Handle Firebase insertion errors (e.g., offline)
-            // You might want a mechanism to sync this later
+            // Save to Room first. If Room auto-generates an ID for a new client,
+            // we might want to use that generated ID for Firebase if consistency is key.
+            // For simplicity here, we assume client.id is either pre-set (for updates) or 0 (for inserts).
+            val entity = client.toEntity()
+            clientDao.insertClient(entity) // Assuming OnConflictStrategy.REPLACE or similar
+
+            // Reflect insert in Firebase
+            try {
+                // If client.id was 0, entity.id might still be 0 if insertClient doesn't return the ID or if not captured.
+                // The toFirebase() mapper handles id=0 to id="".
+                // The addClient in FirebaseDataSource should handle ID generation if it receives an empty id.
+                clientFirebaseDataSource.addClient(client.toFirebase()) 
+            } catch (e: Exception) {
+                // Log.e("ClientRepo", "Error adding client to Firebase", e)
+                // Handle Firebase error (e.g., queue for later sync, notify user)
+            }
         }
     }
 
     override suspend fun updateClient(client: Client) {
         withContext(Dispatchers.IO) {
             clientDao.updateClient(client.toEntity())
-        }
-        try {
-            // Assuming clientFirebaseDataSource.updateClient() uses ClientFirebase object
-            clientFirebaseDataSource.updateClient(client.toFirebase())
-        } catch (e: Exception) {
-            // Handle Firebase update errors (e.g., offline)
-            // You might want a mechanism to sync this later
+            try {
+                clientFirebaseDataSource.updateClient(client.toFirebase())
+            } catch (e: Exception) {
+                // Log.e("ClientRepo", "Error updating client in Firebase", e)
+            }
         }
     }
 
     override suspend fun deleteClient(client: Client) {
-        clientDao.deleteClient(client.toEntity())
-        clientFirebaseDataSource.deleteClient(client.id.toString()) // Assuming Firebase delete uses ID string
-    }
-
-        override suspend fun addClient(client: Client) {
-            // This method is already implemented in insertClient
-            // You might want to remove the addClient method from the interface
-            // or move the firebase logic from insertClient to addClient
-            // For now, I'll just call insertClient
-            insertClient(client)
+        withContext(Dispatchers.IO) {
+            clientDao.deleteClient(client.toEntity())
+            try {
+                clientFirebaseDataSource.deleteClient(client.id.toString()) // Firebase uses String ID
+            } catch (e: Exception) {
+                // Log.e("ClientRepo", "Error deleting client from Firebase", e)
+            }
         }
+    }
 }
