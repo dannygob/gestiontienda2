@@ -85,4 +85,5 @@ class ClientDetailViewModel @Inject constructor(
     object Saving : SavingState()
     object Success : SavingState()
     object Error : SavingState()
+    }
 }
