@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// Estados para representar el proceso de guardado
 sealed class SavingState {
     object Idle : SavingState()
     object Saving : SavingState()
@@ -72,28 +73,35 @@ class AddPurchaseViewModel @Inject constructor(
         _newPurchase.value = _newPurchase.value.copy(totalAmount = total)
     }
 
+    // Validación antes de guardar
+    private fun validatePurchase(): Boolean {
+        val purchase = _newPurchase.value
+        if (purchase.providerId.isBlank()) {
+            _savingState.value = SavingState.Error("El proveedor no puede estar vacío")
+            return false
+        }
+        if (purchase.items.isEmpty()) {
+            _savingState.value = SavingState.Error("Debe agregar al menos un producto")
+            return false
+        }
+        return true
+    }
+
+    // Guardar la compra en el repositorio
     fun savePurchase() {
-        _savingState.value = SavingState.Saving
+        if (!validatePurchase()) return
+
         viewModelScope.launch {
+            _savingState.value = SavingState.Saving
             try {
-                purchaseRepository.insertPurchase(_newPurchase.value)
+                purchaseRepository.savePurchase(_newPurchase.value)
                 _savingState.value = SavingState.Success
-                _newPurchase.value = Purchase(
-                    id = "0",
-                    providerId = "0",
-                     purchaseDate = System.currentTimeMillis(),
-                     items = emptyList(),
-                     totalAmount = 0.0
-                )
             } catch (e: Exception) {
-                _savingState.value = SavingState.Error("Failed to save purchase: ${e.localizedMessage}")
+                _savingState.value = SavingState.Error(e.message ?: "Error desconocido al guardar la compra")
             }
         }
     }
-
-    fun resetSavingState() {
-        _savingState.value = SavingState.Idle
-    }
+}
 
     // TODO: 1. Investigate the UI layer to identify where SavingState.Idle is being incorrectly passed as a PurchaseItem.
     // TODO: 2. Ensure that the UI observes the correct StateFlow (SavingState) and handles the different states accordingly.
