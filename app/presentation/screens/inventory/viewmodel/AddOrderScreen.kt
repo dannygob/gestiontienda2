@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
@@ -15,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.your_app_name.presentation.viewmodels.AddOrderViewModel
 import com.your_app_name.presentation.ui.UiEvent
+import com.your_app_name.util.SavingState
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,13 +47,16 @@ fun AddOrderScreen(
                 title = { Text("Nuevo Pedido") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.Delete, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
                     }
                 }
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.saveOrder() }) {
+            FloatingActionButton(
+                onClick = { viewModel.saveOrder() },
+                enabled = savingState != SavingState.Saving
+            ) {
                 Icon(Icons.Default.Save, contentDescription = "Guardar Pedido")
             }
         }
@@ -63,7 +68,7 @@ fun AddOrderScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Text("Cliente ID: ${order.clientId}", style = MaterialTheme.typography.titleMedium)
-            Button(onClick = { /* TODO: Seleccionar cliente */ }) {
+            Button(onClick = { /* TODO: Implementar selección de cliente */ }) {
                 Text("Seleccionar Cliente")
             }
 
@@ -74,7 +79,7 @@ fun AddOrderScreen(
             }
 
             Text("Fecha del Pedido: $formattedDate")
-            Button(onClick = { /* TODO: Mostrar selector de fecha */ }) {
+            Button(onClick = { /* TODO: Implementar selector de fecha */ }) {
                 Text("Cambiar Fecha")
             }
 
@@ -99,15 +104,15 @@ fun AddOrderScreen(
                 }
             }
 
-            Button(onClick = { /* TODO: Agregar producto */ }) {
+            Button(onClick = { /* TODO: Implementar agregar producto */ }) {
                 Text("Agregar Producto")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Total: \$${order.totalAmount}", style = MaterialTheme.typography.titleLarge)
+            Text("Total: \$${"%.2f".format(order.totalAmount)}", style = MaterialTheme.typography.titleLarge)
 
-            if (savingState is com.your_app_name.util.SavingState.Saving) {
+            if (savingState == SavingState.Saving) {
                 CircularProgressIndicator(modifier = Modifier.padding(top = 16.dp))
             }
         }
