@@ -1,28 +1,24 @@
 package com.your_app_name.presentation.viewmodels
 
-import androidx.compose.material3.SnackbarDuration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.your_app_name.domain.models.Order
 import com.your_app_name.domain.models.OrderItem
 import com.your_app_name.domain.models.OrderStatus
-import com.your_app_name.domain.repository.ProductRepository
-import com.your_app_name.domain.models.Order
-import com.your_app_name.presentation.ui.UiEvent
 import com.your_app_name.domain.repository.OrderRepository
+import com.your_app_name.domain.repository.ProductRepository
+import com.your_app_name.presentation.ui.UiEvent
 import com.your_app_name.util.SavingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddOrderViewModel @Inject constructor(
     private val orderRepository: OrderRepository,
-    private val productRepository: ProductRepository // Inject ProductRepository
+    private val productRepository: ProductRepository
 ) : ViewModel() {
 
     private val _newOrder = MutableStateFlow(
@@ -41,14 +37,14 @@ class AddOrderViewModel @Inject constructor(
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
     private val _eventChannel = Channel<UiEvent>()
-    val events = _eventChannel.receiveAsFlow()
+    val events: Flow<UiEvent> = _eventChannel.receiveAsFlow()
 
     fun updateOrderDate(timestamp: Long) {
         _newOrder.value = _newOrder.value.copy(orderDate = timestamp)
     }
 
     fun updateClient(clientId: Int) {
-         _newOrder.value = _newOrder.value.copy(clientId = clientId)
+        _newOrder.value = _newOrder.value.copy(clientId = clientId)
     }
 
     fun updateStatus(status: OrderStatus) {
@@ -58,23 +54,28 @@ class AddOrderViewModel @Inject constructor(
     fun addItem(item: OrderItem) {
         val currentItems = _newOrder.value.items.toMutableList()
         currentItems.add(item)
-        _newOrder.value = _newOrder.value.copy(items = currentItems, totalAmount = calculateTotal(currentItems))
+        _newOrder.value = _newOrder.value.copy(
+            items = currentItems,
+            totalAmount = calculateTotal(currentItems)
+        )
     }
 
     fun updateItemQuantity(itemId: Int, quantity: Int) {
         val updatedItems = _newOrder.value.items.map { item ->
-            if (item.id == itemId) {
-                item.copy(quantity = quantity)
-            } else {
-                item
-            }
+            if (item.id == itemId) item.copy(quantity = quantity) else item
         }
-        _newOrder.value = _newOrder.value.copy(items = updatedItems, totalAmount = calculateTotal(updatedItems))
+        _newOrder.value = _newOrder.value.copy(
+            items = updatedItems,
+            totalAmount = calculateTotal(updatedItems)
+        )
     }
 
-     fun removeItem(itemId: Int) {
+    fun removeItem(itemId: Int) {
         val updatedItems = _newOrder.value.items.filterNot { it.id == itemId }
-         _newOrder.value = _newOrder.value.copy(items = updatedItems, totalAmount = calculateTotal(updatedItems))
+        _newOrder.value = _newOrder.value.copy(
+            items = updatedItems,
+            totalAmount = calculateTotal(updatedItems)
+        )
     }
 
     private fun calculateTotal(items: List<OrderItem>): Double {
@@ -84,37 +85,49 @@ class AddOrderViewModel @Inject constructor(
     fun saveOrder() {
         viewModelScope.launch {
             _savingState.value = SavingState.Saving
- try {
- val orderToSave = _newOrder.value
- val insufficientStockProduct = orderToSave.items.firstOrNull { item ->
- viewModelScope.launch {
- val product = productRepository.getProductById(item.productId)
- return@launch product == null || product.stockQuantity - product.reservedStockQuantity < item.quantity
-                }.await() // Await the product check result for each item
-            }
 
- if (insufficientStockProduct != null) {
- // TODO: Get product name more gracefully if needed
-                    _eventChannel.send(UiEvent.ShowSnackbar("Insufficient stock for a product.")) // More generic message for simplicity
- return@launch // Stop saving if stock is insufficient for any item
+            try {
+                val orderToSave = _newOrder.value
+
+                val insufficientStockProduct = orderToSave.items.firstOrNull { item ->
+                    var hasInsufficientStock = false
+                    val job = viewModelScope.launch {
+                        val product = productRepository.getProductById(item.productId)
+                        hasInsufficientStock = product == null ||
+                            product.stockQuantity - product.reservedStockQuantity < item.quantity
+                    }
+                    job.join()
+                    hasInsufficientStock
                 }
-            }
 
- // If all items have sufficient stock, proceed to save and reserve
+                if (insufficientStockProduct != null) {
+                    // TODO: Get product name more gracefully if needed
+                    _eventChannel.send(UiEvent.ShowSnackbar("Insufficient stock for a product."))
+                    _savingState.value = SavingState.Idle
+                    return@launch
+                }
+
                 val orderId = orderRepository.insertOrder(orderToSave)
- _savingState.value = SavingState.Success
- // Optionally reset _newOrder or navigate
+                _savingState.value = SavingState.Success
 
- // Reserve stock for order items
+                // TODO: Optionally reset _newOrder or navigate
+
+                // Reserve stock for order items
                 orderToSave.items.forEach { item ->
- val product = productRepository.getProductById(item.productId)
- product?.let {
-                        productRepository.updateProduct(it.copy(reservedStockQuantity = it.reservedStockQuantity + item.quantity))
+                    viewModelScope.launch {
+                        val product = productRepository.getProductById(item.productId)
+                        product?.let {
+                            val updatedProduct = it.copy(
+                                reservedStockQuantity = it.reservedStockQuantity + item.quantity
+                            )
+                            productRepository.updateProduct(updatedProduct)
+                        }
                     }
-                    }
+                }
 
             } catch (e: Exception) {
                 _savingState.value = SavingState.Error("Failed to save order: ${e.localizedMessage}")
+                _eventChannel.send(UiEvent.ShowSnackbar("Error saving order."))
             }
         }
     }
