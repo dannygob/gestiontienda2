@@ -13,6 +13,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +27,7 @@ class AddOrderViewModel @Inject constructor(
     private val _newOrder = MutableStateFlow(
         Order(
             id = 0,
-            clientId = 0,
+            clientId = -1, // Usar -1 para indicar cliente no seleccionado
             orderDate = System.currentTimeMillis(),
             status = OrderStatus.PENDING,
             items = emptyList(),
@@ -84,7 +87,7 @@ class AddOrderViewModel @Inject constructor(
     private suspend fun validateOrder(): Boolean {
         val order = _newOrder.value
 
-        if (order.clientId == 0) {
+        if (order.clientId < 0) {
             _eventChannel.send(UiEvent.ShowSnackbar("Selecciona un cliente."))
             return false
         }
@@ -94,15 +97,16 @@ class AddOrderViewModel @Inject constructor(
             return false
         }
 
-        for (item in order.items) {
-            val product = productRepository.getProductById(item.productId)
-            if (product == null || product.stockQuantity - product.reservedStockQuantity < item.quantity) {
-                _eventChannel.send(UiEvent.ShowSnackbar("Stock insuficiente para el producto con ID ${item.productId}."))
-                return false
+        return withContext(Dispatchers.IO) {
+            for (item in order.items) {
+                val product = productRepository.getProductById(item.productId)
+                if (product == null || product.stockQuantity - product.reservedStockQuantity < item.quantity) {
+                    _eventChannel.send(UiEvent.ShowSnackbar("Stock insuficiente para el producto con ID ${item.productId}."))
+                    return@withContext false
+                }
             }
+            true
         }
-
-        return true
     }
 
     fun saveOrder() {
@@ -115,18 +119,23 @@ class AddOrderViewModel @Inject constructor(
                     return@launch
                 }
 
-                val orderId = orderRepository.insertOrder(_newOrder.value)
+                val orderId = withContext(Dispatchers.IO) {
+                    orderRepository.insertOrder(_newOrder.value)
+                }
+
                 _savingState.value = SavingState.Success
 
-                // Reservar stock
-                _newOrder.value.items.forEach { item ->
-                    launch {
-                        val product = productRepository.getProductById(item.productId)
-                        product?.let {
-                            val updatedProduct = it.copy(
-                                reservedStockQuantity = it.reservedStockQuantity + item.quantity
-                            )
-                            productRepository.updateProduct(updatedProduct)
+                // Reservar stock en bloque
+                coroutineScope {
+                    _newOrder.value.items.forEach { item ->
+                        launch(Dispatchers.IO) {
+                            val product = productRepository.getProductById(item.productId)
+                            product?.let {
+                                val updatedProduct = it.copy(
+                                    reservedStockQuantity = it.reservedStockQuantity + item.quantity
+                                )
+                                productRepository.updateProduct(updatedProduct)
+                            }
                         }
                     }
                 }
