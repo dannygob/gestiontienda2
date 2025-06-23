@@ -1,14 +1,13 @@
-package com.example.gestiontienda2.data.remote.firebase.mapper
+package com.example.gestiontienda2.data.remote.firebase.firebase_mapper
 
 
-import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.ProductEntity
+import com.example.gestiontienda2.data.local.entities.entity.OrderItemEntity
 import com.example.gestiontienda2.data.repository.OrderWithItems
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.example.gestiontienda2.domain.models.Product
+import com.google.android.engage.food.datamodel.ProductEntity
 
 // Client mappers (ClientEntity.toDomain and Client.toEntity) removed, now centralized in ClientMapper.kt
 
@@ -25,10 +24,12 @@ fun ProductEntity.toDomain(): Product = Product(
     category = this.category,
     purchasePrice = this.purchasePrice,
     stock = this.availableStock = this.stockQuantity - this.reservedStockQuantity,
-
-
-
-
+    barcode = TODO(),
+    providerId = TODO(),
+    availableStock = TODO(),
+    buyingPrice = TODO(),
+    sellingPrice = TODO(),
+    imageUrl = TODO(),
 )
 
 fun Product.toEntity(): ProductEntity = ProductEntity(

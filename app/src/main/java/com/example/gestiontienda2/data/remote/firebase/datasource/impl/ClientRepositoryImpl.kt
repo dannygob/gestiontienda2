@@ -4,7 +4,7 @@ import com.example.gestiontienda2.data.local.dao.ClientDao
 import com.example.gestiontienda2.data.mapper.toDomain
 import com.example.gestiontienda2.data.mapper.toEntity
 import com.example.gestiontienda2.data.remote.firebase.datasource.source.ClientFirebaseDataSource
-import com.example.gestiontienda2.data.remote.firebase.mapper.toFirebase
+import com.example.gestiontienda2.data.remote.firebase.firebase_mapper.toFirebase
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import kotlinx.coroutines.Dispatchers

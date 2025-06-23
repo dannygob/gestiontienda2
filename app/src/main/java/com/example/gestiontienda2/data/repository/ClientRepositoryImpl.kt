@@ -1,7 +1,8 @@
 package com.example.gestiontienda2.data.repository
 
-import com.example.gestiontienda2.data.local.room.dao.ClientDao
-import com.example.gestiontienda2.data.local.room.entities.mapper.toFirebase
+
+import com.example.gestiontienda2.data.local.dao.ClientDao
+import com.example.gestiontienda2.data.remote.firebase.firebase_mapper.toFirebase
 import com.example.gestiontienda2.data.remote.firebase.models.ClientFirebase
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
 import com.example.gestiontienda2.domain.models.Client
@@ -26,7 +27,7 @@ class ClientFirebaseDataSource {
         return null // Placeholder
     }
 
-    suspend fun addClient(client: ClientFirebase) {
+    suspend fun addClient(client: ProviderFirebase) {
         // Implementación para agregar cliente a Firebase
     }
 

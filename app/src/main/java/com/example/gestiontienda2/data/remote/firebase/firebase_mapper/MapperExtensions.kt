@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.remote.firebase.mapper
+package com.example.gestiontienda2.data.remote.firebase.firebase_mapper
 
 // Client-specific mapper extensions (ClientFirebase.toEntity, ClientEntity.toDomain, Client.toEntity, Client.toFirebase)
 // have been removed from this file.

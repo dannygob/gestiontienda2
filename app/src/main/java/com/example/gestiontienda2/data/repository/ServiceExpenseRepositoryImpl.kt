@@ -2,11 +2,10 @@ package com.example.gestiontienda2.data.repository
 
 import android.R.attr.category
 import android.R.attr.description
-import android.R.attr.id
 import android.R.attr.type
 import android.R.string
 import com.example.gestiontienda2.data.local.dao.ServiceExpenseDao
-import com.example.gestiontienda2.data.local.room.entities.entity.ServiceExpenseEntity
+import com.example.gestiontienda2.data.local.entities.entity.ServiceExpenseEntity
 import com.example.gestiontienda2.domain.models.ServiceExpense
 import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
 import kotlinx.coroutines.Dispatchers
@@ -89,6 +88,10 @@ fun ServiceExpenseEntity.toDomain(): ServiceExpense {
         type = type,
         amount = amount,
         date = date,
-        description = description
+        description = description,
+        saleId = TODO(),
+        productId = TODO(),
+        quantity = TODO(),
+        unitPrice = TODO()
     )
 }

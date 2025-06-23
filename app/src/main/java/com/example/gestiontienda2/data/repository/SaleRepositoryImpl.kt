@@ -6,9 +6,8 @@ import android.net.NetworkCapabilities
 import com.example.gestiontienda2.data.local.dao.ClientDao
 import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
-import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
 import com.example.gestiontienda2.data.remote.firebase.datasource.source.SaleFirebaseDataSource
+import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.domain.repository.SaleRepository
@@ -118,7 +117,10 @@ class SaleRepositoryImpl @Inject constructor(
             date = saleEntity.date,
             clientId = saleEntity.clientId,
             total = saleEntity.total,
-            items = saleItems
+            items = saleItems,
+            saleDate = TODO(),
+            totalAmount = TODO(),
+            paymentMethod = TODO()
         )
     }
 
@@ -133,7 +135,7 @@ class SaleRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun SaleItemEntity.toDomain(product: com.example.gestiontienda2.domain.models.Product? = null): SaleItem {
+    private fun SaleItemEntity.toDomain(product: Product? = null): SaleItem {
         return SaleItem(
             id = id,
             saleId = saleId,

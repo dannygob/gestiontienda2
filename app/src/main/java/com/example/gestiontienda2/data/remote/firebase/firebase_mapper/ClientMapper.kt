@@ -1,6 +1,6 @@
-package com.example.gestiontienda2.data.remote.firebase.mapper
+package com.example.gestiontienda2.data.remote.firebase.firebase_mapper
 
-import com.example.gestiontienda2.data.local.room.entities.entity.ClientEntity
+import com.example.gestiontienda2.data.local.entities.entity.ClientEntity
 import com.example.gestiontienda2.data.remote.firebase.models.ClientFirebase
 import com.example.gestiontienda2.domain.models.Client
 

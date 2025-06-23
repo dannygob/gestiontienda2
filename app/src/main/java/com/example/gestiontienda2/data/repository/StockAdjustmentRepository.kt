@@ -1,6 +1,8 @@
 package com.example.gestiontienda2.data.repository
 
 
+import com.example.gestiontienda2.data.local.dao.StockAdjustmentDao
+import com.example.gestiontienda2.data.local.entities.entity.StockAdjustmentEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext

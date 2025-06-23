@@ -1,8 +1,6 @@
 package com.example.gestiontienda2.data.repository
 
 import com.example.gestiontienda2.data.local.dao.PurchaseDao
-import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseDetailEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseEntity
 import com.example.gestiontienda2.domain.models.Purchase
 import com.example.gestiontienda2.domain.models.PurchaseDetail
 import com.example.gestiontienda2.domain.models.PurchaseItem
@@ -96,7 +94,9 @@ class PurchaseRepositoryImpl @Inject constructor(
             providerId = this.providerId,
             totalAmount = TODO(),
             items = TODO(),
-            total = this.total
+            total = this.total,
+            id1 = TODO(),
+            purchaseDate = TODO()
         )
     }
 

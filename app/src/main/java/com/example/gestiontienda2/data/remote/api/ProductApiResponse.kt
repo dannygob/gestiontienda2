@@ -22,6 +22,9 @@ fun ProductApiResponse.toDomainProduct(): Product {
         description = null,
         reservedStockQuantity = 0,
         price = 0.0, // Assuming price is not available in the API response
-        availableStock = 0, // Assuming available stock is not available in the API response
-        )
+        availableStock = 0,
+        buyingPrice = TODO(),
+        sellingPrice = TODO(),
+        imageUrl = TODO(), // Assuming available stock is not available in the API response
+    )
 }

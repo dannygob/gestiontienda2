@@ -40,7 +40,7 @@ import com.example.gestiontienda2.data.mapper.MyConverters
         ServiceExpenseEntity::class,
         SaleItemEntity::class,
         PurchaseItemEntity::class,
-        StockAdjustmentEntity::class
+        StockAdjustmentEntity::class,
     ],
     version = 8,
     exportSchema = false
@@ -55,4 +55,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun orderDao(): OrderDao
     abstract fun serviceExpenseDao(): ServiceExpenseDao
     abstract fun stockAdjustmentDao(): StockAdjustmentDao
+
 }
