@@ -60,46 +60,55 @@ fun AddOrderScreen(
                 Icon(Icons.Default.Save, contentDescription = "Guardar Pedido")
             }
         }
-    ) { padding ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(padding)
+                .padding(innerPadding)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            Text("Cliente ID: ${order.clientId}", style = MaterialTheme.typography.titleMedium)
+            // Cliente
+            Text("Cliente ID: ${if (order.clientId >= 0) order.clientId else "No seleccionado"}", style = MaterialTheme.typography.titleMedium)
             Button(onClick = { /* TODO: Implementar selección de cliente */ }) {
                 Text("Seleccionar Cliente")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Fecha
             val formattedDate = remember(order.orderDate) {
                 SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(order.orderDate))
             }
 
             Text("Fecha del Pedido: $formattedDate")
-            Button(onClick = { /* TODO: Implementar selector de fecha */ }) {
-                Text("Cambiar Fecha")
+            Button(onClick = {
+                viewModel.updateOrderDate(System.currentTimeMillis())
+            }) {
+                Text("Actualizar Fecha")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Productos
             Text("Productos", style = MaterialTheme.typography.titleMedium)
-            order.items.forEach { item ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column {
-                        Text("Producto ID: ${item.productId}")
-                        Text("Cantidad: ${item.quantity}")
-                    }
-                    IconButton(onClick = { viewModel.removeItem(item.id) }) {
-                        Icon(Icons.Default.Delete, contentDescription = "Eliminar Producto")
+            if (order.items.isEmpty()) {
+                Text("No hay productos agregados.")
+            } else {
+                order.items.forEach { item ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column {
+                            Text("Producto ID: ${item.productId}")
+                            Text("Cantidad: ${item.quantity}")
+                        }
+                        IconButton(onClick = { viewModel.removeItem(item.id) }) {
+                            Icon(Icons.Default.Delete, contentDescription = "Eliminar Producto")
+                        }
                     }
                 }
             }
@@ -110,6 +119,7 @@ fun AddOrderScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Total
             Text("Total: \$${"%.2f".format(order.totalAmount)}", style = MaterialTheme.typography.titleLarge)
 
             if (savingState == SavingState.Saving) {
