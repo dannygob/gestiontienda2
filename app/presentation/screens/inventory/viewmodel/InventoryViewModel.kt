@@ -31,6 +31,29 @@ class InventoryViewModel @Inject constructor(
         }
     }
 
-    // You can add other functions here for inventory management
-    // e.g., addProduct, updateProduct, deleteProduct, etc.
+    fun addProduct(product: ProductEntity) {
+        viewModelScope.launch {
+            productDao.insertProduct(product)
+        }
+    }
+
+    fun updateProduct(product: ProductEntity) {
+        viewModelScope.launch {
+            productDao.updateProduct(product)
+        }
+    }
+
+    fun deleteProduct(product: ProductEntity) {
+        viewModelScope.launch {
+            productDao.deleteProduct(product)
+        }
+    }
+
+    fun searchProducts(query: String) {
+        viewModelScope.launch {
+            productDao.searchProducts("%$query%").collect { result ->
+                _products.value = result
+            }
+        }
+    }
 }
