@@ -14,6 +14,9 @@ data class ProductEntity(
     val stockQuantity: Int,
     val reservedStockQuantity: Int = 0,
     val providerId: Long?, // Puede ser null si aún no hay proveedor asignado
-    val location: Location, // Ej: "Pasillo 1 - Estante 2 - Nivel 3"
+    val location: String?, // Ej: "Pasillo 1 - Estante 2 - Nivel 3"
     val description: String? = null,
+    val location1: String,
+    val price: Double,
+    val stock: Int,
 )
