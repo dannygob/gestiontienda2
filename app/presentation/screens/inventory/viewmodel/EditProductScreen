@@ -1,0 +1,130 @@
+package com.bizsync.bizsync.presentation.ui.inventory
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.bizsync.bizsync.presentation.viewmodels.InventoryDetailViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EditProductScreen(
+    productId: Int,
+    navController: NavController,
+    viewModel: InventoryDetailViewModel = hiltViewModel()
+) {
+    val product by viewModel.product.collectAsState()
+    val loading by viewModel.loading.collectAsState()
+    val error by viewModel.error.collectAsState()
+
+    // Cargar producto al iniciar
+    LaunchedEffect(productId) {
+        viewModel.loadProduct(productId)
+    }
+
+    var name by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var buyingPrice by remember { mutableStateOf("") }
+    var sellingPrice by remember { mutableStateOf("") }
+    var stockQuantity by remember { mutableStateOf("") }
+
+    // Rellenar campos cuando se carga el producto
+    LaunchedEffect(product) {
+        product?.let {
+            name = it.name
+            description = it.description
+            buyingPrice = it.buyingPrice.toString()
+            sellingPrice = it.sellingPrice.toString()
+            stockQuantity = it.stockQuantity.toString()
+        }
+    }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Editar Producto") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            when {
+                loading -> CircularProgressIndicator()
+                error != null -> Text("Error: $error", color = MaterialTheme.colorScheme.error)
+                product == null -> Text("Producto no encontrado.")
+                else -> {
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Nombre") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = description,
+                        onValueChange = { description = it },
+                        label = { Text("Descripción") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = buyingPrice,
+                        onValueChange = { buyingPrice = it },
+                        label = { Text("Precio de compra") },
+                        keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = sellingPrice,
+                        onValueChange = { sellingPrice = it },
+                        label = { Text("Precio de venta") },
+                        keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = stockQuantity,
+                        onValueChange = { stockQuantity = it },
+                        label = { Text("Cantidad en stock") },
+                        keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Button(
+                        onClick = {
+                            val updatedProduct = product!!.copy(
+                                name = name,
+                                description = description,
+                                buyingPrice = buyingPrice.toDoubleOrNull() ?: 0.0,
+                                sellingPrice = sellingPrice.toDoubleOrNull() ?: 0.0,
+                                stockQuantity = stockQuantity.toIntOrNull() ?: 0
+                            )
+                            viewModel.updateProduct(updatedProduct)
+                            navController.popBackStack()
+                        },
+                        enabled = name.isNotBlank() && buyingPrice.isNotBlank() && sellingPrice.isNotBlank()
+                    ) {
+                        Text("Guardar Cambios")
+                    }
+                }
+            }
+        }
+    }
+}
