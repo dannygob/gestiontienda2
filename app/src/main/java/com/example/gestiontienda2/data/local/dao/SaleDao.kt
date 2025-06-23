@@ -5,8 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
-import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
+import com.example.gestiontienda2.data.local.entities.entity.SaleEntity
+import com.example.gestiontienda2.data.local.entities.entity.SaleItemEntity
+
 import kotlinx.coroutines.flow.Flow
 
 @Dao

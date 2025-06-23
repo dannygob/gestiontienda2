@@ -5,7 +5,6 @@ import com.example.gestiontienda2.data.local.dao.OrderDao
 import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.OrderItemEntity
-import com.example.gestiontienda2.data.local.room.entities.mapper.toDomain
 import com.example.gestiontienda2.data.remote.firebase.datasource.source.OrderFirebaseDataSource
 import com.example.gestiontienda2.data.remote.firebase.models.OrderFirebase
 import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase

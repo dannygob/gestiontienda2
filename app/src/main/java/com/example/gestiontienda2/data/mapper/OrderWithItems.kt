@@ -9,8 +9,8 @@ fun OrderWithItems.toDomain(clients: List<Client>, products: List<Product>): Ord
     clients.find { it.id.toLong() == this.order.clientId } // Puede ser null si no existe
     val productsMap = products.associateBy { it.id }
     return Order(
-        id = this.order.id.toInt(),
-        clientId = this.order.clientId.toInt(),
+        id = this.order.id.toInt() as Int,
+        clientId = this.order.clientId.toInt() as Int,
         orderDate = this.order.orderDate,
         status = this.order.status,
         totalAmount = this.order.totalAmount,
