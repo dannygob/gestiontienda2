@@ -1,4 +1,4 @@
-package com.example.gestiontienda2.data.repository
+package com.example.gestiontienda2.data.local.room.entities
 
 import androidx.room.Embedded
 import androidx.room.Relation

@@ -14,6 +14,4 @@ interface ClientRepository {
     suspend fun updateClient(client: Client)
 
     suspend fun deleteClient(client: Client)
-
-    suspend fun addClient(client: Client)
 }

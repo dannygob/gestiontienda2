@@ -3,15 +3,16 @@ package com.your_app_name.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.example.gestiontienda2.domain.models.Purchase
-import com.example.gestiontienda2.domain.models.PurchaseItem
-import com.example.gestiontienda2.domain.repository.PurchaseRepository
+import com.your_app_name.domain.models.Purchase // Assuming Purchase model exists
+import com.your_app_name.domain.models.PurchaseItem // Assuming PurchaseItem model exists
+import com.your_app_name.domain.repositories.PurchaseRepository // Assuming PurchaseRepository exists
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// Define a simple SavingState sealed class if you don't have one
 sealed class SavingState {
     object Idle : SavingState()
     object Saving : SavingState()
@@ -21,24 +22,28 @@ sealed class SavingState {
 
 @HiltViewModel
 class AddPurchaseViewModel @Inject constructor(
-    private val purchaseRepository: PurchaseRepository
+    private val purchaseRepository: PurchaseRepository // Inject your PurchaseRepository
 ) : ViewModel() {
 
+    // State for the new purchase data
     private val _newPurchase = MutableStateFlow(
         Purchase(
-            id = "0",
-            providerId = "0",
-            purchaseDate = System.currentTimeMillis(),
-            items = emptyList(),
-            totalAmount = 0.0
+            id = 0, // Assuming 0 or similar for a new entry
+            providerId = 0, // Placeholder, you'll need to handle provider selection
+            purchaseDate = System.currentTimeMillis(), // Default to current time
+            items = emptyList(), // Start with an empty list of items
+            totalAmount = 0.0 // Calculate based on items
+            // Add other fields as needed
         )
     )
     val newPurchase: StateFlow<Purchase> = _newPurchase.asStateFlow()
 
+    // State for saving process
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
 
-    fun updateProvider(providerId: String) {
+    // Functions to update the new purchase data from UI input
+    fun updateProvider(providerId: Int) {
         _newPurchase.value = _newPurchase.value.copy(providerId = providerId)
     }
 
@@ -60,30 +65,35 @@ class AddPurchaseViewModel @Inject constructor(
         calculateTotalAmount()
     }
 
-    fun removeItem(itemId: String) {
+    fun removeItem(itemId: Int) {
         _newPurchase.value = _newPurchase.value.copy(
             items = _newPurchase.value.items.filterNot { it.id == itemId }
         )
         calculateTotalAmount()
     }
 
+    // Helper function to calculate total amount
     private fun calculateTotalAmount() {
-        val total = _newPurchase.value.items.sumOf { it.quantity * it.price }
+        val total = _newPurchase.value.items.sumOf { it.quantity * it.priceAtPurchase }
         _newPurchase.value = _newPurchase.value.copy(totalAmount = total)
     }
 
+    // Function to save the new purchase
     fun savePurchase() {
         _savingState.value = SavingState.Saving
         viewModelScope.launch {
             try {
-                purchaseRepository.insertPurchase(_newPurchase.value)
+                // Call repository to insert the new purchase
+                purchaseRepository.insertPurchase(_newPurchase.value) // Assuming insertPurchase takes a Purchase object
                 _savingState.value = SavingState.Success
+                // Optionally reset the newPurchase state after successful save
                 _newPurchase.value = Purchase(
-                    id = "0",
-                    providerId = "0",
+                     id = 0,
+                     providerId = 0,
                      purchaseDate = System.currentTimeMillis(),
                      items = emptyList(),
                      totalAmount = 0.0
+                     // Add other fields as needed
                 )
             } catch (e: Exception) {
                 _savingState.value = SavingState.Error("Failed to save purchase: ${e.localizedMessage}")
@@ -91,10 +101,8 @@ class AddPurchaseViewModel @Inject constructor(
         }
     }
 
+    // Function to reset saving state, useful after showing an error or success message
     fun resetSavingState() {
         _savingState.value = SavingState.Idle
     }
-
-    // TODO: 1. Investigate the UI layer to identify where SavingState.Idle is being incorrectly passed as a PurchaseItem.
-    // TODO: 2. Ensure that the UI observes the correct StateFlow (SavingState) and handles the different states accordingly.
 }

@@ -1,6 +1,6 @@
 package com.example.gestiontienda2.data.local.room.entities.mapper
 
-import com.example.gestiontienda2.data.repository.OrderWithItems
+import com.example.gestiontienda2.data.local.room.entities.OrderWithItems
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.Product

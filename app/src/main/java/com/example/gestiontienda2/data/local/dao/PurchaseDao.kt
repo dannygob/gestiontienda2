@@ -7,9 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.gestiontienda2.data.local.room.entities.PurchaseWithItems
 import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.PurchaseItemEntity
-import com.example.gestiontienda2.data.repository.PurchaseWithItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao

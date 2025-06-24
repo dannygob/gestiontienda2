@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities
 import com.example.gestiontienda2.data.local.dao.ClientDao
 import com.example.gestiontienda2.data.local.dao.ProductDao
 import com.example.gestiontienda2.data.local.dao.SaleDao
+import com.example.gestiontienda2.data.local.room.entities.SaleWithItems
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleEntity
 import com.example.gestiontienda2.data.local.room.entities.entity.SaleItemEntity
 import com.example.gestiontienda2.data.remote.firebase.datasource.source.SaleFirebaseDataSource

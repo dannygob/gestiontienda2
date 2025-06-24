@@ -1,7 +1,5 @@
 package com.example.gestiontienda2.domain.models
 
-
-
 data class Product(
     val id: Int,
     val name: String,
@@ -16,7 +14,6 @@ data class Product(
     val description: String?,
     val reservedStockQuantity: Int,
     val availableStock: Int,
-
 
     ) {
     annotation class SaleItem
