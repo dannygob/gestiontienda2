@@ -7,11 +7,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.gestiontienda2.presentation.viewmodels.auth.LoginViewModel
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onLoginSuccess: () -> Unit,
+    onNavigateToRegister: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    // Example: Observe a login result state from the ViewModel
+    // val loginState by viewModel.loginState.collectAsState()
+    // LaunchedEffect(loginState) {
+    //     if (loginState is LoginResult.Success) {
+    //         onLoginSuccess()
+    //     } else if (loginState is LoginResult.Error) {
+    //         // Show error message
+    //     }
+    // }
 
     Column(
         modifier = Modifier
@@ -35,11 +51,15 @@ fun LoginScreen() {
             visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /* TODO: Implement login logic */ }) {
+        Button(onClick = {
+            // viewModel.login(username, password) // ViewModel would handle actual login
+            // For now, directly call onLoginSuccess for flow testing
+            onLoginSuccess()
+        }) {
             Text("Login")
         }
         Spacer(modifier = Modifier.height(8.dp))
-        TextButton(onClick = { /* TODO: Navigate to registration screen */ }) {
+        TextButton(onClick = onNavigateToRegister) {
             Text("Register")
         }
     }
@@ -48,5 +68,7 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    // Preview won't work easily with Hilt ViewModel and navigation lambdas
+    // For a simple preview, you might need to pass mock lambdas
+    LoginScreen(onLoginSuccess = {}, onNavigateToRegister = {})
 }
