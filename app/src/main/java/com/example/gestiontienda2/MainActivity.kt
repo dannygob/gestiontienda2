@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,6 +20,8 @@ import com.example.gestiontienda2.presentation.ui.auth.LoginScreen
 import com.example.gestiontienda2.presentation.ui.auth.RegistrationScreen
 import com.example.gestiontienda2.presentation.ui.dashboard.DashboardScreen
 import com.example.gestiontienda2.presentation.ui.theme.GestionTiendaAppTheme
+import com.example.gestiontienda2.presentation.viewmodels.auth.LoginViewModel
+import com.example.gestiontienda2.presentation.viewmodels.auth.RegistrationViewModel
 
 // Constantes de ruta
 const val ROUTE_LOGIN = "login"
@@ -37,7 +40,9 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = ROUTE_LOGIN) {
                         composable(ROUTE_LOGIN) {
+                            val loginViewModel: LoginViewModel = hiltViewModel()
                             LoginScreen(
+                                // viewModel = loginViewModel, // Assuming LoginScreen takes a ViewModel
                                 onLoginSuccess = {
                                     navController.navigate(ROUTE_MAIN_APP) {
                                         popUpTo(ROUTE_LOGIN) { inclusive = true }
@@ -49,10 +54,12 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(ROUTE_REGISTRATION) {
+                            val registrationViewModel: RegistrationViewModel = hiltViewModel()
                             RegistrationScreen(
+                                // viewModel = registrationViewModel, // Assuming RegistrationScreen takes a ViewModel
                                 onRegistrationSuccess = {
                                     navController.navigate(ROUTE_LOGIN) {
-                                        popUpTo(ROUTE_REGISTRATION) { inclusive = true } // Go to Login, remove registration from backstack
+                                        popUpTo(ROUTE_REGISTRATION) { inclusive = true }
                                     }
                                 },
                                 onNavigateBack = {

@@ -1,3 +1,19 @@
+package com.example.gestiontienda2.presentation.viewmodels
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.gestiontienda2.domain.models.Order
+import com.example.gestiontienda2.domain.models.OrderItem
+import com.example.gestiontienda2.domain.repository.ClientRepository
+import com.example.gestiontienda2.domain.repository.OrderRepository
+import com.example.gestiontienda2.domain.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 // In OrderDetailViewModel.kt
 @HiltViewModel
 class OrderDetailViewModel @Inject constructor(
@@ -193,7 +209,7 @@ class OrderDetailViewModel @Inject constructor(
                     orderRepository.updateOrder(fulfilledOrder)
 
                     _savingState.value = SavingState.Success // Or a separate state for fulfillment success
-                    val fulfilledOrder = orderToFulfill.copy(status = "FULFILLED")
+                   // val fulfilledOrder = orderToFulfill.copy(status = "FULFILLED") // duplicate line
                     _order.value = fulfilledOrder // Update local state
                      // Refresh detailed order to show updated status and stock
                      loadOrder(fulfilledOrder.id)
