@@ -29,9 +29,9 @@ class SplashActivity : AppCompatActivity() {
         val animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         greetingText.startAnimation(animation)
 
-        // Navegar al Dashboard después de 3 segundos usando Handler con postDelayed
+        // Navegar al MainActivity después de 3 segundos usando Handler con postDelayed
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, DashboardScreen::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)
