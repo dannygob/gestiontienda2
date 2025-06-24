@@ -1,12 +1,12 @@
 package com.example.gestiontienda2.di
 
-import com.example.gestiontienda2.data.repository.ClientRepositoryImpl
-import com.example.gestiontienda2.data.repository.OrderRepositoryImpl
-import com.example.gestiontienda2.data.repository.ProductRepositoryImpl
-import com.example.gestiontienda2.data.repository.ProviderRepositoryImpl
-import com.example.gestiontienda2.data.repository.PurchaseRepositoryImpl
-import com.example.gestiontienda2.data.repository.SaleRepositoryImpl
-import com.example.gestiontienda2.data.repository.ServiceExpenseRepositoryImpl
+import com.example.gestiontienda2.data.repository.impl.ClientRepositoryImpl
+import com.example.gestiontienda2.data.repository.impl.OrderRepositoryImpl
+import com.example.gestiontienda2.data.repository.impl.ProductRepositoryImpl
+import com.example.gestiontienda2.data.repository.impl.ProviderRepositoryImpl
+import com.example.gestiontienda2.data.repository.impl.PurchaseRepositoryImpl
+import com.example.gestiontienda2.data.repository.impl.SaleRepositoryImpl
+import com.example.gestiontienda2.data.repository.impl.ServiceExpenseRepositoryImpl
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.example.gestiontienda2.domain.repository.OrderRepository
 import com.example.gestiontienda2.domain.repository.ProductRepository
