@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gestiontienda2.presentation.ui.auth.LoginScreen
 import com.example.gestiontienda2.presentation.ui.auth.RegistrationScreen
+import com.example.gestiontienda2.presentation.ui.dashboard.DashboardScreen
 import com.example.gestiontienda2.presentation.ui.theme.GestionTiendaAppTheme
 
 // Constantes de ruta
@@ -37,33 +38,40 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = ROUTE_LOGIN) {
                         composable(ROUTE_LOGIN) {
                             LoginScreen(
-// TODO: Pasar las devoluciones de llamada de navegación, p. ej.:
-// onLoginSuccess = { navController.navigate(ROUTE_MAIN_APP) { popUpTo(ROUTE_LOGIN) { inclusive = true } } },
-// onNavigateToRegister = { navController.navigate(ROUTE_REGISTRATION) }
+                                onLoginSuccess = {
+                                    navController.navigate(ROUTE_MAIN_APP) {
+                                        popUpTo(ROUTE_LOGIN) { inclusive = true }
+                                    }
+                                },
+                                onNavigateToRegister = {
+                                    navController.navigate(ROUTE_REGISTRATION)
+                                }
                             )
                         }
                         composable(ROUTE_REGISTRATION) {
                             RegistrationScreen(
-// TODO: Pasar las devoluciones de llamada de navegación, p. ej.:
-// onRegistrationSuccess = { navController.navigate(ROUTE_LOGIN) },
-// onNavigateBack = { navController.popBackStack() }
+                                onRegistrationSuccess = {
+                                    navController.navigate(ROUTE_LOGIN) {
+                                        popUpTo(ROUTE_REGISTRATION) { inclusive = true } // Go to Login, remove registration from backstack
+                                    }
+                                },
+                                onNavigateBack = {
+                                    navController.popBackStack()
+                                }
                             )
                         }
                         composable(ROUTE_MAIN_APP) {
-// Marcador de posición para la pantalla principal después de iniciar sesión
-                            Column(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(text = "Pantalla principal de la aplicación")
-// TODO: Agregar un ejemplo de botón de cierre de sesión
-// Button(onClick = {
-// navController.navigate(ROUTE_LOGIN) {
-// popUpTo(ROUTE_MAIN_APP) { inclusive = true }
-// }
-// }) { Text("Cerrar sesión") }
-                            }
+                            DashboardScreen(
+                                onNavigateToProducts = { /* TODO: navController.navigate("products_route") */ },
+                                onNavigateToClients = { /* TODO: navController.navigate("clients_route") */ },
+                                onNavigateToProviders = { /* TODO: navController.navigate("providers_route") */ }
+                                // TODO: Add logout functionality, e.g.,
+                                // onLogout = {
+                                //     navController.navigate(ROUTE_LOGIN) {
+                                //         popUpTo(ROUTE_MAIN_APP) { inclusive = true }
+                                //     }
+                                // }
+                            )
                         }
                     }
                 }
