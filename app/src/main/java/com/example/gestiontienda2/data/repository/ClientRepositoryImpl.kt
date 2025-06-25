@@ -14,31 +14,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-// Definición correcta de la fuente de datos Firebase
-class ClientFirebaseDataSource {
-    suspend fun getClients(): List<ClientFirebase> {
-        // Implementación para obtener datos de Firebase
-        return emptyList() // Placeholder
-    }
-
-    suspend fun getClientById(id: String): ClientFirebase? {
-        // Implementación para obtener un solo cliente
-        return null // Placeholder
-    }
-
-    suspend fun addClient(client: ProviderFirebase) {
-        // Implementación para agregar cliente a Firebase
-    }
-
-    suspend fun updateClient(client: ClientFirebase) {
-        // Implementación para actualizar cliente en Firebase
-    }
-
-    suspend fun deleteClient(id: String) {
-        // Implementación para eliminar cliente en Firebase
-    }
-}
+import com.example.gestiontienda2.data.remote.firebase.datasource.source.ClientFirebaseDataSource // Corrected import path
 
 class ClientRepositoryImpl @Inject constructor(
     private val clientDao: ClientDao,

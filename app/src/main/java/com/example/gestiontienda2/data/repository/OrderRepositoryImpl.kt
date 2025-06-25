@@ -14,6 +14,7 @@ import com.example.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
@@ -23,7 +24,7 @@ class OrderRepositoryImpl @Inject constructor(
     private val orderFirebaseDataSource: OrderFirebaseDataSource,
     private val productDao: ProductDao,
     private val clientDao: ClientDao,
-    private val ioDispatcher: CoroutineContext,
+    @Named("IODispatcher") private val ioDispatcher: CoroutineContext,
 ) : OrderRepository {
 
     override fun getAllOrders(): Flow<List<Order>> = orderDao.getAllOrdersWithItems()
