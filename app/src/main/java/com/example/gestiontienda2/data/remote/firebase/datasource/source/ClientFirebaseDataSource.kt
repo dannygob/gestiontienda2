@@ -3,8 +3,11 @@ package com.example.gestiontienda2.data.remote.firebase.datasource.source
 import com.example.gestiontienda2.data.remote.firebase.models.ClientFirebase
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ClientFirebaseDataSource {
+@Singleton
+class ClientFirebaseDataSource @Inject constructor() {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val clientsCollection = firestore.collection("clients")
