@@ -16,6 +16,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@dagger.assisted.AssistedFactory
+interface OrderDetailViewModelFactory {
+    fun create(savedStateHandle: SavedStateHandle): OrderDetailViewModel
+}
+
 @HiltViewModel
 class OrderDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
