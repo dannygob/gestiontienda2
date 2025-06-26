@@ -1,36 +1,55 @@
-package com.your_app_name.presentation.ui.clients
+package com.example.gestiontienda2.presentation.ui.clients
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.your_app_name.domain.models.Client
+import com.example.gestiontienda2.domain.models.Client
+import com.example.gestiontienda2.presentation.ui.common.UiState // Make sure this path is correct
+import com.example.gestiontienda2.presentation.ui.theme.GestionTiendaAppTheme
+import java.util.Date // For mock data in previews
 
 @Composable
-fun ClientListScreen(
+fun ClientListScreenRoute(
     viewModel: ClientListViewModel = hiltViewModel(),
     onClientClick: (Client) -> Unit,
     onAddClientClick: () -> Unit
 ) {
-    val clientsState by viewModel.clients.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
+    ClientListScreenContent(
+        uiState = uiState,
+        onClientClick = onClientClick,
+        onAddClientClick = onAddClientClick,
+        onRetry = { viewModel.retry() }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ClientListScreenContent(
+    uiState: UiState<List<Client>>,
+    onClientClick: (Client) -> Unit,
+    onAddClientClick: () -> Unit,
+    onRetry: () -> Unit
+) {
     Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Clients") })
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClientClick) {
-                Icon(Icons.Filled.Add, "Add new client")
+                Icon(Icons.Default.Add, contentDescription = "Add Client")
             }
         }
     ) { paddingValues ->
@@ -38,22 +57,35 @@ fun ClientListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
         ) {
-            if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            } else if (errorMessage != null) {
-                Text(
-                    text = errorMessage!!,
-                    color = MaterialTheme.colors.error,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(clientsState) { client ->
-                        ClientListItem(
-                            client = client,
-                            onClientClick = onClientClick
-                        )
+            when (uiState) {
+                is UiState.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is UiState.Success -> {
+                    val clients = uiState.data
+                    if (clients.isEmpty()) {
+                        Text("No clients found. Click the + button to add one.")
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(clients) { client ->
+                                ClientListItem(client = client, onClientClick = { onClientClick(client) })
+                            }
+                        }
+                    }
+                }
+                is UiState.Error -> {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = uiState.message, color = MaterialTheme.colorScheme.error)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(onClick = onRetry) {
+                            Text("Retry")
+                        }
                     }
                 }
             }
@@ -61,32 +93,61 @@ fun ClientListScreen(
     }
 }
 
+// Preview functions remain the same as I drafted them before.
+
+@Preview(showBackground = true, name = "Client List - Success")
 @Composable
-fun ClientListItem(
-    client: Client,
-    onClientClick: (Client) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-            .clickable { onClientClick(client) }
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = client.name,
-                style = MaterialTheme.typography.h6,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            // Add other relevant client details you want to show in the list item, e.g.:
-            // Text(text = "Phone: ${client.phone}", style = MaterialTheme.typography.body2)
-            // Text(text = "Email: ${client.email}", style = MaterialTheme.typography.body2)
-        }
+fun ClientListScreenSuccessPreview() {
+    GestionTiendaAppTheme {
+        ClientListScreenContent(
+            uiState = UiState.Success(
+                listOf(
+                    Client(1, "Alice Wonderland", "alice@example.com", "123 Fairy Lane", "555-0101", Date(), null),
+                    Client(2, "Bob The Builder", "bob@example.com", "456 Construct Rd", "555-0102", Date(), null)
+                )
+            ),
+            onClientClick = {},
+            onAddClientClick = {},
+            onRetry = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Client List - Loading")
+@Composable
+fun ClientListScreenLoadingPreview() {
+    GestionTiendaAppTheme {
+        ClientListScreenContent(
+            uiState = UiState.Loading,
+            onClientClick = {},
+            onAddClientClick = {},
+            onRetry = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Client List - Error")
+@Composable
+fun ClientListScreenErrorPreview() {
+    GestionTiendaAppTheme {
+        ClientListScreenContent(
+            uiState = UiState.Error("Failed to load clients. Please try again."),
+            onClientClick = {},
+            onAddClientClick = {},
+            onRetry = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Client List - Empty")
+@Composable
+fun ClientListScreenEmptyPreview() {
+    GestionTiendaAppTheme {
+        ClientListScreenContent(
+            uiState = UiState.Success(emptyList()),
+            onClientClick = {},
+            onAddClientClick = {},
+            onRetry = {}
+        )
     }
 }
