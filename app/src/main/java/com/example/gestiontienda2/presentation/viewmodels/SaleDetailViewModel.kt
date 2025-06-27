@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Product
 import com.example.gestiontienda2.domain.models.Sale
-
 import com.example.gestiontienda2.domain.models.SaleItem
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import com.example.gestiontienda2.domain.repository.ProductRepository
@@ -18,7 +17,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// Data class to represent the detailed sale state
 data class DetailedSaleState(
     val sale: Sale? = null,
     val client: Client? = null,
@@ -28,7 +26,6 @@ data class DetailedSaleState(
     val editMode: Boolean = false
 )
 
-// Data class to combine SaleItem and Product
 data class SaleItemWithProduct(
     val saleItem: SaleItem,
     val product: Product?
@@ -49,8 +46,7 @@ class SaleDetailViewModel @Inject constructor(
     private val productRepository: ProductRepository
 ) : ViewModel() {
 
-    private val saleId: Int? =
-        savedStateHandle["saleId"] // Assuming sale ID is Int and passed as "saleId"
+    private val saleId: Int? = savedStateHandle["saleId"]
 
     private val _detailedSaleState = MutableStateFlow(DetailedSaleState(isLoading = true))
     val detailedSaleState: StateFlow<DetailedSaleState> = _detailedSaleState.asStateFlow()
@@ -72,25 +68,21 @@ class SaleDetailViewModel @Inject constructor(
             _detailedSaleState.value = DetailedSaleState(isLoading = true)
             try {
                 val sale = saleRepository.getSaleById(saleId)
-
-                if (sale == null) {
-                    _detailedSaleState.value = DetailedSaleState(error = "Sale not found.")
-                    return@launch
-                }
+                    ?: throw Exception("Sale not found")
 
                 val client = try {
                     clientRepository.getClientById(sale.clientId)
                 } catch (e: Exception) {
-                    null // Handle case where client might not exist
+                    null
                 }
 
                 val itemsWithProducts = sale.items.map { item ->
                     val product = try {
                         productRepository.getProductById(item.productId)
                     } catch (e: Exception) {
-                        null // Handle case where product might not exist
+                        null
                     }
-                    SaleItemWithProduct(saleItem = item, product = product)
+                    SaleItemWithProduct(item, product)
                 }
 
                 _detailedSaleState.value = DetailedSaleState(
@@ -102,7 +94,7 @@ class SaleDetailViewModel @Inject constructor(
 
             } catch (e: Exception) {
                 _detailedSaleState.value = DetailedSaleState(
-                    error = e.localizedMessage ?: "Unknown error",
+                    error = e.localizedMessage ?: "Error loading sale",
                     isLoading = false
                 )
             }
@@ -114,38 +106,64 @@ class SaleDetailViewModel @Inject constructor(
             _detailedSaleState.value.copy(editMode = !_detailedSaleState.value.editMode)
     }
 
-    // TODO: Implement updateSaleDetails function
     fun updateSaleDetails(updatedSale: Sale) {
-        // Logic to update state and then save
+        _detailedSaleState.value = _detailedSaleState.value.copy(sale = updatedSale)
     }
 
-    // TODO: Implement updateSaleItemQuantity function
     fun updateSaleItemQuantity(itemId: Int, newQuantity: Int) {
-        // Logic to update quantity in the state
+        val updatedItems = _detailedSaleState.value.itemsWithProducts.map {
+            if (it.saleItem.id == itemId) {
+                it.copy(saleItem = it.saleItem.copy(quantity = newQuantity))
+            } else it
+        }
+        _detailedSaleState.value = _detailedSaleState.value.copy(itemsWithProducts = updatedItems)
     }
 
-    // TODO: Implement removeSaleItem function
     fun removeSaleItem(itemId: Int) {
-        // Logic to remove item from the state
+        val updatedItems = _detailedSaleState.value.itemsWithProducts.filterNot {
+            it.saleItem.id == itemId
+        }
+        _detailedSaleState.value = _detailedSaleState.value.copy(itemsWithProducts = updatedItems)
     }
 
-    // TODO: Implement addSaleItem function
     fun addSaleItem(productId: Int, quantity: Int, priceAtSale: Double) {
-        // Logic to add a new item to the state
+        viewModelScope.launch {
+            val product = try {
+                productRepository.getProductById(productId)
+            } catch (e: Exception) {
+                null
+            }
+
+            if (product != null) {
+                val newItem = SaleItemWithProduct(
+                    saleItem = SaleItem(
+                        id = 0, // ID generado por la base de datos
+                        saleId = saleId ?: 0,
+                        productId = productId,
+                        quantity = quantity,
+                        priceAtSale = priceAtSale
+                    ),
+                    product = product
+                )
+
+                val updatedItems = _detailedSaleState.value.itemsWithProducts + newItem
+                _detailedSaleState.value =
+                    _detailedSaleState.value.copy(itemsWithProducts = updatedItems)
+            }
+        }
     }
 
-
-    // TODO: Implement saveSale function
     fun saveSale() {
         viewModelScope.launch {
             _savingState.value = SavingState.Saving
             try {
-                val currentDetailedState = _detailedSaleState.value
-                val saleToSave =
-                    currentDetailedState.sale?.copy(items = currentDetailedState.itemsWithProducts.map { it.saleItem }) // Recreate sale with potentially updated items
+                val current = _detailedSaleState.value
+                val saleToSave = current.sale?.copy(
+                    items = current.itemsWithProducts.map { it.saleItem }
+                )
 
                 if (saleToSave != null) {
-                    // saleRepository.updateSale(saleToSave) // Need updateSale method in repository
+                    saleRepository.updateSale(saleToSave)
                     _savingState.value = SavingState.Success
                 } else {
                     _savingState.value = SavingState.Error("Sale data is null.")
@@ -157,18 +175,16 @@ class SaleDetailViewModel @Inject constructor(
         }
     }
 
-    // TODO: Implement deleteSale function
     fun deleteSale() {
         viewModelScope.launch {
-            _savingState.value = SavingState.Saving // Reuse SavingState for delete
-            if (saleId == null) {
-                _savingState.value = SavingState.Error("Sale ID not provided for deletion.")
-                return@launch
-            }
+            _savingState.value = SavingState.Saving
             try {
-                saleRepository.deleteSale(saleId) // Need deleteSale method in repository/DAO
-                _savingState.value =
-                    SavingState.Success // Indicate success, UI should navigate back
+                if (saleId != null) {
+                    saleRepository.deleteSale(saleId)
+                    _savingState.value = SavingState.Success
+                } else {
+                    _savingState.value = SavingState.Error("Sale ID not provided for deletion.")
+                }
             } catch (e: Exception) {
                 _savingState.value =
                     SavingState.Error(e.localizedMessage ?: "Failed to delete sale.")

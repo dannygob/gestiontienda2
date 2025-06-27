@@ -9,7 +9,7 @@ interface SaleRepository {
     suspend fun getSaleById(saleId: Int): Sale?
     suspend fun addSale(sale: Sale): Long
     suspend fun updateSale(sale: Sale)
-    suspend fun deleteSale(sale: Sale)
+    suspend fun deleteSale(sale: Int)
     suspend fun getTotalSalesAmount(startDate: Long? = null, endDate: Long? = null): Double
     fun getSalesByDateRange(
         startDate: Long?,
