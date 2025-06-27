@@ -1,6 +1,5 @@
 package com.example.gestiontienda2.presentation.ui.orders
 
-
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,14 +9,12 @@ import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.example.gestiontienda2.domain.usecases.GetOrderByIdUseCase
 import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.example.gestiontienda2.domain.usecases.UpdateOrderUseCase
-// Using fully qualified names for Dagger assisted injection annotations
-// import dagger.assisted.Assisted // No, keep this as import
-// import dagger.assisted.AssistedInject // No, keep this as import
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @dagger.assisted.AssistedFactory
 interface OrderDetailViewModelFactory {
@@ -25,14 +22,15 @@ interface OrderDetailViewModelFactory {
 }
 
 @HiltViewModel
+
 class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully qualified
     @dagger.assisted.Assisted savedStateHandle: SavedStateHandle, // Fully qualified
+
     private val getOrderByIdUseCase: GetOrderByIdUseCase,
     private val updateOrderUseCase: UpdateOrderUseCase,
     private val deleteOrderUseCase: DeleteOrderUseCase,
-    private val getClientsUseCase: GetClientsUseCase, // Potentially needed for client details display/editing
-    private val getProductsUseCase: GetProductsUseCase // Potentially needed for product details display/editing in items
-
+    private val getClientsUseCase: GetClientsUseCase,
+    private val getProductsUseCase: GetProductsUseCase
 ) : ViewModel() {
 
     private val orderId: Int = checkNotNull(savedStateHandle["orderId"])
@@ -49,7 +47,6 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
     private val _editMode = MutableStateFlow(false)
     val editMode: StateFlow<Boolean> = _editMode.asStateFlow()
 
-    // State for editing
     private val _editingOrder = MutableStateFlow<Order?>(null)
     val editingOrder: StateFlow<Order?> = _editingOrder.asStateFlow()
 
@@ -58,7 +55,6 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
 
     private val _savingState = MutableStateFlow<Order?>(null)
     val savingState: StateFlow<Order?> = _savingState.asStateFlow()
-
 
     init {
         fetchOrder()
@@ -71,7 +67,7 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
             try {
                 val fetchedOrder = getOrderByIdUseCase.execute(orderId)
                 _order.value = fetchedOrder
-                _editingOrder.value = fetchedOrder // Initialize editing state
+                _editingOrder.value = fetchedOrder
             } catch (e: Exception) {
                 _error.value = e.message ?: "Error fetching order"
             } finally {
@@ -82,10 +78,10 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
 
     fun toggleEditMode() {
         _editMode.value = !_editMode.value
-        if (_editMode.value) {
-            _editingOrder.value = _order.value?.copy() // Create a copy for editing
+        _editingOrder.value = if (_editMode.value) {
+            _order.value?.copy()
         } else {
-            _editingOrder.value = _order.value // Revert editing state if cancelling edit
+            _order.value
         }
     }
 
@@ -103,14 +99,9 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
                 }
             } ?: emptyList()
         )?.also { updatedOrder ->
-            // Recalculate total if items change
             updatedOrder.totalAmount = updatedOrder.items.sumOf { it.quantity * it.priceAtOrder }
         }
     }
-
-    // You might need functions to add/remove order items in edit mode
-    // fun addOrderItem(...)
-    // fun removeOrderItem(itemId: Int)
 
     fun saveOrder() {
         viewModelScope.launch {
@@ -119,8 +110,8 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
             val orderToSave = _editingOrder.value ?: return@launch
             try {
                 updateOrderUseCase.execute(orderToSave)
-                _order.value = orderToSave // Update the main order state after saving
-                _editMode.value = false // Exit edit mode
+                _order.value = orderToSave
+                _editMode.value = false
             } catch (e: Exception) {
                 _error.value = e.message ?: "Error saving order"
             } finally {
@@ -136,8 +127,7 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
             val orderToDelete = _order.value ?: return@launch
             try {
                 deleteOrderUseCase.execute(orderToDelete)
-                // Navigate back or show success message after deletion
-                // Example: navigateBack() // Assuming navigateBack is passed from the UI
+                // Aquí podrías emitir un evento para navegar hacia atrás
             } catch (e: Exception) {
                 _error.value = e.message ?: "Error deleting order"
             } finally {
