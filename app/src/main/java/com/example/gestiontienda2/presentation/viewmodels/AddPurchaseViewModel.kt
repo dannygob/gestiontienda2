@@ -15,14 +15,6 @@ import java.nio.channels.spi.SelectorProvider
 import java.util.TimeZone.LONG
 import javax.inject.Inject
 
-// Define a simple SavingState sealed class if you don't have one
-sealed class SavingState {
-    object Idle : SavingState()
-    object Saving : SavingState()
-    object Success : SavingState()
-    data class Error(val message: String) : SavingState()
-}
-
 @HiltViewModel
 class AddPurchaseViewModel @Inject constructor(
     private val purchaseRepository: PurchaseRepository // Inject your PurchaseRepository
@@ -104,16 +96,6 @@ class AddPurchaseViewModel @Inject constructor(
                 purchaseRepository.insertPurchase(_newPurchase.value) // Assuming insertPurchase takes a Purchase object
                 _savingState.value = SavingState.Success
                 // Optionally reset the newPurchase state after successful save
-                _newPurchase.value = Purchase(
-                    date = selectedDateTimestamp,
-                    providerId = 0,
-                    totalAmount = 0.0,
-                    total = this.total,
-                    id1 = TODO(),
-                    purchaseDate = selectedDateTimestamp,
-                    // Reset date to the selected date
-                    // Add other fields as needed
-                )
             } catch (e: Exception) {
                 _savingState.value =
                     SavingState.Error("Failed to save purchase: ${e.localizedMessage}")

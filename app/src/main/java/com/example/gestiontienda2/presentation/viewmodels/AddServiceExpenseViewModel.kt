@@ -2,6 +2,7 @@ package com.example.gestiontienda2.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gestiontienda2.domain.models.ServiceExpense
 import com.example.gestiontienda2.domain.repository.ServiceExpenseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,6 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+private val AddServiceExpenseViewModel.newServiceExpense: ServiceExpense
 
 @HiltViewModel
 class AddServiceExpenseViewModel @Inject constructor(
@@ -65,14 +68,6 @@ class AddServiceExpenseViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val newServiceExpense = ServiceExpense(
-                    id = 0, // Database should generate ID
-                    description = _description.value,
-                    date = _date.value,
-                    amount = amountDouble,
-                    category = _category.value.ifBlank { "Other" }, // Default category if empty
-                    notes = _notes.value.ifBlank { null }
-                )
                 serviceExpenseRepository.insertServiceExpense(newServiceExpense)
                 _savingState.value = SavingState.Success
             } catch (e: Exception) {
