@@ -1,6 +1,6 @@
 [versions]
 # Kotlin y AGP
-agp = "8.10.1" # ✅ Compatible con SDK 34 si usas gradle.properties para suprimir advertencia
+agp = "8.11.0" # ✅ Compatible con SDK 34 si usas gradle.properties para suprimir advertencia
 composeBom = "2024.04.01"
 hiltAndroid = "your_hilt_version"
 hiltAndroidVersion = "2.56.2"
