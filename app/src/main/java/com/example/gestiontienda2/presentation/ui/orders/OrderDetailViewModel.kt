@@ -10,8 +10,9 @@ import com.example.gestiontienda2.domain.usecases.GetClientsUseCase
 import com.example.gestiontienda2.domain.usecases.GetOrderByIdUseCase
 import com.example.gestiontienda2.domain.usecases.GetProductsUseCase
 import com.example.gestiontienda2.domain.usecases.UpdateOrderUseCase
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+// Using fully qualified names for Dagger assisted injection annotations
+// import dagger.assisted.Assisted // No, keep this as import
+// import dagger.assisted.AssistedInject // No, keep this as import
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +25,8 @@ interface OrderDetailViewModelFactory {
 }
 
 @HiltViewModel
-class OrderDetailViewModel @AssistedInject constructor(
-    @Assisted savedStateHandle: SavedStateHandle,
+class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully qualified
+    @dagger.assisted.Assisted savedStateHandle: SavedStateHandle, // Fully qualified
     private val getOrderByIdUseCase: GetOrderByIdUseCase,
     private val updateOrderUseCase: UpdateOrderUseCase,
     private val deleteOrderUseCase: DeleteOrderUseCase,
