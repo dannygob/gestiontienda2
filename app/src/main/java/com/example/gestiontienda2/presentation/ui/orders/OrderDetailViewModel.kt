@@ -22,8 +22,10 @@ interface OrderDetailViewModelFactory {
 }
 
 @HiltViewModel
-class OrderDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+
+class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully qualified
+    @dagger.assisted.Assisted savedStateHandle: SavedStateHandle, // Fully qualified
+
     private val getOrderByIdUseCase: GetOrderByIdUseCase,
     private val updateOrderUseCase: UpdateOrderUseCase,
     private val deleteOrderUseCase: DeleteOrderUseCase,
