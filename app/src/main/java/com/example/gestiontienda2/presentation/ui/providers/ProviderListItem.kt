@@ -17,14 +17,14 @@ import com.example.gestiontienda2.domain.models.Provider
 
 @Composable
 fun ProviderListItem(
-    provider: Int,
+    provider: Provider, // Changed from Int to Provider
     onProviderClick: (Provider) -> Unit,
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
-            .clickable { onProviderClick(provider) }
+            .clickable { onProviderClick(provider) } // Pass the Provider object
     ) {
         Column(
             modifier = Modifier
@@ -32,8 +32,8 @@ fun ProviderListItem(
                 .fillMaxWidth()
         ) {
             Text(
-                text = provider.name,
-                style = MaterialTheme.typography.h6,
+                text = provider.name, // Now correctly accesses Provider.name
+                style = MaterialTheme.typography.titleMedium, // Using M3 typography
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

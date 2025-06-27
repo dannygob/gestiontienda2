@@ -23,12 +23,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.gestiontienda2.presentation.ui.addproduct.SavingState
+// import com.example.gestiontienda2.presentation.ui.addproduct.SavingState // Incorrect import and usage
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
-import com.gestiontienda2.domain.models.OrderStatus
-import java.util.*
+import com.example.gestiontienda2.presentation.ui.theme.GestionTiendaAppTheme
+import com.example.gestiontienda2.domain.models.OrderStatus // Corrected import
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 @Composable
@@ -36,12 +40,12 @@ fun OrderDetailScreen(
     viewModel: OrderDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit
 ) {
-    val detailedOrderState by viewModel.detailedOrder.collectAsState()
-    val orderState by viewModel.order.collectAsState()
+    // val detailedOrderState by viewModel.detailedOrder.collectAsState() // This seems unused, orderState has items
+    val orderState by viewModel.order.collectAsState() // This is Order?
     val loading by viewModel.loading.collectAsState()
     val error by viewModel.error.collectAsState()
     val editMode by viewModel.editMode.collectAsState()
-    val savingState by viewModel.savingState.collectAsState() // Collect savingState
+    // val savingState by viewModel.savingState.collectAsState() // This is Order?, not an enum
 
     // State for delete confirmation dialog visibility
     var showDeleteConfirmation by remember { mutableStateOf(false) }
@@ -49,26 +53,9 @@ fun OrderDetailScreen(
     // State for DatePicker visibility
     var showDatePicker by remember { mutableStateOf(false) }
     // State for selected date timestamp (Long) in edit mode
-    var editedOrderDateTimestamp by remember { mutableStateOf(System.currentTimeMillis()) }
-
-    // State for displaying save/error messages
-    var snackbarMessage by remember { mutableStateOf<String?>(null) }
-
-    // LaunchedEffect to show snackbar messages
-    LaunchedEffect(savingState) {
-        when (savingState) {
-            is SavingState.Success -> {
-                snackbarMessage = "Operation successful!"
-            }
-
-            is SavingState.Error -> {
-                snackbarMessage = "Error: ${(savingState as SavingState.Error).message}"
-            }
-
-            else -> {
-                snackbarMessage = null
-            }
-        }
+    // Initialize with order date if available, or current time
+    var editedOrderDateTimestamp by remember(orderState) {
+        mutableStateOf(orderState?.orderDate ?: System.currentTimeMillis())
     }
 
 
@@ -99,7 +86,7 @@ fun OrderDetailScreen(
                                     viewModel.toggleEditMode()
                                 }
                             },
-                            enabled = savingState != SavingState.Saving && // Disable when saving
+                            enabled = !loading && // Disable when loading (previously savingState)
                                     orderState?.status != OrderStatus.FULFILLED.name && // Disable if fulfilled
                                     orderState?.status != OrderStatus.CANCELLED.name // Disable if cancelled
                         ) {
@@ -112,7 +99,7 @@ fun OrderDetailScreen(
                         if (!editMode && orderState?.status != OrderStatus.FULFILLED.name && orderState?.status != OrderStatus.CANCELLED.name) {
                             IconButton(
                                 onClick = { showDeleteConfirmation = true },
-                                enabled = savingState != SavingState.Saving // Disable when saving
+                                enabled = !loading // Disable when loading
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
@@ -145,134 +132,73 @@ fun OrderDetailScreen(
 
                 orderState != null -> {
                     val order = orderState!!
-                    val detailedOrder =
-                        detailedOrderState // Get detailed order for client/product names
+                    // Assuming order.client.name and order.items.product.name are available if populated by UseCase
                     Column(
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        // Display Order Status
                         Text("Status: ${order.status}", style = MaterialTheme.typography.h6)
-
-                        // Display Client Name
-                        Text("Client: ${detailedOrder?.clientName ?: "Loading..."}")
-
-                        // Order ID is typically not editable
+                        // Text("Client: ${order.client?.name ?: "Loading..."}") // Assuming Order model has a Client object
+                        Text("Client ID: ${order.clientId}") // Displaying ID if client object not embedded
                         Text("Order ID: ${order.id}")
-
                         Spacer(modifier = Modifier.height(16.dp))
 
                         if (editMode) {
-                            // Date Input with DatePicker
                             OutlinedTextField(
                                 value = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
                                     Date(editedOrderDateTimestamp)
                                 ),
-                                onValueChange = { /* Read-only, date is selected via picker */ },
+                                onValueChange = { /* Read-only */ },
                                 label = { Text("Order Date") },
                                 readOnly = true,
                                 trailingIcon = {
                                     IconButton(onClick = { showDatePicker = true }) {
-                                        Icon(
-                                            Icons.Filled.CalendarToday,
-                                            contentDescription = "Select Date"
-                                        )
+                                        Icon(Icons.Filled.CalendarToday, contentDescription = "Select Date")
                                     }
                                 },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        showDatePicker = true
-                                    } // Make the entire field clickable
+                                modifier = Modifier.fillMaxWidth().clickable { showDatePicker = true }
                             )
-
                             Spacer(modifier = Modifier.height(16.dp))
-
                             Text("Items:", style = MaterialTheme.typography.h6)
-                            // Display list of order items with product names
-                            detailedOrder?.items?.forEach { detailedItem ->
-                                Text("- ${detailedItem.productName ?: "Loading..."}: Quantity: ${detailedItem.orderItem.quantity}, Price: ${detailedItem.orderItem.priceAtOrder}")
+                            order.items.forEach { item ->
+                                // Text("- ${item.product?.name ?: "Product ID: ${item.productId}"}: Quantity: ${item.quantity}, Price: ${item.priceAtOrder}")
+                                Text("Product ID: ${item.productId}, Qty: ${item.quantity}, Price: ${item.priceAtOrder}")
                             }
                         } else {
-                            // Display static order details when not in edit mode
-                            Text(
-                                "Order Date: ${
-                                    SimpleDateFormat(
-                                        "dd/MM/yyyy",
-                                        Locale.getDefault()
-                                    ).format(Date(order.orderDate))
-                                }"
-                            )
+                            Text("Order Date: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(order.orderDate))}")
                             Text("Total Amount: ${order.totalAmount}")
                             Spacer(modifier = Modifier.height(16.dp))
                             Text("Items:", style = MaterialTheme.typography.h6)
-                            detailedOrder?.items?.forEach { detailedItem ->
-                                Text("- ${detailedItem.productName ?: "Loading..."}: Quantity: ${detailedItem.orderItem.quantity}, Price: ${detailedItem.orderItem.priceAtOrder}")
+                            order.items.forEach { item ->
+                                // Text("- ${item.product?.name ?: "Product ID: ${item.productId}"}: Quantity: ${item.quantity}, Price: ${item.priceAtOrder}")
+                                Text("Product ID: ${item.productId}, Qty: ${item.quantity}, Price: ${item.priceAtOrder}")
                             }
                         }
 
-
-                        // Fulfill Order Button
                         Spacer(modifier = Modifier.height(24.dp))
                         Button(
-                            onClick = { viewModel.fulfillOrder() }, // Corrected call
-                            enabled = order.status != OrderStatus.FULFILLED.name && // Button is enabled if status is not FULFILLED
-                                    order.status != OrderStatus.CANCELLED.name && // Also disable if cancelled
-                                    savingState != SavingState.Saving, // Disable when saving
+                            onClick = { viewModel.fulfillOrder() },
+                            enabled = !loading && order.status != OrderStatus.FULFILLED.name && order.status != OrderStatus.CANCELLED.name,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         ) {
                             Text("Mark as Fulfilled")
                         }
 
-                        // Cancel Order Button
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(
                             onClick = { viewModel.cancelOrder() },
-                            enabled = order.status != OrderStatus.CANCELLED.name && // Button is enabled if status is not CANCELLED
-                                    order.status != OrderStatus.FULFILLED.name && // Also disable if fulfilled
-                                    savingState != SavingState.Saving, // Disable when saving
+                            enabled = !loading && order.status != OrderStatus.CANCELLED.name && order.status != OrderStatus.FULFILLED.name,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         ) {
                             Text("Cancel Order")
                         }
-
                     }
                 }
-
                 else -> {
-                    Text("Order not found", modifier = Modifier.align(Alignment.Center))
+                    Text("Order not found or no details available", modifier = Modifier.align(Alignment.Center))
                 }
             }
-
-            // Display Saving or Error messages
-            when (savingState) {
-                is SavingState.Saving -> {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-
-                is SavingState.Success -> {
-                    // Display success message (e.g., using a Snackbar)
-                    // Text("Saved successfully!", color = Color.Green, modifier = Modifier.align(Alignment.BottomCenter))
-                }
-
-                is SavingState.Error -> {
-                    // Display error message (e.g., using a Snackbar)
-                    // Text("Error: ${(savingState as SavingState.Error).message}", color = Color.Red, modifier = Modifier.align(Alignment.BottomCenter))
-                }
-
-                else -> {
-                    // No message to display
-                }
-            }
-
-            // Simple Text display for Snackbar messages (Alternatively use a real Snackbar)
-            snackbarMessage?.let {
-                Text(
-                    text = it,
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(16.dp)
-                )
-            }
+            // Removed snackbarMessage and the when(savingState) block for displaying messages here.
+            // Errors are shown via the 'error' state, loading via 'loading' state.
         }
 
         // DatePickerDialog
@@ -302,5 +228,25 @@ fun OrderDetailScreen(
             dismissButton = {
                 Button(onClick = { showDeleteConfirmation = false }) { Text("Cancel") }
             })
+    }
+}
+
+@Preview(showBackground = true, name = "Order Detail Preview (Limited)")
+@Composable
+fun OrderDetailScreenPreview() {
+    GestionTiendaAppTheme {
+        // Note: Previews for screens using Hilt ViewModels with SavedStateHandle
+        // are complex. This preview will likely not render the ViewModel's state
+        // correctly. It's provided as a basic structural preview.
+        // A more robust preview would require refactoring the screen to accept
+        // state parameters directly or using a more advanced preview setup with fakes.
+        OrderDetailScreen(
+            // viewModel = fakeViewModel, // Would need a fake ViewModel instance
+            navigateBack = {}
+        )
+        // Example of what might be needed for a more functional preview:
+        // val fakeOrder = Order(id=1, clientId=1, orderDate=System.currentTimeMillis(), status="PENDING", totalAmount=100.0, items=emptyList())
+        // OrderDetailScreenContent(order = fakeOrder, loading = false, error = null, editMode = false, /* ... other lambdas ... */)
+        // (This would require OrderDetailScreen to be split into a stateful part and a stateless "Content" part)
     }
 }

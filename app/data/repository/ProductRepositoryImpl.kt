@@ -1,0 +1,78 @@
+package com.example.gestiontienda2.data.repository
+
+import com.example.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.models.toDomain
+import com.example.gestiontienda2.domain.models.toFirebase
+import com.example.gestiontienda2.domain.repository.ProductRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+import com.example.gestiontienda2.data.remote.firebase.ProductFirebaseDataSource
+import com.example.gestiontienda2.data.remote.firebase.toDomain as productFirebaseToDomain
+import com.example.gestiontienda2.data.remote.api.OpenFoodFactsApiService
+import com.google.firebase.firestore.FirebaseFirestoreException
+import kotlinx.coroutines.tasks.await
+import com.example.gestiontienda2.data.local.entities.toDomain as productEntityToDomain
+import com.example.gestiontienda2.data.local.entities.toEntity as productDomainToEntity
+
+class ProductRepositoryImpl @Inject constructor(
+    private val productDao: ProductDao,
+    //private val productFirebaseDataSource: ProductFirebaseDataSource, // Assume this is implemented
+    private val openFoodFactsApiService: OpenFoodFactsApiService // Assume this is implemented
+) : ProductRepository {
+
+    override suspend fun updateProductStockQuantity(productId: Long, newStock: Int) {
+        productDao.updateStockQuantity(productId, newStock)
+    }
+
+    override suspend fun updateProductReservedStockQuantity(productId: Long, newReservedStock: Int) {
+        productDao.updateReservedStockQuantity(productId, newReservedStock)
+    }
+
+    override fun getAllProducts(): Flow<List<Product>> {
+        // Always return the flow from the local database
+        return productDao.getAllProducts().map { entities -> entities.map { it.toDomain() } }
+    }
+
+    override suspend fun getProductById(id: Int): Product? {
+        // Example: Prioritize local database, then Firebase
+        return productDao.getProductById(id)?.productEntityToDomain() ?: try {
+            null
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    // Example function for fetching product by barcode from API
+    suspend fun getProductByBarcodeFromApi(barcode: String): Product? {
+         return try {
+             val response = openFoodFactsApiService.getProductByBarcode(barcode)
+             if (response.isSuccessful && response.body() != null) {
+                 response.body()!!.toDomain()
+             } else {
+                 null
+             }
+         } catch (e: Exception) {
+             null
+         }
+    }
+
+    override suspend fun insertProduct(product: Product) {
+        // Insert into local
+        productDao.insertProduct(product.productDomainToEntity())
+    }
+
+    override suspend fun updateProduct(product: Product) {
+        // Update in local
+        productDao.updateProduct(product.productDomainToEntity())
+    }
+
+    override suspend fun deleteProduct(product: Product) {
+        // Example: Delete from local and Firebase
+        productDao.deleteProduct(product.productDomainToEntity())
+    }
+}
