@@ -67,7 +67,7 @@ class ProductRepositoryImpl @Inject constructor(
             response.body()?.toDomain()
         } catch (_: Exception) {
             null
-        }
+        } as Product?
     }
 
     override suspend fun insertProduct(product: Product) {

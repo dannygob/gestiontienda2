@@ -8,23 +8,21 @@ data class ProductApiResponse(
     val code: String?,
 )
 
-fun ProductApiResponse.toDomainProduct(): Product {
+fun ProductApiResponse.toDomain(): Product {
     return Product(
-        id = 0,
-        name = product_name ?: "Unknown Product",
+        id = 0, // Assuming ID is not provided in the API response
+        name = product_name ?: "",
+        price = 0.0, // Default value, adjust as necessary
+        stock = 0, // Default value, adjust as necessary
         barcode = code ?: "",
-        purchasePrice = 0.0,
-        salePrice = 0.0,
-        category = "Unknown",
-        stock = 0,
+        purchasePrice = 0.0, // Default value, adjust as necessary
+        salePrice = 0.0, // Default value, adjust as necessary
+        category = "", // Default value, adjust as necessary
         providerId = 0,
-        stockQuantity = 0,
-        description = null,
-        reservedStockQuantity = 0,
-        price = 0.0, // Assuming price is not available in the API response
-        availableStock = 0,
+        stockQuantity = TODO(),
+        description = TODO(),
         buyingPrice = TODO(),
         sellingPrice = TODO(),
-        imageUrl = TODO(), // Assuming available stock is not available in the API response
+        imageUrl = TODO() // Default value, adjust as necessary
     )
 }
