@@ -15,17 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-@dagger.assisted.AssistedFactory
-interface OrderDetailViewModelFactory {
-    fun create(savedStateHandle: SavedStateHandle): OrderDetailViewModel
-}
-
 @HiltViewModel
-
-class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully qualified
-    @dagger.assisted.Assisted savedStateHandle: SavedStateHandle, // Fully qualified
-
+class OrderDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getOrderByIdUseCase: GetOrderByIdUseCase,
     private val updateOrderUseCase: UpdateOrderUseCase,
     private val deleteOrderUseCase: DeleteOrderUseCase,
@@ -33,7 +25,9 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
     private val getProductsUseCase: GetProductsUseCase
 ) : ViewModel() {
 
-    private val orderId: Int = checkNotNull(savedStateHandle["orderId"])
+    private val orderId: Int = checkNotNull(savedStateHandle["orderId"]) {
+        "Order ID is required in SavedStateHandle"
+    }
 
     private val _order = MutableStateFlow<Order?>(null)
     val order: StateFlow<Order?> = _order.asStateFlow()
@@ -69,7 +63,7 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
                 _order.value = fetchedOrder
                 _editingOrder.value = fetchedOrder
             } catch (e: Exception) {
-                _error.value = e.message ?: "Error fetching order"
+                _error.value = e.message ?: "Error al obtener el pedido"
             } finally {
                 _loading.value = false
             }
@@ -113,7 +107,7 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
                 _order.value = orderToSave
                 _editMode.value = false
             } catch (e: Exception) {
-                _error.value = e.message ?: "Error saving order"
+                _error.value = e.message ?: "Error al guardar el pedido"
             } finally {
                 _loading.value = false
             }
@@ -127,9 +121,9 @@ class OrderDetailViewModel @dagger.assisted.AssistedInject constructor( // Fully
             val orderToDelete = _order.value ?: return@launch
             try {
                 deleteOrderUseCase.execute(orderToDelete)
-                // Aquí podrías emitir un evento para navegar hacia atrás
+                // Emitir un evento para navegación o feedback
             } catch (e: Exception) {
-                _error.value = e.message ?: "Error deleting order"
+                _error.value = e.message ?: "Error al eliminar el pedido"
             } finally {
                 _loading.value = false
             }

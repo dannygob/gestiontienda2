@@ -6,11 +6,12 @@ import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.Product
 
 fun OrderWithItems.toDomain(clients: List<Client>, products: List<Product>): Order {
-    clients.find { it.id.toLong() == this.order.clientId } // Puede ser null si no existe
+    val clientIdInt = this.order.clientId.toInt()
     val productsMap = products.associateBy { it.id }
+
     return Order(
-        id = this.order.id.toInt() as Int,
-        clientId = this.order.clientId.toInt() as Int,
+        id = this.order.id.toInt(),
+        clientId = clientIdInt,
         orderDate = this.order.orderDate,
         status = this.order.status,
         totalAmount = this.order.totalAmount,
@@ -19,3 +20,4 @@ fun OrderWithItems.toDomain(clients: List<Client>, products: List<Product>): Ord
         }
     )
 }
+

@@ -2,9 +2,9 @@ package com.example.gestiontienda2.data.repository
 
 
 import com.example.gestiontienda2.data.local.dao.ClientDao
-import com.example.gestiontienda2.data.remote.firebase.firebase_mapper.toFirebase
-import com.example.gestiontienda2.data.remote.firebase.models.ClientFirebase
-import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
+import com.example.gestiontienda2.data.mapper.toEntity
+import com.example.gestiontienda2.data.mapper.toFirebase
+import com.example.gestiontienda2.data.remote.firebase.datasource.source.ClientFirebaseDataSource
 import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.repository.ClientRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import com.example.gestiontienda2.data.remote.firebase.datasource.source.ClientFirebaseDataSource // Corrected import path
 
 class ClientRepositoryImpl @Inject constructor(
     private val clientDao: ClientDao,
@@ -43,7 +42,7 @@ class ClientRepositoryImpl @Inject constructor(
             firebaseClient?.toDomain()
         } catch (e: Exception) {
             clientDao.getClientById(id)?.toDomain()
-        }
+        } as Client?
     }
 
     override suspend fun insertClient(client: Client) {

@@ -1,4 +1,14 @@
 package com.example.gestiontienda2.data.mapper
 
-// Other mappers might exist here for other entities.
-// Client-specific mappers (ClientEntity.toDomain and Client.toEntity) have been moved to ClientMapper.kt
+import com.example.gestiontienda2.data.local.entities.entity.OrderItemEntity
+import com.example.gestiontienda2.domain.models.OrderItem
+
+fun OrderItemEntity.toDomain(): OrderItem {
+    return OrderItem(
+        id = this.id,
+        orderId = this.orderId,
+        productId = this.productId,
+        quantity = this.quantity,
+        priceAtOrder = this.priceAtOrder
+    )
+}
