@@ -9,7 +9,7 @@ interface OrderRepository {
     fun getOrders(): Flow<List<Order>>
 
     // Obtiene una orden por id
-    suspend fun getOrderById(orderId: Int): Order?
+    suspend fun getOrderById(orderId: Int): Order
 
     // Agrega una orden, retorna el ID generado (Long)
     suspend fun addOrder(order: Order): Long

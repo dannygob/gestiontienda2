@@ -8,7 +8,7 @@ interface ProductRepository {
 
     fun getAllProducts(): Flow<List<Product>>
 
-    suspend fun getProductById(id: Int): Product?
+    suspend fun getProductById(id: Int): Product
     suspend fun updateProduct(product: Product) // This line is already present, confirming it remains
     suspend fun deleteProduct(product: Product)
   suspend fun insertProduct(product: Product)

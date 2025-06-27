@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetClientsUseCase @Inject constructor(
     private val clientRepository: ClientRepository
 ) {
-    operator fun invoke(): Flow<List<Client>> {
+    suspend operator fun invoke(): Flow<List<Client>> {
         return clientRepository.getClients()
     }
 }

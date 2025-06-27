@@ -14,14 +14,14 @@ fun ProductEntity.toDomain(): Product = Product(
     description = this.description ?: "",
     price = this.salePrice ?: 0.0,
     stockQuantity = this.stockQuantity ?: 0,
-    reservedStockQuantity = this.reservedStockQuantity ?: 0,
+
     salePrice = this.salePrice ?: 0.0,
     category = this.category ?: "",
     purchasePrice = this.purchasePrice ?: 0.0,
     stock = (this.stockQuantity ?: 0) - (this.reservedStockQuantity ?: 0),
     barcode = this.barcode ?: "",
     providerId = this.providerId?.toInt() ?: 0,
-    availableStock = (this.stockQuantity ?: 0) - (this.reservedStockQuantity ?: 0),
+
     buyingPrice = 0.0,
     sellingPrice = 0.0,
     imageUrl = ""
@@ -35,7 +35,7 @@ fun Product.toEntity(): ProductEntity = ProductEntity(
     salePrice = this.salePrice,
     category = this.category ?: "",
     stockQuantity = this.stockQuantity,
-    reservedStockQuantity = this.reservedStockQuantity,
+
     providerId = this.providerId?.toLong(),
     location = null,
     description = this.description ?: "",
@@ -60,8 +60,6 @@ fun ProductFirebase.toDomain(): Product = Product(
     providerId = 0,
     stockQuantity = 0,
     description = "",
-    reservedStockQuantity = 0,
-    availableStock = 0,
     buyingPrice = 0.0,
     sellingPrice = 0.0,
     imageUrl = ""
