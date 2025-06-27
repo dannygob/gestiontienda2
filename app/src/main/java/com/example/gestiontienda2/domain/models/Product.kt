@@ -14,8 +14,6 @@ data class Product(
     val providerId: Int,
     val stockQuantity: Int,
     val description: String?,
-    val reservedStockQuantity: Int,
-    val availableStock: Int,
     val buyingPrice: Double,
     val sellingPrice: Double,
     val imageUrl: String? = null,

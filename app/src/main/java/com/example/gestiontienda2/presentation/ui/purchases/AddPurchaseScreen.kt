@@ -93,8 +93,6 @@ fun AddPurchaseScreen(
                         stock = 100,
                         description = "Sample product description",
                         imageUrl = "https://example.com/image.jpg",
-                        availableStock = 100,
-                        reservedStockQuantity = 0,
                         stockQuantity = 100,
                         providerId = 1,
                         price = 10.0,

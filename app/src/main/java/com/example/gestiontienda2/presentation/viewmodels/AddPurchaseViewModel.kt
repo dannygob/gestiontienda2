@@ -51,10 +51,10 @@ class AddPurchaseViewModel @Inject constructor(
     val totalAmount: StateFlow<SavingState> = _totalAmount.asStateFlow()
 
     private val _selectedProvider = MutableStateFlow<SelectorProvider>(SavingState.Idle)
-    val selectedProvider: StateFlow<SavingState> = _selectedProvider.asStateFlow()
+    val selectedProvider: StateFlow<SelectorProvider> = _selectedProvider.asStateFlow()
 
     private val _purchaseItems = MutableStateFlow<PurchaseItem>(SavingState.Idle)
-    val purchaseItems: StateFlow<SavingState> = _purchaseItems.asStateFlow()
+    val purchaseItems: StateFlow<PurchaseItem> = _purchaseItems.asStateFlow()
 
     private val _savingState = MutableStateFlow<SavingState>(SavingState.Idle)
     val savingState: StateFlow<SavingState> = _savingState.asStateFlow()
