@@ -3,13 +3,15 @@ package com.example.gestiontienda2.data.repository
 import com.example.gestiontienda2.data.local.dao.ClientDao
 import com.example.gestiontienda2.data.local.dao.OrderDao
 import com.example.gestiontienda2.data.local.dao.ProductDao
+import com.example.gestiontienda2.data.local.entities.entity.OrderEntity
+import com.example.gestiontienda2.data.remote.entity.OrderItemEntity
 import com.example.gestiontienda2.data.remote.firebase.datasource.source.OrderFirebaseDataSource
 import com.example.gestiontienda2.data.remote.firebase.models.OrderFirebase
 import com.example.gestiontienda2.data.remote.firebase.models.OrderItemFirebase
-import com.example.gestiontienda2.domain.models.Client
 import com.example.gestiontienda2.domain.models.Order
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.example.gestiontienda2.domain.models.Product
+import com.example.gestiontienda2.domain.models.Provider
 import com.example.gestiontienda2.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -100,10 +102,10 @@ private fun OrderFirebase.toRoomEntity(): OrderEntity = OrderEntity(
 )
 
 private fun OrderWithItems.toDomain(
-    clients: List<Client>,
+    clients: List<Provider>,
     products: List<Product>
 ): Order {
-    clients.find { it.id.toLong() == this.order.clientId }
+    clients.find { it.id.toLong().toInt() == this.order.clientId }
     val productsMap = products.associateBy { it.id }
     return Order(
         id = this.order.id.toInt(),
@@ -129,7 +131,8 @@ private fun Order.toEntity(): OrderEntity = OrderEntity(
     clientId = this.clientId.toLong(),
     orderDate = this.orderDate,
     status = this.status,
-    totalAmount = this.totalAmount
+    totalAmount = this.totalAmount,
+    orderId = TODO()
 )
 
 private fun OrderItem.toEntity(orderId: Int): OrderItemEntity = OrderItemEntity(
@@ -155,7 +158,7 @@ private fun OrderItem.toFirebaseModel(): OrderItemFirebase = OrderItemFirebase(
     priceAtOrder = this.priceAtOrder
 )
 
-private fun OrderFirebase.toDomain(clients: List<Client>, products: List<Product>): Order {
+private fun OrderFirebase.toDomain(clients: List<Provider>, products: List<Product>): Order {
     clients.find { it.id.toString() == this.clientId }
     val productsMap = products.associateBy { it.id }
     return Order(

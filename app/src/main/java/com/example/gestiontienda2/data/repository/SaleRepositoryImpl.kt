@@ -66,7 +66,7 @@ class SaleRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteSale(sale: Int) {
+    override suspend fun deleteSale(sale: Sale) {
         withContext(Dispatchers.IO) {
             try {
                 saleDao.deleteSale(sale.toSaleEntity())
