@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.gestiontienda2.data.local.entities.entity.OrderEntity
-import com.example.gestiontienda2.data.local.entities.entity.OrderItemEntity
 import com.example.gestiontienda2.data.repository.OrderWithItems
 import kotlinx.coroutines.flow.Flow
 
@@ -25,7 +24,7 @@ interface OrderDao {
     suspend fun insertOrders(orders: List<OrderEntity>)  // Inserción masiva
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrderItems(orderItems: List<OrderItemEntity>)  // Inserción masiva de items
+    suspend fun insertOrderItems(orderItems: List<com.example.gestiontienda2.data.remote.entity.OrderItemEntity>)  // Inserción masiva de items
 
     @Update
     suspend fun updateOrder(order: OrderEntity)

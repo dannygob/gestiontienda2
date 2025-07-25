@@ -1,7 +1,7 @@
 package com.example.gestiontienda2.presentation.ui.financialreports
 
 
-import android.R.style.Theme
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.gestiontienda2.data.repository.PurchaseWithItems
 import com.example.gestiontienda2.presentation.viewmodels.PurchaseReportViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -132,7 +133,7 @@ fun PurchaseReportItem(purchase: PurchaseWithItems) {
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = "Items: ${purchase.items.size}",
+                text = "Items: ${purchase.items().size}",
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -151,4 +152,9 @@ fun PreviewPurchaseReportScreen() {
     Theme {
         PurchaseReportScreen(onBackClick = {})
     }
+}
+
+@Composable
+fun Theme(content: @Composable () -> Unit) {
+    TODO("Not yet implemented")
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.gestiontienda2.domain.models.ServiceExpense
 import com.example.gestiontienda2.presentation.viewmodels.ServiceExpenseReportViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -155,7 +156,7 @@ private fun formatDate(timestamp: Long?): String {
 @Preview(showBackground = true)
 @Composable
 fun PreviewServiceExpenseReportScreen() {
-    YourAppTheme {
+    Theme.Gestiontienda2 {
         ServiceExpenseReportScreen()
     }
 }

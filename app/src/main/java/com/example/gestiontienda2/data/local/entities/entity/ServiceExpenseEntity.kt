@@ -8,10 +8,10 @@ data class ServiceExpenseEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val description: String,
-    val date: String, // Or String, depending on how you store dates
+    val date: Unit, // Or String, depending on how you store dates
     val amount: String, // Or Double, depending on how you store amounts
-    val category: String,
+    val category: Int,
     val notes: String?,
-    val type: String, // e.g., "service", "expense",
+    val type: Int, // e.g., "service", "expense",
 
 )

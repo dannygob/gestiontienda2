@@ -1,5 +1,6 @@
-package com.inventory.app.presentation.ui.addclient
+package com.example.gestiontienda2.presentation.ui.addclient
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gestiontienda2.domain.models.Client
@@ -112,7 +113,7 @@ class AddClientViewModel @Inject constructor(
 
     private fun validateEmail(email: String): String? {
         if (email.isBlank()) return null
-        return if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        return if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             null
         } else {
             "Email inválido"

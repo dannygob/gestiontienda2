@@ -31,7 +31,7 @@ class OrderRepositoryImpl @Inject constructor(
 
     override fun getAllOrders(): Flow<List<Order>> = orderDao.getAllOrdersWithItems()
         .map { ordersWithItems ->
-            val clients = clientDao.getAllClientsBlocking().map { it.toDomain() }
+            val clients = clientDao.getAllClientsBlocking().map { it.toDomain(productsMap) }
             val products = productDao.getAllProductsBlocking().map { it.toDomain() }
             ordersWithItems.map { it.toDomain(clients, products) }
         }
@@ -41,14 +41,14 @@ class OrderRepositoryImpl @Inject constructor(
             orderFirebaseDataSource.getOrderById(orderId.toString())?.let {
                 orderDao.insertOrder(it.toRoomEntity())
                 return@withContext it.toDomain(
-                    clientDao.getAllClientsBlocking().map { c -> c.toDomain() },
+                    clientDao.getAllClientsBlocking().map { c -> c.toDomain(productsMap) },
                     productDao.getAllProductsBlocking().map { p -> p.toDomain() }
                 )
             }
         } catch (_: Exception) {
             return@withContext orderDao.getOrderWithItemsById(orderId.toLong())
                 ?.toDomain(
-                    clientDao.getAllClientsBlocking().map { c -> c.toDomain() },
+                    clientDao.getAllClientsBlocking().map { c -> c.toDomain(productsMap) },
                     productDao.getAllProductsBlocking().map { p -> p.toDomain() }
                 )
         }
@@ -98,14 +98,15 @@ private fun OrderFirebase.toRoomEntity(): OrderEntity = OrderEntity(
     clientId = this.clientId.toLongOrNull() ?: 0L,
     orderDate = this.orderDate,
     status = this.status,
-    totalAmount = this.totalAmount
+    totalAmount = this.totalAmount,
+    orderId = TODO()
 )
 
 private fun OrderWithItems.toDomain(
     clients: List<Provider>,
-    products: List<Product>
+    products: Flow<R>,
 ): Order {
-    clients.find { it.id.toLong().toInt() == this.order.clientId }
+    clients.find { it.id.toLong().toInt().toLong() == this.order.clientId }
     val productsMap = products.associateBy { it.id }
     return Order(
         id = this.order.id.toInt(),
@@ -158,7 +159,7 @@ private fun OrderItem.toFirebaseModel(): OrderItemFirebase = OrderItemFirebase(
     priceAtOrder = this.priceAtOrder
 )
 
-private fun OrderFirebase.toDomain(clients: List<Provider>, products: List<Product>): Order {
+private fun OrderFirebase.toDomain(clients: List<Provider>, products: Flow<R>): Order {
     clients.find { it.id.toString() == this.clientId }
     val productsMap = products.associateBy { it.id }
     return Order(

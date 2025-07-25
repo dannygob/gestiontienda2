@@ -44,7 +44,13 @@ class ProductRepositoryImpl @Inject constructor(
             }
             emit(firebaseProducts.map { it.productFirebaseToDomain() })
         } catch (e: Exception) {
-            emit(productDao.getAllProducts().map { entities -> entities.map { it.toDomain() } })
+            emit(productDao.getAllProducts().map { entities ->
+                entities.map {
+                    it.toDomain(
+                        productsMap
+                    )
+                }
+            } as List<*>)
         }
     }
 
@@ -64,7 +70,7 @@ class ProductRepositoryImpl @Inject constructor(
     suspend fun getProductByBarcodeFromApi(barcode: String): Product? {
         return try {
             val response = openFoodFactsApiService.getProductByBarcode(barcode)
-            response.body()?.toDomain()
+            response.body()?.toDomain(productsMap)
         } catch (_: Exception) {
             null
         } as Product?

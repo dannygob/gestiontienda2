@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.example.gestiontienda2.data.local.dao.ProviderDao
-import com.example.gestiontienda2.data.local.room.entities.entity.ProviderEntity
+import com.example.gestiontienda2.data.local.entities.entity.ProviderEntity
 import com.example.gestiontienda2.data.remote.firebase.datasource.source.ProviderFirebaseDataSource
 import com.example.gestiontienda2.data.remote.firebase.models.ProviderFirebase
 import com.example.gestiontienda2.domain.models.Provider
@@ -23,24 +23,26 @@ class ProviderRepositoryImpl @Inject constructor(
 
     override fun getAllProviders(): Flow<List<Provider>> {
         return providerDao.getAllProviders().map { entities ->
-            entities.map { it.toDomain() }
+            entities.map { it.toDomain(productsMap) }
         }
     }
 
     override suspend fun getProviderById(providerId: Int): Provider? {
         return if (isOnline()) {
             try {
-                providerFirebaseDataSource.getProviderById(providerId.toString())?.toDomain()
+                providerFirebaseDataSource.getProviderById(providerId.toString())?.toDomain(
+                    productsMap
+                )
                     ?.also {
                         withContext(Dispatchers.IO) {
                             providerDao.updateProvider(it.toEntity())
                         }
                     }
             } catch (e: Exception) {
-                providerDao.getProviderById(providerId)?.toDomain()
+                providerDao.getProviderById(providerId)?.toDomain(productsMap)
             }
         } else {
-            providerDao.getProviderById(providerId)?.toDomain()
+            providerDao.getProviderById(providerId)?.toDomain(productsMap)
         }
     }
 
@@ -76,7 +78,7 @@ class ProviderRepositoryImpl @Inject constructor(
 }
 
 // Mapper functions
-fun ProviderEntity.toDomain(): Provider {
+fun ProviderEntity.toDomain(productsMap: associateBy): Provider {
     return Provider(
         id = this.id,
         name = this.name,

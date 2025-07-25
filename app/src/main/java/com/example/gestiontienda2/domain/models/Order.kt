@@ -7,6 +7,6 @@ data class Order(
     val status: String,
     var totalAmount: Double,
     val client: Client? = null,
-    val items: List<OrderItem> = emptyList(),
+    val items: List<Provider> = emptyList(),
 )
 

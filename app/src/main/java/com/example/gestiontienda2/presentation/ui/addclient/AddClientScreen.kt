@@ -1,4 +1,4 @@
-package com.inventory.app.presentation.ui.addclient
+package com.example.gestiontienda2.presentation.ui.addclient
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

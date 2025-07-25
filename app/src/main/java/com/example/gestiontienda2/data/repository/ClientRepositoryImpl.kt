@@ -31,7 +31,7 @@ class ClientRepositoryImpl @Inject constructor(
                 // Manejo de errores de Firebase
             }
             emitAll(clientDao.getAllClients().map { entities ->
-                entities.map { it.toDomain() }
+                entities.map { it.toDomain(productsMap) }
             })
         }
     }
@@ -39,9 +39,9 @@ class ClientRepositoryImpl @Inject constructor(
     override suspend fun getClientById(id: Int): Client? {
         return try {
             val firebaseClient = clientFirebaseDataSource.getClientById(id.toString())
-            firebaseClient?.toDomain()
+            firebaseClient?.toDomain(productsMap)
         } catch (e: Exception) {
-            clientDao.getClientById(id)?.toDomain()
+            clientDao.getClientById(id)?.toDomain(productsMap)
         } as Client?
     }
 

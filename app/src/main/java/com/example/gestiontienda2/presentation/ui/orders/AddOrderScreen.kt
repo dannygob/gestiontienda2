@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.gestiontienda2.domain.models.OrderItem
 import com.example.gestiontienda2.presentation.ui.components.DatePickerDialog
+import com.example.gestiontienda2.presentation.viewmodels.SavingState
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -117,6 +118,10 @@ fun AddOrderScreen(
 
                     is SavingState.Success -> Text("Saved!")
                     is SavingState.Error -> Text("Error Saving")
+                    is AddOrderViewModel.SavingState.Error -> TODO()
+                    AddOrderViewModel.SavingState.Idle -> TODO()
+                    AddOrderViewModel.SavingState.Loading -> TODO()
+                    AddOrderViewModel.SavingState.Success -> TODO()
                 }
             }
 

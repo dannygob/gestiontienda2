@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gestiontienda2.domain.models.Product
-import com.example.gestiontienda2.presentation.viewmodels.InventoryViewModel // Correct ViewModel import
 import com.example.gestiontienda2.presentation.ui.theme.GestionTiendaAppTheme
+import com.example.gestiontienda2.presentation.viewmodels.InventoryViewModel
 
 @Composable
 fun InventoryListScreenRoute(
@@ -101,7 +101,9 @@ fun InventoryListScreenContent(
                     ErrorMessage(
                         error = error,
                         onRetry = onRetry,
-                        modifier = Modifier.fillMaxSize().padding(16.dp)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
                     )
                 }
                 products.isEmpty() -> { // Handles both initial empty and no search results
@@ -165,7 +167,9 @@ fun ProductListItem(
     onClick: () -> Unit,
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth().clickable { onClick() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -260,7 +264,22 @@ fun InventoryListScreenPopulatedPreview() {
     GestionTiendaAppTheme {
         InventoryListScreenContent(
             products = listOf(
-                Product(1, "Laptop Pro", "High-end laptop", 1200.0, 1500.0, 15, "Electronics", "111", null, 1, 5, 0),
+                Product(
+                    1,
+                    "Laptop Pro",
+                    "High-end laptop",
+                    1200.0,
+                    1500.0,
+                    15,
+                    "Electronics",
+                    "111",
+                    null,
+                    1,
+                    5,
+                    0,
+                    sellingPrice = TODO(),
+                    imageUrl = TODO()
+                ),
                 Product(2, "Wireless Mouse", "Ergonomic mouse", 20.0, 35.0, 50, "Accessories", "222", null, 2, 10, 0),
                 Product(3, "Keyboard", "Mechanical keyboard", 75.0, 120.0, 5, "Accessories", "333", null, 3, 5, 0)
             ),

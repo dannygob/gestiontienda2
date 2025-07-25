@@ -16,7 +16,7 @@ interface ProviderDao {
     fun getAllProviders(): Flow<List<ProviderEntity>>
 
     @Query("SELECT * FROM providers WHERE id = :providerId")
-    suspend fun getProviderById(providerId: Long): ProviderEntity?
+    suspend fun getProviderById(providerId: Int): ProviderEntity?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProvider(provider: ProviderEntity): Long

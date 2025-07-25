@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.gestiontienda2.domain.models.Sale
 import com.example.gestiontienda2.presentation.viewmodels.SaleReportViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -116,21 +117,21 @@ fun SaleReportListItem(sale: Sale) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "Sale ID: ${sale.sale.id}",
+                text = "Sale ID: ${sale.saleDate.id}",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
                 text = "Date: ${
                     SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(
-                        Date(sale.sale.date)
+                        Date(sale.saleDate)
                     )
                 }",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = "Total Amount: $${String.format("%.2f", sale.sale.totalAmount)}",
+                text = "Total Amount: $${String.format("%.2f", sale.saleDate.totalAmount)}",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(bottom = 4.dp)
