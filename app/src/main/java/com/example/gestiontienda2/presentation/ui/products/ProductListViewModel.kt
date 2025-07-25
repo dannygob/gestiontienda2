@@ -26,7 +26,7 @@ class ProductListViewModel @Inject constructor(
         loadProducts()
     }
 
-    private fun loadProducts() {
+    fun loadProducts() {
         viewModelScope.launch {
             _isLoading.value = true
             _errorMessage.value = null
